@@ -9,11 +9,17 @@ const Register = () => {
     const password = useRef(null);
 
     // funkce
+
+    // vytvoreni uzivatele
     const createUser = () => {
         const newUser = {
             name: name.current.value,
             password: password.current.value
         }
+        // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
+        localStorage.setItem("user", JSON.stringify(newUser));
+       
+        // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
         setUser(newUser);
     }
     return (

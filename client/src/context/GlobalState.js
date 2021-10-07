@@ -3,7 +3,7 @@ import Reducer from "./Reducer"
 
 // initial state zde bude ulozeny uzivatel aby jsem mohl jeho data pouzivat ve vsech komponentach
 const initialState = {
-    user: null
+    user: JSON.parse(localStorage.getItem("user")) // do user se ulozi json promenna user z local storagu
 }
 
 export const GlobalContext = createContext(initialState);
