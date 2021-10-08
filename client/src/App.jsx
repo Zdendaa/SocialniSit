@@ -1,26 +1,34 @@
-import { useState } from 'react';
 import './App.css';
-
-import storage from './firebaseStorage/storage';
-import {uploadImg} from './storageImgDownload/imgDownload';
+import Register from './pages/Register'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Home from './pages/Home';
+import Login from './pages/Login';
+import { GlobalContext } from './context/GlobalState';
+import { useContext } from 'react';
 
 function App() {
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
-
-  const pokus = async () => {
-    await uploadImg(image, storage); 
-  }
+  const {user} = useContext(GlobalContext);
   
   return (
     <div className="App">
-
-      <input type="file" onChange={(e) => setImage(e.target.files[0])}/>
-      <button onClick={pokus }>odeslat</button>
-    <img src={url && url} alt="" />
-    <button >aaa</button>
-      {//<Register />
-      }
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            { user ? <Home /> : <Redirect to="/register" /> }
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
