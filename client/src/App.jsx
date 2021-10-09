@@ -22,10 +22,10 @@ function App() {
             { user ? <Home /> : <Redirect to="/register" /> }
           </Route>
           <Route path="/register">
-            <Register />
+            { !user ? <Register /> : <Redirect to="/" /> }
           </Route>
           <Route path="/login">
-            <Login />
+            { !user ? <Login /> : <Redirect to="/" /> }
           </Route>
         </Switch>
       </Router>

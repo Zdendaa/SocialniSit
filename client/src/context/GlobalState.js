@@ -21,9 +21,15 @@ export const GlobalProvider = ({children}) => {
         })
     }
 
+    function deleteUser() {
+        dispatch({
+            type: 'DELETE_USER',
+        })
+    }
+
 
     return (
-        <GlobalContext.Provider value={{user: state.user, setUser}}>
+        <GlobalContext.Provider value={{user: state.user, setUser, deleteUser}}>
             {children}
         </GlobalContext.Provider>
     )

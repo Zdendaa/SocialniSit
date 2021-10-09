@@ -22,9 +22,11 @@ app.use(express.json());
 app.use("/api/users", user);
 app.use("/api/images", image);
 
+/*
 app.get("/", (req, res) => {
     res.send("<p>ahoj</p>")
 })
+*/
 
 // zpusteni serveru
 app.listen(PORT, () => {

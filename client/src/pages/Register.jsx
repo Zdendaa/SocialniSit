@@ -1,21 +1,22 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useHistory } from 'react-router';
 import { GlobalContext } from '../context/GlobalState';
-import storage from '../firebaseStorage/storage';
 import { uploadImg } from '../storageImgActions/imgFunctions'
 import axios from 'axios'
 
 const Register = () => {
-
+    // vypujceni promenne user a funkce setUser z context api
     const {user, setUser} = useContext(GlobalContext);
+
     // useRef promenne
     const name = useRef(null);
     const password = useRef(null);
+    const email = useRef(null);
 
     // useState promenne
     const [image, setImage] = useState(null);
 
-    // useHistry ( pouziva se k presmerovani stranky)
+    // useHistory ( pouziva se k presmerovani stranky)
     const history = useHistory();
 
 
@@ -23,34 +24,42 @@ const Register = () => {
 
     // vytvoreni uzivatele
     const createUser = async () => {
-        const newUser = {
-            name: name.current.value,
-            password: password.current.value
-        }
-        // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
-        localStorage.setItem("user", JSON.stringify(newUser));
-       
-        // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
-        setUser(newUser);
 
-        // ulozeni img do storage
-        saveImgInStorages();
-        await axios.get("/images/clg");
-        //history.push("/");
+        // vytvoreni zaznamu v tabulkce images
+        const img = await axios.post("/images/createNew", {name: image.name});
         
-    }
-
-    const saveImgInStorages = async () => {
         // ulozeni img do storage
-        await uploadImg(image, storage);
+        const newImgName = img.data._id;
+        await uploadImg(image, newImgName);
+
+        const newUser = {
+            username: name.current.value,
+            email: email.current.value,
+            password: password.current.value,
+            idOfProfilePicture: img.data._id // id obrazku ktery jsme uz ulozili
+        }
+        
+        // vytvoreni zaznamu v tabulkce users
+        const userData = await axios.post("/users/register", newUser);
+        const newUserData = userData.data;
+        
+        // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
+        localStorage.setItem("user", JSON.stringify(newUserData));
+
+        // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
+        setUser(newUserData);
+
+        // presmerovani na stranku home
+        history.push("/");
     }
 
 
     return (
         <div className="Register">
-            <input type="name" ref={name} required/>
-            <input type="password" ref={password} required/>
-            <input type="file" onChange={(e) => setImage(e.target.files[0])}/>
+            <input type="name" ref={name} placeholder="name" required/>
+            <input type="password" ref={password} placeholder="password" required/>
+            <input type="email" ref={email} placeholder="email" required/>
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} required/>
             <button onClick={createUser}>Registrovat</button>
 
             <p>{user && user.name}</p>

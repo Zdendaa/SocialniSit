@@ -5,6 +5,11 @@ const Reducer = (state, action) => {
                 ...state,
                 user: action.payload
             }
+        case "DELETE_USER":
+                return {
+                    ...state,
+                    user: null
+                }
         default: 
             return state;
     }

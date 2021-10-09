@@ -13,7 +13,8 @@ router.post("/register", async (req, res) => {
         const newUser = new User({
             username: req.body.username,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            idOfProfilePicture: req.body.idOfProfilePicture,
         })
         //console.log(newUser)
         // ulozeni uzivatele do databaze
@@ -28,10 +29,10 @@ router.post("/register", async (req, res) => {
 })
 
 /** PRIHLASOVANI */
-router.post("/login", async (req, res,) => {
+router.post("/login", async (req, res) => {
     try {
         // vyhledani uzivatele pomoci emailu ktery jsme zadali 
-        const user = await User.findOne({email: req.body.email})
+        const user = await User.findOne({email: req.body.email});
         // jeslize se uzivatele nepovedlo najit posleme chybu
         !user && res.status(404).send("user not found");
 
