@@ -1,4 +1,4 @@
-import storage from "../firebaseStorage/storage";
+import {storage} from "../firebaseStorage/storage";
 
 // ulozeni img do uloziste
 export const uploadImg = async (image, name) => {

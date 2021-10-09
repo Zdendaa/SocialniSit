@@ -1,8 +1,10 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useHistory } from 'react-router';
-import { GlobalContext } from '../context/GlobalState';
+import { GlobalContext } from '../context/GlobalState'
 import { uploadImg } from '../storageImgActions/imgFunctions'
 import axios from 'axios'
+import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
+import { Link } from 'react-router-dom'
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
@@ -36,9 +38,10 @@ const Register = () => {
             username: name.current.value,
             email: email.current.value,
             password: password.current.value,
-            idOfProfilePicture: img.data._id // id obrazku ktery jsme uz ulozili
+            idOrUrlOfProfilePicture: img.data._id, // id obrazku ktery jsme uz ulozili
+            idGoogleAccount: false,
         }
-        
+
         // vytvoreni zaznamu v tabulkce users
         const userData = await axios.post("/users/register", newUser);
         const newUserData = userData.data;
@@ -51,8 +54,10 @@ const Register = () => {
 
         // presmerovani na stranku home
         history.push("/");
+        
     }
 
+    
 
     return (
         <div className="Register">
@@ -61,6 +66,8 @@ const Register = () => {
             <input type="email" ref={email} placeholder="email" required/>
             <input type="file" onChange={(e) => setImage(e.target.files[0])} required/>
             <button onClick={createUser}>Registrovat</button>
+            <ButtonGoogleLogIn />
+            <Link to="/login">Příhlásit se</Link>
 
             <p>{user && user.name}</p>
             <p>{user && user.password}</p>

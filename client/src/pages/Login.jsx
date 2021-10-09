@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useRef } from 'react'
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { GlobalContext } from '../context/GlobalState';
 
 const Login = () => {
@@ -19,6 +21,7 @@ const Login = () => {
             email: email.current.value, 
             password: password.current.value
         }
+        // zjisteni jeslit uzivatel existuje a email i heslo se shoduje
         const newUser = await axios.post("/users/login", data);
             
         const newUserData = newUser.data;
@@ -37,8 +40,11 @@ const Login = () => {
         <div>
             <input type="email" placeholder="email" ref={email} required/>
             <input type="password" placeholder="password" ref={password} required/>
-            <button onClick={logIn}>prihlasit</button>
+            <button onClick={logIn}>prihlasit</button> <br/>
+            <ButtonGoogleLogIn />
+            <Link to="/register">Registrovat</Link>
         </div>
+        
     )
 }
 

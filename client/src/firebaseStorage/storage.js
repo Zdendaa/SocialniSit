@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 
 import "firebase/storage"
+import "firebase/auth";
 
 // pripojeni k firebase 
 const firebaseConfig = {
@@ -17,4 +18,4 @@ firebase.initializeApp(firebaseConfig);
 // vytvoreni uloziste s kterym muzeme pracovat
 var storage = firebase.storage();
 
-export default storage;
+export { firebase, storage };
