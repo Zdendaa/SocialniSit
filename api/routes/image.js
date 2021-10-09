@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Image = require('../models/Image');
 
+
 router.post("/createNew", async (req, res) => {
     try {
         // vytvoreni obrazku

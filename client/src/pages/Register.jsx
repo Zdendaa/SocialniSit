@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { GlobalContext } from '../context/GlobalState';
 import storage from '../firebaseStorage/storage';
 import { uploadImg } from '../storageImgActions/imgFunctions'
+import axios from 'axios'
 
 const Register = () => {
 
@@ -21,7 +22,7 @@ const Register = () => {
     // funkce
 
     // vytvoreni uzivatele
-    const createUser = () => {
+    const createUser = async () => {
         const newUser = {
             name: name.current.value,
             password: password.current.value
@@ -34,8 +35,8 @@ const Register = () => {
 
         // ulozeni img do storage
         saveImgInStorages();
-
-        history.push("/")
+        await axios.get("/images/clg");
+        //history.push("/");
         
     }
 
