@@ -6,10 +6,11 @@ import axios from 'axios'
 import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { Link } from 'react-router-dom'
 import changePath from '../changePath';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
-    const {user, setUser} = useContext(GlobalContext);
+    const {user, setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
 
     // useRef promenne
     const name = useRef(null);
@@ -62,16 +63,25 @@ const Register = () => {
 
     return (
         <div className="Register">
-            <input type="name" ref={name} placeholder="name" required/>
-            <input type="password" ref={password} placeholder="password" required/>
-            <input type="email" ref={email} placeholder="email" required/>
-            <input type="file" onChange={(e) => setImage(e.target.files[0])} required/>
-            <button onClick={createUser}>Registrovat</button>
-            <ButtonGoogleLogIn />
-            <Link to="/login">Příhlásit se</Link>
-
-            <p>{user && user.name}</p>
-            <p>{user && user.password}</p>
+            <div className="registerContainer">
+                <div className="rotateDiv1" style={{backgroundColor: backgroundColor1}}></div>
+                <div className="rotateDiv2" style={{backgroundColor: backgroundColor1}}></div>
+                <div className="registerForm">
+                    <h2 style={{color: backgroundColor1}}>Registrace</h2>
+                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="name" ref={name} placeholder="jméno" required/>
+                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" ref={email} placeholder="email" required/>
+                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" ref={password} placeholder="heslo" required/>
+                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
+                    <label for="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
+                        <span>vybrat profilovou fotku</span>
+                    </label>
+                    <input id="fileUpload" type="file" onChange={(e) => console.log(e.target.files[0])} required/>
+                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} ><span>Registrovat</span></button>    
+                    <span>nebo</span>        
+                        <ButtonGoogleLogIn />
+                        <Link to="/login" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg"/></Link>
+                </div>
+            </div>
         </div>
     )
 }

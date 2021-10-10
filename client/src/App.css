@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+span {
+  font-size: 12px;
+  font-weight: 500;
+}
+.App {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+}
+
+/* Register a Login */
+.Register,
+.Login {
+  width: 100%;
+  min-height: 100%;
+}
+
+.registerContainer,
+.loginContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rotateDiv1 {
+  top: -50px;
+  left: -50px;
+  position: absolute;
+  transform: rotate(10deg);
+  width: 200%;
+  height: 150px;
+  opacity: 0.8;
+}
+
+.rotateDiv2 {
+  top: -100px;
+  left: -200px;
+  position: absolute;
+  transform: rotate(-30deg);
+  width: 200%;
+  height: 200px;
+  opacity: 0.5;
+}
+
+.registerForm,
+.loginForm {
+  width: 100%;
+  height: auto;
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.registerForm h2,
+.loginForm h2 {
+  font-weight: 900;
+}
+
+.inputRegister {
+  border: none;
+  padding: 15px;
+  width: 65%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.inputRegister:focus {
+  outline: none;
+}
+#fileUpload {
+  display: none;
+}
+
+#inputfileRegister {
+  text-align: center;
+}
+
+.buttonRegister {
+  text-align: center;
+  width: calc(65% + 30px);
+  cursor: pointer;
+}
+
+/* ButtonGoogleLogIn a Register button go to Log in */
+.createGoogleButton,
+.goToLogInButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.createGoogleButton {
+  margin-top: 15px;
+  background-color: rgb(2, 2, 202);
+}
+
+.googleImg,
+.ArrowImg {
+  font-size: 20px;
+  padding-right: 5px;
+}
+
+.goToLogInButton {
+  list-style-type: none;
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+@media only screen and (min-width: 450px) {
+  .App {
+    position: absolute;
+    min-height: 100%;
+  }
+  /* Register a Login */
+  .Register,
+  .Login {
+    position: absolute;
+    min-height: 100%;
+    display: flex;
+
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .registerContainer,
+  .loginContainer {
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  /* Register a Login */
+  .Register,
+  .Login {
+    margin: 0;
+    align-items: center;
+  }
+  .registerContainer,
+  .loginContainer {
+    width: 405px;
+  }
+}

@@ -4,6 +4,7 @@ import { GlobalContext } from '../context/GlobalState'
 import { firebase } from '../firebaseStorage/storage'
 import { useHistory } from 'react-router'
 import changePath from '../changePath';
+import { FcGoogle } from 'react-icons/fc';
 
 const ButtonGoogleLogIn = () => {
     const {setUser} = useContext(GlobalContext);
@@ -61,9 +62,12 @@ const ButtonGoogleLogIn = () => {
 
     
     return (
-        <div>
-             <button onClick={createUserGoogle}>Pokracovat skrze google ucet</button>
-        </div>
+        <>
+            <button onClick={createUserGoogle} className="createGoogleButton inputRegister buttonRegister">
+                 <FcGoogle className="googleImg"/>
+                 <span>Pokračovat skrze google účet</span>
+            </button>
+        </>
     )
 }
 
