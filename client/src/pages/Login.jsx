@@ -48,7 +48,8 @@ const Login = () => {
                     <h2 style={{color: backgroundColor1}}>Přihlásit se</h2>
                     <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" placeholder="email" ref={email} required/>
                     <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="heslo" ref={password} required/>
-                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={logIn}>příhlásit</button> <br/>
+                    <button className="buttonRegister buttonRegisterMarginNone inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={logIn}>příhlásit</button> <br/>
+                    <span>nebo</span> 
                     <ButtonGoogleLogIn />
                     <Link to="/register" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}><span>Registrovat se</span> <AiOutlineArrowRight className="ArrowImg"/></Link>
                 </div>

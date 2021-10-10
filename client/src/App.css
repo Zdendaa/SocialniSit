@@ -7,8 +7,11 @@ body {
 
 span {
   font-size: 12px;
+}
+.f500 {
   font-weight: 500;
 }
+
 .App {
   position: relative;
   width: 100%;
@@ -91,6 +94,10 @@ span {
   cursor: pointer;
 }
 
+.buttonRegisterMarginNone {
+  margin-bottom: 0;
+}
+
 /* ButtonGoogleLogIn a Register button go to Log in */
 .createGoogleButton,
 .goToLogInButton {
@@ -129,22 +136,21 @@ span {
     position: absolute;
     min-height: 100%;
     display: flex;
-
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    
   }
   .registerContainer,
   .loginContainer {
+    margin-top: 35px;
+    margin-bottom: 35px;
     width: 400px;
-    height: auto;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
   }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1600px) {
   /* Register a Login */
   .Register,
   .Login {
