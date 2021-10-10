@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useRef } from 'react'
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import changePath from '../changePath';
 import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { GlobalContext } from '../context/GlobalState';
 
@@ -22,7 +23,7 @@ const Login = () => {
             password: password.current.value
         }
         // zjisteni jeslit uzivatel existuje a email i heslo se shoduje
-        const newUser = await axios.post("/users/login", data);
+        const newUser = await axios.post(changePath("/users/login"), data);
             
         const newUserData = newUser.data;
             

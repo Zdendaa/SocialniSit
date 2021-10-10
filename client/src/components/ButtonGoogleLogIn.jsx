@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { firebase } from '../firebaseStorage/storage'
 import { useHistory } from 'react-router'
+import changePath from '../changePath';
 
 const ButtonGoogleLogIn = () => {
     const {setUser} = useContext(GlobalContext);
@@ -22,7 +23,7 @@ const ButtonGoogleLogIn = () => {
                         password: null,
                         idGoogleAccount: data.user.idGoogleAccount
                     }
-                    const newUser = await axios.post("/users/login", userData);
+                    const newUser = await axios.post(changePath("/users/login"), userData);
                     saveUser(newUser);
                 } catch (err) {
                     console.log("ach jaj");
@@ -36,7 +37,7 @@ const ButtonGoogleLogIn = () => {
                     }
         
                     // vytvoreni zaznamu v tabulkce users
-                    const userData = await axios.post("/users/register", newUser);
+                    const userData = await axios.post(changePath("/users/register"), newUser);
                     saveUser(userData);
                 }
             })

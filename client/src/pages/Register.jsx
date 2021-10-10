@@ -5,6 +5,7 @@ import { uploadImg } from '../storageImgActions/imgFunctions'
 import axios from 'axios'
 import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { Link } from 'react-router-dom'
+import changePath from '../changePath';
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
@@ -28,7 +29,7 @@ const Register = () => {
     const createUser = async () => {
 
         // vytvoreni zaznamu v tabulkce images
-        const img = await axios.post("/images/createNew", {name: image.name});
+        const img = await axios.post(changePath("/images/createNew"), {name: image.name});
         
         // ulozeni img do storage
         const newImgName = img.data._id;
@@ -43,7 +44,7 @@ const Register = () => {
         }
 
         // vytvoreni zaznamu v tabulkce users
-        const userData = await axios.post("/users/register", newUser);
+        const userData = await axios.post(changePath("/users/register"), newUser);
         const newUserData = userData.data;
         
         // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
