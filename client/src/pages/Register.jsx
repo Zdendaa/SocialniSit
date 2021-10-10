@@ -10,7 +10,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
-    const {user, setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const {setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
 
     // useRef promenne
     const name = useRef(null);
@@ -75,8 +75,8 @@ const Register = () => {
                     <label for="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>
-                    <input id="fileUpload" type="file" onChange={(e) => console.log(e.target.files[0])} required/>
-                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} ><span>Registrovat</span></button>    
+                    <input id="fileUpload" type="file" onChange={(e) => setImage(e.target.files[0])} required/>
+                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}><span>Registrovat</span></button>    
                     <span>nebo</span>        
                         <ButtonGoogleLogIn />
                         <Link to="/login" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg"/></Link>
