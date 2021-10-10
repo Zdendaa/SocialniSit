@@ -17,14 +17,13 @@ const user = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        min: 2
+        default: null
     },
-    idOfProfilePicture: {
+    idOrUrlOfProfilePicture: {
         type: String,
         default: null
     },
-    idOfCoverPicture: {
+    idOrUrlOfCoverPicture: {
         type: String,
         default: null
     },
@@ -41,6 +40,10 @@ const user = new mongoose.Schema({
         default: []
     },
     isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    idGoogleAccount: {
         type: Boolean,
         default: false
     }

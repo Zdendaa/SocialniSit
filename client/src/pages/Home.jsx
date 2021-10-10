@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import { downloadUrlImg } from '../storageImgActions/imgFunctions'
 import { GlobalContext } from '../context/GlobalState';
+import validator from 'validator';
 
 const Home = () => {
     const {user, deleteUser} = useContext(GlobalContext);
@@ -10,11 +11,12 @@ const Home = () => {
     
     useEffect(() => {
         const downloadUrl = async () => {
-            const url = await downloadUrlImg(user.idOfProfilePicture);
+
+            const url = validator.isURL(user.idOrUrlOfProfilePicture) ? user.idOrUrlOfProfilePicture : await downloadUrlImg(user.idOrUrlOfProfilePicture);
             setUrl(url);
         }
         downloadUrl();
-    }, [user.idOfProfilePicture])
+    }, [user.idOrUrlOfProfilePicture])
 
     return (
         <div>
