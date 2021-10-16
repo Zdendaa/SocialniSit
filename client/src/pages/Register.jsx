@@ -45,72 +45,73 @@ const Register = () => {
     // zkontrolovani dat ve formulari a ulozeni chybove hlasky
     const checkInput = async (what, value) => {
         // what 1 name   2 password    3 passwordConfirm    4 email
-        what === 1 && (!value == "" ? setErrName(null) : setErrName("Jméno je povinné"));
-        what === 2 && (!value == "" ? (value != passwordConfirmValue ? setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo") : setBothPasswordRight()) : setErrPassword("Heslo je povinné"));
-        what === 3 && (!value == "" ? (value == passwordValue ? setErrPasswordConfirm(null): setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
-        what === 4 && (!value == "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
+        what === 1 && (value !== "" ? setErrName(null) : setErrName("Jméno je povinné"));
+        what === 2 && (value !== "" ? (value === passwordConfirmValue ? setRight(true, true) : setRight(true, false)) : setErrPassword("Heslo je povinné"));
+        what === 3 && (value !== "" ? (value === passwordValue ? setErrPasswordConfirm(null): setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
+        what === 4 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
     }
 
-    const setBothPasswordRight = () => {
-        setErrPassword(null); 
-        setErrPasswordConfirm(null);
+    const setRight = (password, passwordConfirm) => {
+        password && setErrPassword(null); 
+        passwordConfirm ? setErrPasswordConfirm(null) : setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo");
     }
 
     // vytvoreni uzivatele
     const createUser = async () => {
         // zjisteni jestli data ve formulari jsou sparvna 
-        const isItRight = ((!errEmail && !errPassword && !errPasswordConfirm && !errName) && (errEmail != "" && errPassword != "" && !errPasswordConfirm != "" && !errName != "")) ? true : false;
+        const isItRight = ((!errEmail && !errPassword && !errPasswordConfirm && !errName) && (errEmail !== "" && errPassword !== "" && !errPasswordConfirm !== "" && !errName !== "")) ? true : false;
 
         // jeslit jsou data spravna pokracujeme v prihlaseni
         if(isItRight) {
             try {
                 // nacitani nastavime na true
                 setIfWaiting(true);
-
                 
                 // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
                 const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
                 
                 // jestli existuje img ulozi se img do storage
                 if(img) {
-                    const newImgName = img.data._id;
-                    await uploadImg(image, newImgName);
+                    const newImgName = "users/" + name.current.value + "/" + img.data._id;
+                    await uploadImg(image, newImgName).then(await setAndSaveUser(img));
+                } else {
+                    await setAndSaveUser(img);
                 }
-                
-
-                const newUser = {
-                    username: name.current.value,
-                    email: email.current.value,
-                    password: password.current.value,
-                    idOrUrlOfProfilePicture: img ? img.data._id : null, // id obrazku ktery jsme uz ulozili
-                    isGoogleAccount: false,
-                }
-
-                // vytvoreni zaznamu v tabulkce users
-                const userData = await axios.post(changePath("/users/register"), newUser);
-                const newUserData = userData.data;
-
-                // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
-                localStorage.setItem("user", JSON.stringify(newUserData));
-
-                // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
-                setUser(newUserData);
-
-                // presmerovani na stranku home
-                history.push("/");
-                
+                                
             } catch (err) {
-                console.log("chyba");
                 // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
                 setIfWaiting(false);
             }
         } else {
             // jeslit uzivatel nezadal zadna data vyhodime chybouve hlasky
-            errName == "" && checkInput(1, "");
-            errPassword == "" && checkInput(2, "");
-            errPasswordConfirm == "" && checkInput(3, "");
-            errEmail == "" && checkInput(4, "");
+            errName === "" && checkInput(1, "");
+            errPassword === "" && checkInput(2, "");
+            errPasswordConfirm === "" && checkInput(3, "");
+            errEmail === "" && checkInput(4, "");
         }
+    }
+
+    const setAndSaveUser = async (img) => {
+        const newUser = {
+            username: name.current.value,
+            email: email.current.value,
+            password: password.current.value,
+            idOrUrlOfProfilePicture: img ? img.data._id : null, // id obrazku ktery jsme uz ulozili
+            isGoogleAccount: false,
+        }
+
+        // vytvoreni zaznamu v tabulkce users
+        const userData = await axios.post(changePath("/users/register"), newUser);
+        const newUserData = userData.data;
+
+        // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
+        localStorage.setItem("user", JSON.stringify(newUserData));
+
+        // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
+        setUser(newUserData);
+
+        // presmerovani na stranku home
+        history.push("/");
     }
 
     return (

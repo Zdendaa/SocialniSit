@@ -11,7 +11,7 @@ const Home = () => {
     
     useEffect(() => {
         const downloadUrl = async () => {
-            const url = user.idOrUrlOfProfilePicture ? ( validator.isURL(user.idOrUrlOfProfilePicture) ? user.idOrUrlOfProfilePicture : await downloadUrlImg(user.idOrUrlOfProfilePicture)) : null;
+            const url = user.idOrUrlOfProfilePicture ? ( validator.isURL(user.idOrUrlOfProfilePicture) ? user.idOrUrlOfProfilePicture : await downloadUrlImg("users/" + user.username + "/" + user.idOrUrlOfProfilePicture)) : null;
             setUrl(url);
         }
         downloadUrl();

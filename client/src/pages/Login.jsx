@@ -32,13 +32,13 @@ const Login = () => {
     // zkontrolovani dat ve formulari a ulozeni chybove hlasky
     const checkInput = async (what, value) => {
         // what 1 email   2 password   
-        what === 1 && (!value == "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"))  ;
-        what === 2 && (!value == "" ? setErrPassword(null) : setErrPassword("heslo je povinné"))
+        what === 1 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
+        what === 2 && (value !== "" ? setErrPassword(null) : setErrPassword("heslo je povinné"));
     }
 
     const logIn = async () => {
         // zjisteni jestli data ve formulari jsou sparvna 
-        const isItRight = ((!errEmail && !errPassword) && (errEmail != "" && errPassword != "")) ? true : false;
+        const isItRight = ((!errEmail && !errPassword) && (errEmail !== "" && errPassword !== "")) ? true : false;
 
         // jeslit jsou data spravna pokracujeme v prihlaseni
         if(isItRight) {
@@ -71,8 +71,8 @@ const Login = () => {
             
         } else {
             // jeslit data nejsou spravna zkontrolujeme chyby
-            errEmail == "" && checkInput(1, "");
-            errPassword == "" && checkInput(2, "");
+            errEmail === "" && checkInput(1, "");
+            errPassword === "" && checkInput(2, "");
         }
     }
     return (
