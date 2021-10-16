@@ -82,11 +82,14 @@ const Login = () => {
                 <div className="loginForm">
                     
                     <h2 style={{color: backgroundColor1}}>Přihlásit se</h2>
+
                     <input className="inputRegister" onChange={(e) => { checkInput(1, e.target.value)}} ref={email} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" placeholder="email"/>
                     {(errEmail !== "" && errEmail) && <span className="errorMessage">{errEmail}</span>}
                     <input className="inputRegister" onChange={(e) => { checkInput(2, e.target.value)}} ref={password} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="heslo"/>
                     {(errPassword  !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
                     <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={logIn}>{!ifWaiting ? "Přihlásit" : <ClipLoader color={backgroundColor2} size={10} />}</button> <br/>
+                    <span>nebo</span> 
+
                     <ButtonGoogleLogIn />
                     <Link to="/register" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}>{!ifWaiting ? (<><span>Registrovat</span><AiOutlineArrowRight className="ArrowImg"/></>) : <ClipLoader color={backgroundColor2} size={10} />}</Link>
                 </div>
