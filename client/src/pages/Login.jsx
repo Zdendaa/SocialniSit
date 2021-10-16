@@ -18,6 +18,7 @@ const Login = () => {
     // promenne useState pro chybove hlasky
     const [errEmail, setErrEmail] = useState("");
     const [errPassword, setErrPassword] = useState("");
+    const [wrongPasswordOrEmail, setWrongPasswordOrEmail] = useState(false);
 
     // promenne useRef
     const email = useRef(null);
@@ -65,6 +66,7 @@ const Login = () => {
             } catch (err) {
                 // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
                 setIfWaiting(false);
+                setWrongPasswordOrEmail(true);
             }
             
         } else {
@@ -87,6 +89,7 @@ const Login = () => {
                     {(errEmail !== "" && errEmail) && <span className="errorMessage">{errEmail}</span>}
                     <input className="inputRegister" onChange={(e) => { checkInput(2, e.target.value)}} ref={password} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="heslo"/>
                     {(errPassword  !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
+                    {wrongPasswordOrEmail && <span className="errorMessage">špatné heslo nebo email</span>}
                     <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={logIn}>{!ifWaiting ? "Přihlásit" : <ClipLoader color={backgroundColor2} size={10} />}</button> <br/>
                     <span>nebo</span> 
 

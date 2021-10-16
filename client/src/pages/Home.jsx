@@ -28,7 +28,7 @@ const Home = () => {
              } }>log out</button>
              <div>
                 <p>{user.username}</p>
-                <img style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}} src={url ? url : "img/anonymous.png"} alt="" />
+                <img style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}} src={user.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
              </div>
         </div>
         
