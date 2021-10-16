@@ -43,7 +43,7 @@ const user = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    idGoogleAccount: {
+    isGoogleAccount: {
         type: Boolean,
         default: false
     }

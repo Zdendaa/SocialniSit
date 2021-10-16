@@ -7,10 +7,26 @@ import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { Link } from 'react-router-dom'
 import changePath from '../changePath';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import validator from 'validator';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
     const {setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+
+    // promenna useState jesli se nacita stranka
+    const [ifWaiting, setIfWaiting] = useState(false);
+
+
+    // promenne useState pro chybove hlasky
+    const [errName, setErrName] = useState("");
+    const [errPassword, setErrPassword] = useState("");
+    const [errPasswordConfirm, setErrPasswordConfirm] = useState("");
+    const [errEmail, setErrEmail] = useState("");
+
+    // promenne useState pro porovnani s potvrzenym heslem
+    const [passwordValue, setpasswordValue] = useState("");
+    const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
 
     // useRef promenne
     const name = useRef(null);
@@ -26,40 +42,76 @@ const Register = () => {
 
     // funkce
 
-    // vytvoreni uzivatele
-    const createUser = async () => {
-
-        // vytvoreni zaznamu v tabulkce images
-        const img = await axios.post(changePath("/images/createNew"), {name: image.name});
-        
-        // ulozeni img do storage
-        const newImgName = img.data._id;
-        await uploadImg(image, newImgName);
-
-        const newUser = {
-            username: name.current.value,
-            email: email.current.value,
-            password: password.current.value,
-            idOrUrlOfProfilePicture: img.data._id, // id obrazku ktery jsme uz ulozili
-            idGoogleAccount: false,
-        }
-
-        // vytvoreni zaznamu v tabulkce users
-        const userData = await axios.post(changePath("/users/register"), newUser);
-        const newUserData = userData.data;
-        
-        // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
-        localStorage.setItem("user", JSON.stringify(newUserData));
-
-        // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
-        setUser(newUserData);
-
-        // presmerovani na stranku home
-        history.push("/");
-        
+    // zkontrolovani dat ve formulari a ulozeni chybove hlasky
+    const checkInput = async (what, value) => {
+        // what 1 name   2 password    3 passwordConfirm    4 email
+        what === 1 && (!value == "" ? setErrName(null) : setErrName("Jméno je povinné"));
+        what === 2 && (!value == "" ? (value != passwordConfirmValue ? setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo") : setBothPasswordRight()) : setErrPassword("Heslo je povinné"));
+        what === 3 && (!value == "" ? (value == passwordValue ? setErrPasswordConfirm(null): setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
+        what === 4 && (!value == "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
     }
 
-    
+    const setBothPasswordRight = () => {
+        setErrPassword(null); 
+        setErrPasswordConfirm(null);
+    }
+
+    // vytvoreni uzivatele
+    const createUser = async () => {
+        // zjisteni jestli data ve formulari jsou sparvna 
+        const isItRight = ((!errEmail && !errPassword && !errPasswordConfirm && !errName) && (errEmail != "" && errPassword != "" && !errPasswordConfirm != "" && !errName != "")) ? true : false;
+
+        // jeslit jsou data spravna pokracujeme v prihlaseni
+        if(isItRight) {
+            try {
+                // nacitani nastavime na true
+                setIfWaiting(true);
+
+                
+                // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
+                const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
+                
+                // jestli existuje img ulozi se img do storage
+                if(img) {
+                    const newImgName = img.data._id;
+                    await uploadImg(image, newImgName);
+                }
+                
+
+                const newUser = {
+                    username: name.current.value,
+                    email: email.current.value,
+                    password: password.current.value,
+                    idOrUrlOfProfilePicture: img ? img.data._id : null, // id obrazku ktery jsme uz ulozili
+                    isGoogleAccount: false,
+                }
+
+                // vytvoreni zaznamu v tabulkce users
+                const userData = await axios.post(changePath("/users/register"), newUser);
+                const newUserData = userData.data;
+
+                // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
+                localStorage.setItem("user", JSON.stringify(newUserData));
+
+                // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
+                setUser(newUserData);
+
+                // presmerovani na stranku home
+                history.push("/");
+                
+            } catch (err) {
+                console.log("chyba");
+                // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
+                setIfWaiting(false);
+            }
+        } else {
+            // jeslit uzivatel nezadal zadna data vyhodime chybouve hlasky
+            errName == "" && checkInput(1, "");
+            errPassword == "" && checkInput(2, "");
+            errPasswordConfirm == "" && checkInput(3, "");
+            errEmail == "" && checkInput(4, "");
+        }
+    }
 
     return (
         <div className="Register">
@@ -68,18 +120,22 @@ const Register = () => {
                 <div className="rotateDiv2" style={{backgroundColor: backgroundColor1}}></div>
                 <div className="registerForm">
                     <h2 style={{color: backgroundColor1}}>Registrace</h2>
-                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="name" ref={name} placeholder="jméno" required/>
-                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" ref={email} placeholder="email" required/>
-                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" ref={password} placeholder="heslo" required/>
-                    <input className="inputRegister" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
+                    <input className="inputRegister" onChange={(e) => checkInput(1, e.target.value)} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="name" ref={name} placeholder="jméno" required/>
+                    {(errName !== "" && errName) && <span className="errorMessage">{errName}</span>}
+                    <input className="inputRegister" onChange={(e) => checkInput(4, e.target.value)} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" ref={email} placeholder="email" required/>
+                    {(errEmail !== "" && errEmail) && <span className="errorMessage">{errEmail}</span>}
+                    <input className="inputRegister" onChange={(e) => {checkInput(2, e.target.value); setpasswordValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" ref={password} placeholder="heslo" required/>
+                    {(errPassword !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
+                    <input className="inputRegister" onChange={(e) => {checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
+                    {(errPasswordConfirm !== "" && errPasswordConfirm) && <span className="errorMessage">{errPasswordConfirm}</span>}
                     <label for="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>
                     <input id="fileUpload" type="file" onChange={(e) => setImage(e.target.files[0])} required/>
-                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}><span>Registrovat</span></button>    
+                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}>{!ifWaiting ? <span>Registrovat</span> : <ClipLoader color={backgroundColor2} size={10} />}</button>    
                     <span>nebo</span>        
                         <ButtonGoogleLogIn />
-                        <Link to="/login" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg"/></Link>
+                        <Link to="/login" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}>{!ifWaiting ? <><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg"/></> : <ClipLoader color={backgroundColor2} size={10} />}</Link>
                 </div>
             </div>
         </div>

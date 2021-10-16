@@ -22,7 +22,7 @@ const ButtonGoogleLogIn = () => {
                     const userData = {
                         email: data.user.email,
                         password: null,
-                        idGoogleAccount: data.user.idGoogleAccount
+                        isGoogleAccount: true
                     }
                     const newUser = await axios.post(changePath("/users/login"), userData);
                     saveUser(newUser);
@@ -34,7 +34,7 @@ const ButtonGoogleLogIn = () => {
                         email: data.user.email,
                         password: null,
                         idOrUrlOfProfilePicture: data.user.photoURL,
-                        idGoogleAccount: true
+                        isGoogleAccount: true
                     }
         
                     // vytvoreni zaznamu v tabulkce users

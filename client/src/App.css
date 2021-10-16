@@ -22,6 +22,11 @@ span {
   min-height: 100%;
 }
 
+.errorMessage {
+  margin-bottom: 15px;
+  color: red;
+}
+
 .registerContainer,
 .loginContainer {
   position: relative;
