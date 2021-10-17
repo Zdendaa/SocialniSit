@@ -5,6 +5,7 @@ const dotenv = require('dotenv') // diky dotenv muzu nacitat promenne v souboru 
 // volani routu
 const user = require('./routes/user');
 const image = require('./routes/image');
+const post = require('./routes/post');
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 // nastaveni url adresy rout, abychom k nim mohli pristupovat
 app.use("/api/users", user);
 app.use("/api/images", image);
+app.use("/api/posts", post);
 
 /*
 app.get("/", (req, res) => {

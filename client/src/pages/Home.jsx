@@ -15,7 +15,7 @@ const Home = () => {
             setUrl(url);
         }
         downloadUrl();
-    }, [user.idOrUrlOfProfilePicture])
+    }, [user.idOrUrlOfProfilePicture, user.username])
 
     return (
         <div>
