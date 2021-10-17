@@ -25,6 +25,32 @@ span {
   min-height: 100%;
 }
 
+.imgShowContainer {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.imgShow {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+}
+
+.removeImgShow {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
 .errorMessage {
   margin-bottom: 15px;
   color: red;
@@ -91,6 +117,7 @@ span {
 
 #inputfileRegister {
   text-align: center;
+  cursor: pointer;
 }
 
 .buttonRegister {
@@ -142,7 +169,6 @@ span {
     min-height: 100%;
     display: flex;
     justify-content: center;
-    
   }
   .registerContainer,
   .loginContainer {

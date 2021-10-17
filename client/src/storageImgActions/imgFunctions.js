@@ -4,9 +4,14 @@ import {storage} from "../firebaseStorage/storage";
 export const uploadImg = async (image, name) => {
     if(image) {
       // odeslani img do storage
-      storage.ref(name).put(image).then(() => {
-        console.log("soubor odeslan a ulozen v ulozisti");
-      });
+      try {
+        await storage.ref(name).put(image).then(() => {
+           console.log("soubor ulozen v ulozisti");
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      
     }
 }
 

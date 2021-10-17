@@ -9,14 +9,15 @@ import changePath from '../changePath';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
+import { TiDelete } from 'react-icons/ti'
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
     const {setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
 
+    // useState promenne
     // promenna useState jesli se nacita stranka
     const [ifWaiting, setIfWaiting] = useState(false);
-
 
     // promenne useState pro chybove hlasky
     const [errName, setErrName] = useState("");
@@ -28,13 +29,13 @@ const Register = () => {
     const [passwordValue, setpasswordValue] = useState("");
     const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
 
+    // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
+    const [image, setImage] = useState(null);
+
     // useRef promenne
     const name = useRef(null);
     const password = useRef(null);
     const email = useRef(null);
-
-    // useState promenne
-    const [image, setImage] = useState(null);
 
     // useHistory ( pouziva se k presmerovani stranky)
     const history = useHistory();
@@ -73,7 +74,9 @@ const Register = () => {
                 // jestli existuje img ulozi se img do storage
                 if(img) {
                     const newImgName = "users/" + name.current.value + "/" + img.data._id;
-                    await uploadImg(image, newImgName).then(await setAndSaveUser(img));
+                    await uploadImg(image, newImgName).then(async() => {
+                       await setAndSaveUser(img);
+                    });
                 } else {
                     await setAndSaveUser(img);
                 }
@@ -132,7 +135,14 @@ const Register = () => {
                     <label for="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>
-                    <input id="fileUpload" type="file" onChange={(e) => setImage(e.target.files[0])} required/>
+                    <input id="fileUpload" key={image || ''} type="file" onChange={(e) => setImage(e.target.files[0])} required/>
+                    {image && 
+                        <div className="imgShowContainer">
+                            <img src={URL.createObjectURL(image)} alt="img" className="imgShow"/>
+                            <TiDelete className="removeImgShow" onClick={(e) => {setImage(null)}} />
+                        </div>
+                    }
+                    
                     <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}>{!ifWaiting ? <span>Registrovat</span> : <ClipLoader color={backgroundColor2} size={10} />}</button>    
                     <span>nebo</span>        
                         <ButtonGoogleLogIn />
