@@ -21,4 +21,17 @@ router.post("/addPost", async (req, res) => {
     }
 })
 
+/* DOSTANI VSECH POSTU*/
+router.get("/getAllPosts", async (req, res) => {
+    try {
+        
+        const allPosts = await Post.find();
+
+        // jesli se nenaskytla zadna chyba posleme data noveho postu
+        res.status(200).json(allPosts); 
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router;

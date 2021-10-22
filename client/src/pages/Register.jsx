@@ -67,7 +67,7 @@ const Register = () => {
             try {
                 // nacitani nastavime na true
                 setIfWaiting(true);
-                
+
                 // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
                 const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
                 

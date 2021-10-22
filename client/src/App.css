@@ -5,11 +5,48 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+/* swiper */
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+/*App*/
 span {
   font-size: 12px;
+  font-family: "Roboto", sans-serif;
 }
-.f500 {
+.weight500 {
   font-weight: 500;
+}
+
+.weight700 {
+  font-weight: 700;
+}
+
+.weight800 {
+  font-weight: 800;
 }
 
 .App {
@@ -155,6 +192,104 @@ span {
   text-decoration: none;
   font-size: 15px;
   margin-bottom: 35px;
+}
+
+/* HOME*/
+
+.homeContainer {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.homeContainerPosts {
+  position: absolute;
+  margin-top: 200px;
+  width: 95%;
+  left: 2.5%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* TopBarHome */
+
+.topBar {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px 0px 15px;
+}
+
+.topBarProfile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.topBarProfile img {
+  margin-left: 7px;
+}
+.profilePicture {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.searchIcon {
+  font-size: 25px;
+}
+
+/* SwiperOnlineFriends*/
+.swiperOnline {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  padding: 10px 0px 10px 0px;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+
+/* AddNewPost*/
+.addNewPost {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+
+.topAddNewPost,
+.middleAddNewPost,
+.bottomAddNewPost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.inputImgAddPost {
+  border: none;
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+}
+
+.inputImgAddPost:focus {
+  outline: none;
 }
 
 @media only screen and (min-width: 450px) {
