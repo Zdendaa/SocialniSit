@@ -132,7 +132,7 @@ const Register = () => {
                     {(errPassword !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
                     <input className="inputRegister" onChange={(e) => {checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
                     {(errPasswordConfirm !== "" && errPasswordConfirm) && <span className="errorMessage">{errPasswordConfirm}</span>}
-                    <label for="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
+                    <label htmlFor="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>
                     <input id="fileUpload" key={image || ''} type="file" onChange={(e) => setImage(e.target.files[0])} required/>

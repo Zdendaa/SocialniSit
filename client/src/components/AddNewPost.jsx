@@ -21,7 +21,7 @@ const AddNewPost = () => {
             setUrl(await getUrlImgOrNull(user));
         }
         downloadUrl();
-    }, [user.idOrUrlOfProfilePicture, user.username]);
+    }, [user.idOrUrlOfProfilePicture, user.username, user]);
 
     // funkce 
 
@@ -54,7 +54,7 @@ const AddNewPost = () => {
             </div>
             <br />
             <div className="middleAddNewPost">
-                <label for="fileUpload" id="inputfileRegister" className="inputImgAddPost" style={{backgroundColor: backgroundColor1, color: "white" }} >
+                <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost" style={{backgroundColor: backgroundColor1, color: "white" }} >
                     <span>obrázek</span>
                 </label>
                 <input id="fileUpload" key={image || ''} type="file" onChange={(e) => setImage(e.target.files[0])} required/>

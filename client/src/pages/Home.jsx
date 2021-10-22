@@ -22,8 +22,6 @@ const Home = () => {
        getPosts();
     }, [])
     
-    const now = new Date();
-    console.log(now.getTime());
     
     return (
         <div className="homeContainer">           
@@ -38,10 +36,10 @@ const Home = () => {
              <div className="homeContainerPosts">
                 <AddNewPost />    
                 {
-                    posts?.map(post => (
-                        <>
+                    posts?.map((post, index) => (
+                        <div key={index}>
                             {post.desc}
-                        </>  
+                        </div>  
                     ))
                 }
              </div>
