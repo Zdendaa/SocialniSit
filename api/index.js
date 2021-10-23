@@ -6,6 +6,7 @@ const dotenv = require('dotenv') // diky dotenv muzu nacitat promenne v souboru 
 const user = require('./routes/user');
 const image = require('./routes/image');
 const post = require('./routes/post');
+const comment = require('./routes/comment');
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/users", user);
 app.use("/api/images", image);
 app.use("/api/posts", post);
+app.use("/api/comments", comment);
 
 /*
 app.get("/", (req, res) => {

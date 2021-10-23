@@ -5,7 +5,7 @@ const comment = new mongoose.Schema({
         type: String,
         required: true,
     },
-    nameOfPicture: {
+    urlOfImg: {
         type: String,
     },
     likes: {
@@ -15,7 +15,13 @@ const comment = new mongoose.Schema({
     idOfMainComment: {
         type: String,
         default: null
+    },
+    idOfPost: {
+        type: String,
+        default: null,
+        required: true
     }
+
 },
 { timestamps: true } // kazdy uzivatel bude mit datum vytvoreni uctu
 );

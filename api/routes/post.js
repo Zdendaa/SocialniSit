@@ -34,4 +34,24 @@ router.get("/getAllPosts", async (req, res) => {
     }
 })
 
+/* PRIDANI NEBO ODEBRANI LIKEU*/
+router.put("/addOrRemoveLike/:id", async (req, res) => {
+    try {
+        // najdeme post u ktereho chceme znenit likey
+        const post = await Post.findById(req.params.id);
+        // pokud jsme tento post jeste nelikely tak pridame like
+        if(!post.idOfLikes.includes(req.body.userId)) {
+            await post.updateOne({ $push: { idOfLikes: req.body.userId }});
+            res.status(200).send("k prispevku byl pridan like");
+        } else {
+        // pokud jsme tento post uz likely tak like odebereme
+            await post.updateOne({ $pull: { idOfLikes: req.body.userId }});
+            res.status(200).send("like byl odebran z prispevku");
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+
 module.exports = router;

@@ -27,7 +27,6 @@ const Home = () => {
 
            const users = await axios.get("/users/getAllUsers");
             setUsers(users.data);
-           console.log(users.data);
           
        }
        getPosts();

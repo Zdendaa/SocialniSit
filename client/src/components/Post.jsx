@@ -5,13 +5,22 @@ import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { GlobalContext } from '../context/GlobalState'
+import Comments from './Comments';
 
 const Post = ({post}) => {
     // registrovani cestiny do formatjs
     register('myLanguage', czDataFormat);
 
+    // zavolani prihlaseneho usera
     const {user} = useContext(GlobalContext);
 
+    // Promenne UseState
+
+    // promenna pro pocet liku
+    const [lenghtOfLikes, setLenghtOfLikes] = useState(post.idOfLikes.length);
+
+    // promenna zdali jsem prispevek likenul
+    const [ifIsLiked, setIfIsLiked] = useState(post.idOfLikes.includes(user._id));
 
     // promenna pro ulozeni vlastnika prispevku
     const [userOfPost, setUserOfPost] = useState(null);
@@ -21,6 +30,8 @@ const Post = ({post}) => {
 
     // promenna pro zobrazeni fotky v prispevku
     const [urlImages, setUrlImages] = useState(null);
+
+   
 
     useEffect(() => {
         // funkce pro ziskani dat vlastnika prispevku
@@ -37,6 +48,12 @@ const Post = ({post}) => {
         getUser();
     }, [post.idOfImg, post.urlOfImg, post.userId])
 
+    // funkce 
+    const addOrRemoveLike = async () => {
+        ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
+        setIfIsLiked(!ifIsLiked);
+        await axios.put(`/posts/addOrRemoveLike/${post._id}`, { userId: user._id })
+    }
     return (
         <div className="post">
             <div className="postContainer">
@@ -52,9 +69,11 @@ const Post = ({post}) => {
                     {urlImages && <img className="postImg" src={urlImages} alt="" />}
                 </div>
                 <div className="postBottom">
-                    {post.idOfLikes.includes(user._id) ? <FcLike style={{fontSize: "35px"}}/> : <FcLikePlaceholder style={{fontSize: "35px"}}/> }
+                    {ifIsLiked ? <FcLike style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
                     
-                    <span>{post.idOfLikes.length}</span><br />
+                    <span>{lenghtOfLikes}</span><br />
+
+                    <Comments post={post}/>
                     
                 </div>
             </div>
