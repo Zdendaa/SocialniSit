@@ -68,4 +68,19 @@ router.get("/getUser/:userId", async (req, res) => {
         res.status(500).json(err);
     }
 })
+
+/** DOSTAT DATA UZIVATELE POMOCI ID UZIVATELE*/
+router.get("/getAllUsers", async (req, res) => {
+    try {
+        // vyhledani vsech uzivatelu
+        const users = await User.find();
+        
+        // posleme data uzivatele ve tvaru json
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+
 module.exports = router;

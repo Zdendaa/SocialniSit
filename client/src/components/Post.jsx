@@ -1,15 +1,20 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
-import { GlobalContext } from '../context/GlobalState';
+import React, {useContext, useEffect, useState } from 'react'
 import { downloadUrlImg, getUrlImgOrNull } from '../storageImgActions/imgFunctions';
-import { format, render, cancel, register } from 'timeago.js';
-import czDataFormat from '../format.ljsCZ/CzFormat';
+import { format, register } from 'timeago.js';
+import czDataFormat from '../format.jsCZ/CzFormat';
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+import { GlobalContext } from '../context/GlobalState'
 
 const Post = ({post}) => {
+    // registrovani cestiny do formatjs
     register('myLanguage', czDataFormat);
 
+    const {user} = useContext(GlobalContext);
+
+
     // promenna pro ulozeni vlastnika prispevku
-    const [user, setUser] = useState(null);
+    const [userOfPost, setUserOfPost] = useState(null);
 
     // promenna pro zobrazeni profilove fotky uzivatele
     const [urlProfilePicture, setUrlProfilePicture] = useState(null);
@@ -21,7 +26,7 @@ const Post = ({post}) => {
         // funkce pro ziskani dat vlastnika prispevku
         const getUser = async () => {
             const userOfPost = await axios.get(`/users/getUser/${post.userId}`);
-            setUser(userOfPost.data)
+            setUserOfPost(userOfPost.data)
             await downloadUrl(userOfPost.data);
         }
         const downloadUrl = async (user) => {
@@ -36,14 +41,22 @@ const Post = ({post}) => {
         <div className="post">
             <div className="postContainer">
                 <div className="userContainerPost">
-                    <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "img/anonymous.png"} alt="" />
-                    <span>{user?.username}</span>
-                    <br />
-                    <span>{post.desc}</span>
-                    <br />
+                    <div className="userDivPost">
+                        <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "img/anonymous.png"} alt="" />
+                        <span>{userOfPost?.username}</span>
+                    </div>
                     <span>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
-                {urlImages && <img className="postImg" src={urlImages} alt="" />}
+                <div className="postContent">
+                    <span className="postDescContent">{post.desc}</span>
+                    {urlImages && <img className="postImg" src={urlImages} alt="" />}
+                </div>
+                <div className="postBottom">
+                    {post.idOfLikes.includes(user._id) ? <FcLike style={{fontSize: "35px"}}/> : <FcLikePlaceholder style={{fontSize: "35px"}}/> }
+                    
+                    <span>{post.idOfLikes.length}</span><br />
+                    
+                </div>
             </div>
         </div>
     )

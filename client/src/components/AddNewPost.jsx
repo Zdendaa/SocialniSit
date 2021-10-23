@@ -5,7 +5,6 @@ import { TiDelete } from 'react-icons/ti';
 import changePath from '../changePath';
 import axios from 'axios';
 import validator from 'validator';
-import { useHistory } from 'react-router';
 
 const AddNewPost = () => {
     const {user, backgroundColor1} = useContext(GlobalContext);
@@ -18,11 +17,11 @@ const AddNewPost = () => {
 
     // useState promenna pro ulozeni hodnoty co se vam honi hlavou
     const [desc, setDesc] = useState("");
+
+    const [errorMessages, setErrorMessages] = useState(null);
     
     // hodnota inputu pro url obrazku
     const [valueUrlInput, setValueUrlInput] = useState("");
-
-    const history = useHistory();
 
 
     useEffect(() => {
@@ -36,9 +35,22 @@ const AddNewPost = () => {
 
     // funkce 
 
+    const validation = (val) => {
+        setDesc(val);
+        if (val) {
+            setErrorMessages(null);
+            return false;
+        } else {
+            setErrorMessages("toto pole je povinné");
+            return true;
+        }
+    }
+
     const createPost = async () => {
         // nacitani nastavime na true
-
+        if (validation(desc)) {
+            return;
+        }
         // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
         const img = (image && (typeof image === "object")) ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
 
@@ -84,12 +96,13 @@ const AddNewPost = () => {
             <div className="addNewPostContainer">
                 <div className="topAddNewPost">
                     <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
-                    <input type="text" value={desc} onChange={(e) => setDesc(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
+                    <input type="text" value={desc} onChange={(e) => validation(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
                 </div>
+                {errorMessages && <div className="bottomAddNewPost"><span className="errorMessage">{errorMessages}</span></div> }
                 {image && 
                 
                         <div className="imgShowContainerAddPost">
-                            <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') == 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image) } alt="obrázek nelze najít" className="imgShowAddPost"/>
+                            <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') === 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image) } alt="obrázek nelze najít" className="imgShowAddPost"/>
                             <TiDelete className="removeImgShow" onClick={(e) => {setImage(null)}} />
                         </div>
                         

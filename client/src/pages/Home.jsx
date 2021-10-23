@@ -14,11 +14,21 @@ const Home = () => {
     const {deleteUser} = useContext(GlobalContext);
     const history = useHistory();
     const [posts, setPosts] = useState(null);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
        const getPosts = async () => {
+        
            const posts = await axios.get("/posts/getAllPosts")
-           setPosts(posts.data);
+
+           // serazeni od nejnovejsich postu po ty uplne posledni
+           const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
+           setPosts(sortPosts);
+
+           const users = await axios.get("/users/getAllUsers");
+            setUsers(users.data);
+           console.log(users.data);
+          
        }
        getPosts();
     }, [])
@@ -33,7 +43,7 @@ const Home = () => {
                 history.push("/register");
                 
              } }>log out</button>
-             <SwiperOnlineFriends />
+             <SwiperOnlineFriends users={users}/>
              <div className="homeContainerPosts">
                 <AddNewPost />    
                 {

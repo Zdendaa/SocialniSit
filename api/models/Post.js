@@ -18,6 +18,10 @@ const post = new mongoose.Schema({
         type: String,
         default: null
     },
+    idOfLikes: {
+        type: Array,
+        default: []
+    },
     idOfComment: {
         type: Array,
         default: null
