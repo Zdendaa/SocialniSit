@@ -107,7 +107,7 @@ const AddNewPost = () => {
                         </div>
                         
                 }
-                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "92%"}}/>
+                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "100%"}}/>
                 <div className="middleAddNewPost">
                     <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>obrázek</span>
@@ -117,7 +117,7 @@ const AddNewPost = () => {
                     <span>nebo</span>
                     <input type="text" value={valueUrlInput} onChange={(e) => { setImage(e.target.value); setValueUrlInput(e.target.value) }} className="inputAddNewPost inputUlrImgAddNewPost"  style={{backgroundColor: "black", color: "white" }} placeholder="url obrázku..."/>
                 </div>
-                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "65%"}}/>
+                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "75%"}}/>
                 <div className="bottomAddNewPost">
                     <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost" onClick={createPost}><span>přídat příspěvek</span></button>
                 </div>

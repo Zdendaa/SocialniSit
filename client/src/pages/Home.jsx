@@ -42,14 +42,19 @@ const Home = () => {
                 history.push("/register");
                 
              } }>log out</button>
-             <SwiperOnlineFriends users={users}/>
-             <div className="homeContainerPosts">
-                <AddNewPost />    
-                {
-                    posts?.map((post, index) => (
-                        <Post post={post} key={index}/> 
-                    ))
-                }
+
+             <SwiperOnlineFriends users={users}  type={1}/>
+
+             <div className="homeContainerPostsMain">
+                <div className="homeContainerPosts">
+                    <AddNewPost />    
+                    {
+                        posts?.map((post, index) => (
+                            <Post post={post} key={index}/> 
+                        ))
+                    }
+                </div>
+                <SwiperOnlineFriends users={users} className="pc" type={2}/>
              </div>
         </div>
     )

@@ -18,7 +18,7 @@ const TopBarHome = () => {
     }, [user.idOrUrlOfProfilePicture, user.username, user]);
 
     return (
-        <div className="topBar" style={{backgroundColor: backgroundColor1, color: "white"}}>
+        <div className="topBar" style={{backgroundColor: "white", color: backgroundColor1, borderBottom: "2px solid" + backgroundColor1}}>
             <p className="weight800">Nazev</p>
             <BiSearchAlt className="searchIcon"/>
             <div className="topBarProfile">
