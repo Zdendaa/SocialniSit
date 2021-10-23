@@ -5,6 +5,7 @@ import TopBarHome from '../components/TopBarHome';
 import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
 import AddNewPost from '../components/AddNewPost';
 import axios from 'axios';
+import Post from '../components/Post';
 
 
 
@@ -37,9 +38,7 @@ const Home = () => {
                 <AddNewPost />    
                 {
                     posts?.map((post, index) => (
-                        <div key={index}>
-                            {post.desc}
-                        </div>  
+                        <Post post={post} key={index}/> 
                     ))
                 }
              </div>

@@ -135,7 +135,7 @@ const Register = () => {
                     <label htmlFor="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>
-                    <input id="fileUpload" key={image || ''} type="file" onChange={(e) => setImage(e.target.files[0])} required/>
+                    <input id="fileUpload" key={image || ''} type="file" accept="image/*"  onChange={(e) => setImage(e.target.files[0])} required/>
                     {image && 
                         <div className="imgShowContainer">
                             <img src={URL.createObjectURL(image)} alt="img" className="imgShow"/>

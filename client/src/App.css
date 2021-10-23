@@ -265,6 +265,7 @@ span {
   position: relative;
   width: 100%;
   border-radius: 8px;
+  margin-bottom: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,23 +274,105 @@ span {
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
 }
 
+.addNewPostContainer {
+  width: calc(100% - 15px);
+  padding: 15px;
+  position: relative;
+}
+
 .topAddNewPost,
 .middleAddNewPost,
 .bottomAddNewPost {
   display: flex;
   align-items: center;
+  margin: 12px 0px 12px 0px;
+}
+
+.topAddNewPost {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  margin-top: 0px;
+}
+.topAddNewPost * {
+  margin-right: 15px;
+}
+
+.middleAddNewPost {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.bottomAddNewPost {
+  margin-bottom: 0px;
   justify-content: center;
-  margin-bottom: 15px;
+}
+
+.lineNewPost {
+  height: 2px;
+  border: none;
 }
 
 .inputImgAddPost {
   border: none;
-  padding: 8px 15px 8px 15px;
-  border-radius: 5px;
+  padding: 12px 20px 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .inputImgAddPost:focus {
   outline: none;
+}
+
+.imgShowContainerAddPost {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.imgShowAddPost {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.inputAddNewPost {
+  border: none;
+}
+
+.inputAddNewPost:focus {
+  outline: none;
+}
+
+.inputUlrImgAddNewPost {
+  padding: 12px 5px 12px 5px;
+  border-radius: 8px;
+}
+
+.inputUlrImgAddNewPost::placeholder {
+  color: white;
+}
+
+/* Post*/
+.post {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+
+.postContainer {
+  width: calc(100% - 30px);
+  padding: 15px;
+  position: relative;
+}
+
+.postImg {
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 @media only screen and (min-width: 450px) {

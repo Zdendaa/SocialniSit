@@ -54,4 +54,18 @@ router.post("/login", async (req, res) => {
     }
 })
 
+/** DOSTAT DATA UZIVATELE POMOCI ID UZIVATELE*/
+router.get("/getUser/:userId", async (req, res) => {
+    try {
+        // vyhledani uzivatele pomoci emailu ktery jsme zadali 
+        const user = await User.findById(req.params.userId);
+        // jeslize se uzivatele nepovedlo najit posleme chybu
+        !user && res.status(404).send("user not found");
+        
+        // posleme data uzivatele ve tvaru json
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 module.exports = router;
