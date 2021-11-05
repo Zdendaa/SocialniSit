@@ -82,5 +82,21 @@ router.get("/getAllUsers", async (req, res) => {
     }
 })
 
+/** ZJISTENI ZDA LI UZIVATEL JIZ NEEXISTUJE SE STEJNYM JMENEM A PREZDIVKOU */
+router.post("/ifUserExist", async (req, res) => {
+    try {
+        // kontrolovani zda li uzivatel nahodou jiz existuje se stejnym jmenem nebo emailem
+        const userUsername = await User.find({username: req.body.username});
+        const userEmail = await User.find({email: req.body.email});
+        if (userUsername.length === 0 && userEmail.length === 0) {    
+            res.status(200).json(false); // vse v poradku uzivatel muze pokracovat v registraci
+        } else {
+            res.status(200).json(true); // error uzivatel jiz existuje se stejmym emailem nebo jmenem
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 module.exports = router;

@@ -17,9 +17,11 @@ router.post("/addComment", async (req, res) => {
         const comment = new Comment({
             value: req.body.value,
             urlOfImg: req.body.urlOfImg,
-            idOfMainComment: req.body.idOfMainComment,
-            idOfPost: req.body.idOfPost
+            idOfparentComment: req.body.idOfparentComment,
+            idOfPost: req.body.idOfPost,
+            idOfUser: req.body.idOfUser
         })
+        console.log(comment);
         const newComment = await comment.save();
         res.status(200).send(newComment);
     } catch (err) {

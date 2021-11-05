@@ -12,7 +12,11 @@ const comment = new mongoose.Schema({
         type: Array,
         default: []
     },
-    idOfMainComment: {
+    idOfUser: {
+        type: String,
+        required: true,
+    },
+    idOfparentComment: {
         type: String,
         default: null
     },
