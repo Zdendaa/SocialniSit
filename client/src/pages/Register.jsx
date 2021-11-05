@@ -24,6 +24,7 @@ const Register = () => {
     const [errPassword, setErrPassword] = useState("");
     const [errPasswordConfirm, setErrPasswordConfirm] = useState("");
     const [errEmail, setErrEmail] = useState("");
+    const [userExist, setUserExist] = useState("");
 
     // promenne useState pro porovnani s potvrzenym heslem
     const [passwordValue, setpasswordValue] = useState("");
@@ -49,7 +50,7 @@ const Register = () => {
         what === 1 && (value !== "" ? setErrName(null) : setErrName("Jméno je povinné"));
         what === 2 && (value !== "" ? (value === passwordConfirmValue ? setRight(true, true) : setRight(true, false)) : setErrPassword("Heslo je povinné"));
         what === 3 && (value !== "" ? (value === passwordValue ? setErrPasswordConfirm(null): setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
-        what === 4 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
+        what === 4 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));       
     }
 
     const setRight = (password, passwordConfirm) => {
@@ -64,26 +65,35 @@ const Register = () => {
 
         // jeslit jsou data spravna pokracujeme v prihlaseni
         if(isItRight) {
-            try {
-                // nacitani nastavime na true
-                setIfWaiting(true);
+            // nacitani nastavime na true
+            setIfWaiting(true);
 
-                // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
-                const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
-                
-                // jestli existuje img ulozi se img do storage
-                if(img) {
-                    const newImgName = "users/" + name.current.value + "/" + img.data._id;
-                    await uploadImg(image, newImgName).then(async() => {
-                       await setAndSaveUser(img);
-                    });
-                } else {
-                    await setAndSaveUser(img);
-                }
-                                
-            } catch (err) {
-                // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
+            // zjisitme zda li uzivatel jiz neexistuje se stejnym jmenem nebo emailem
+            const ifUserExist = await axios.post(changePath("/users/ifUserExist"), {username: name.current.value, email: email.current.value})
+            
+            if (ifUserExist.data) {    
+                // uzivatel jiz existuje 
+                setUserExist("uživatel již existuje s tímto jménem nebo emailem");
                 setIfWaiting(false);
+            } else {
+                try {
+                    // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
+                    const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
+                    
+                    // jestli existuje img ulozi se img do storage
+                    if(img) {
+                        const newImgName = "users/" + name.current.value + "/" + img.data._id;
+                        await uploadImg(image, newImgName).then(async() => {
+                        await setAndSaveUser(img);
+                        });
+                    } else {
+                        await setAndSaveUser(img);
+                    }
+                                    
+                } catch (err) {
+                    // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
+                    setIfWaiting(false);
+                }
             }
         } else {
             // jeslit uzivatel nezadal zadna data vyhodime chybouve hlasky
@@ -92,6 +102,7 @@ const Register = () => {
             errPasswordConfirm === "" && checkInput(3, "");
             errEmail === "" && checkInput(4, "");
         }
+        
     }
 
     const setAndSaveUser = async (img) => {
@@ -132,6 +143,7 @@ const Register = () => {
                     {(errPassword !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
                     <input className="inputRegister" onChange={(e) => {checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
                     {(errPasswordConfirm !== "" && errPasswordConfirm) && <span className="errorMessage">{errPasswordConfirm}</span>}
+                    {(userExist !== "" && userExist) && <span className="errorMessage">{userExist}</span>}
                     <label htmlFor="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
                         <span>vybrat profilovou fotku</span>
                     </label>

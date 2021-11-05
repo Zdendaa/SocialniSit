@@ -411,6 +411,35 @@ span {
   margin-right: 10px;
 }
 
+/* Comment*/
+.userCommentContainer {
+  display: flex;
+  align-items: center;
+}
+.imgUserComment {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 5px;
+}
+.addComment {
+  display: flex;
+  align-items: center;
+}
+.addCommentInput,
+.addCommentButton {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+.addCommentInput:focus {
+  outline: none;
+}
+.addCommentButton {
+  color: white;
+}
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
   .mobile {

@@ -1,9 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import Comment from './Comment';
+import React, { useContext, useEffect, useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import changePath from '../changePath';
+import { GlobalContext } from '../context/GlobalState';
+import Comment from './Comment';
 
 const Comments = ({post}) => {
+    const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+
     // promenna pro vsechny komentare pro tenhle prispevek
     const [comments, setComments] = useState([]);
 
@@ -13,35 +17,73 @@ const Comments = ({post}) => {
     // promenna ve ktere je ulozen text inputu
     const [valueOfInput, setValueOfInput] = useState("");
 
+    // promenna ktera ma ulozene komentare s spravne vnoreneme komentarema v children
+    const [allComments, setAllComments] = useState([]);
+
     useEffect(() => {
+        // najde vsechny komentare vztazene k nasemu prispevku
+        const getAllComments = async () => {
+            const newComments = await axios.get(changePath(`/comments/getComments/${post._id}`));
+            setComments(newComments.data);
+        }
         getAllComments();
-    }, []);
+    }, [post._id]);
 
-    const getAllComments = async () => {
-        const comments = await axios.get(`/comments/getComments/${post._id}`);
-        setComments(comments.data);
-    }
+    useEffect(() => {
+      
+        const nestComments = (commentList) => {
+          commentList = commentList.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
+          const commentMap = {};
+  
+          // vsechny komenty se ulozi do commentMap kde jsou indexy jako id
+          commentList.forEach(comment => commentMap[comment._id] = comment);
+          // do komentaru vnorime deti komenatre (komentare ktere patri hlvanimu komentari)
+          commentList.forEach(comment => {
+            if(comment.idOfparentComment !== null) {
+              const parent = commentMap[comment.idOfparentComment];
+              (parent.children = parent.children || []).push(comment);
+            }
+          });
 
+          // filtrujeme seznam komentaru na hlavni komentare
+          return commentList.filter(comment => comment.idOfparentComment === null);
+        }
+        setAllComments(nestComments(comments));
+      }, [comments]);
+
+    
     // funkce
-    const addComment = async () => {
+    
+    // prida komentar
+    const addComment = async (valueOfInput, idOfparentComment, idOfUser) => {
         const newComment = {
             value: valueOfInput,
             idOfPost: post._id,
+            idOfparentComment: idOfparentComment,
+            idOfUser: idOfUser
         }
-        await axios.post("/comments/addComment", newComment);
-        await getAllComments();
+        await axios.post(changePath("/comments/addComment"), newComment);
     }
+
+    
 
     return (
         <div>
             <span onClick={() => setShow(!show)}>počet komentářů {comments.length} {show ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+
             {show && 
                 <div className="commentsContainer">
-                <input type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
-                <button onClick={addComment}>přidej komentář</button>
-                {comments.map((comment, index) => (
-                    <Comment key={index} comment={comment} />
-                ))}
+                    <div className="addComment">
+                      <input className="addCommentInput" style={{"background-color": backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
+                      <button className="addCommentButton" style={{"background-color": backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id)}>přidej komentář</button>
+                    </div>
+                   {   
+                        allComments.map(comment => (
+                          <>
+                           <Comment comment={comment} commentMain={comment} addComment={addComment} key={comment._id} />
+                           </>
+                        ))
+                        }
                 </div>
             }
           

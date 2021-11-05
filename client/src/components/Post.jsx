@@ -6,6 +6,7 @@ import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { GlobalContext } from '../context/GlobalState'
 import Comments from './Comments';
+import changePath from '../changePath';
 
 const Post = ({post}) => {
     // registrovani cestiny do formatjs
@@ -36,7 +37,7 @@ const Post = ({post}) => {
     useEffect(() => {
         // funkce pro ziskani dat vlastnika prispevku
         const getUser = async () => {
-            const userOfPost = await axios.get(`/users/getUser/${post.userId}`);
+            const userOfPost = await axios.get(changePath(`/users/getUser/${post.userId}`));
             setUserOfPost(userOfPost.data)
             await downloadUrl(userOfPost.data);
         }
@@ -49,11 +50,14 @@ const Post = ({post}) => {
     }, [post.idOfImg, post.urlOfImg, post.userId])
 
     // funkce 
+
+    // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
-        await axios.put(`/posts/addOrRemoveLike/${post._id}`, { userId: user._id })
+        await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id })
     }
+    
     return (
         <div className="post">
             <div className="postContainer">
@@ -73,7 +77,7 @@ const Post = ({post}) => {
                     
                     <span>{lenghtOfLikes}</span><br />
 
-                    <Comments post={post}/>
+                    <Comments post={post} key={post._id}/>
                     
                 </div>
             </div>

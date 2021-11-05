@@ -8,7 +8,7 @@ const czDataFormat = (number, index, totalSec) => {
       ['před jednou hodinou', 'in 1 hour'],
       ['před %s hodinama', 'in %s hours'],
       ['před jedním dnem', 'in 1 day'],
-      ['před %s dněmi', 'in %s days'],
+      ['před %s dny', 'in %s days'],
       ['před jedním týdnem', 'in 1 week'],
       ['před %s týdnama', 'in %s weeks'],
       ['před jendím měsícem', 'in 1 month'],

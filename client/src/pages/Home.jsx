@@ -26,7 +26,7 @@ const Home = () => {
            setPosts(sortPosts);
 
            const users = await axios.get("/users/getAllUsers");
-            setUsers(users.data);
+           setUsers(users.data);
           
        }
        getPosts();
