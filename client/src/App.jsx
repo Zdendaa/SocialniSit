@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import { GlobalContext } from './context/GlobalState';
 import { useContext } from 'react';
+import Profile from './pages/Profile';
 
 function App() {
   const {user} = useContext(GlobalContext);
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/login">
             { !user ? <Login /> : <Redirect to="/" /> }
+          </Route>
+          <Route path="/profile/:idOfUser">
+            { user ? <Profile /> : <Redirect to="/register" /> }
           </Route>
         </Switch>
       </Router>

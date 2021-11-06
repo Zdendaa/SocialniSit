@@ -5,9 +5,11 @@ import { TiDelete } from 'react-icons/ti';
 import changePath from '../changePath';
 import axios from 'axios';
 import validator from 'validator';
+import ClipLoader from "react-spinners/ClipLoader";
+import { Link } from "react-router-dom";
 
 const AddNewPost = () => {
-    const {user, backgroundColor1} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
 
     // promenna pro zobrazeni profilove fotky uzivatele
     const [url, setUrl] = useState(null);
@@ -22,6 +24,9 @@ const AddNewPost = () => {
     
     // hodnota inputu pro url obrazku
     const [valueUrlInput, setValueUrlInput] = useState("");
+
+    // loading
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
@@ -47,10 +52,13 @@ const AddNewPost = () => {
     }
 
     const createPost = async () => {
-        // nacitani nastavime na true
+        // zjistime jestli pole co se vam honi hlavou neni prazdne
         if (validation(desc)) {
             return;
         }
+        // nacitani nastavime na true
+        setLoading(true)
+
         // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
         const img = (image && (typeof image === "object")) ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
 
@@ -95,7 +103,9 @@ const AddNewPost = () => {
         <div className="addNewPost">
             <div className="addNewPostContainer">
                 <div className="topAddNewPost">
+                    <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: "center"}}>
                     <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
+                    </Link>
                     <input type="text" value={desc} onChange={(e) => validation(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
                 </div>
                 {errorMessages && <div className="bottomAddNewPost"><span className="errorMessage">{errorMessages}</span></div> }
@@ -119,7 +129,7 @@ const AddNewPost = () => {
                 </div>
                 <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "75%"}}/>
                 <div className="bottomAddNewPost">
-                    <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost" onClick={createPost}><span>přídat příspěvek</span></button>
+                    <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
                 </div>
             </div>
         </div>

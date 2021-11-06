@@ -8,7 +8,7 @@ const comment = new mongoose.Schema({
     urlOfImg: {
         type: String,
     },
-    likes: {
+    idOfLikes: {
         type: Array,
         default: []
     },

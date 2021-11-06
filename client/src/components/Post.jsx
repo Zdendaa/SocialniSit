@@ -7,6 +7,7 @@ import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { GlobalContext } from '../context/GlobalState'
 import Comments from './Comments';
 import changePath from '../changePath';
+import { Link } from "react-router-dom";
 
 const Post = ({post}) => {
     // registrovani cestiny do formatjs
@@ -62,10 +63,10 @@ const Post = ({post}) => {
         <div className="post">
             <div className="postContainer">
                 <div className="userContainerPost">
-                    <div className="userDivPost">
+                    <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
                         <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "img/anonymous.png"} alt="" />
                         <span>{userOfPost?.username}</span>
-                    </div>
+                    </Link>    
                     <span>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="postContent">

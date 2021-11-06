@@ -32,6 +32,7 @@ const Comments = ({post}) => {
     useEffect(() => {
       
         const nestComments = (commentList) => {
+          // serazeni komentaru od nejnovejsiho po nejstarsiho
           commentList = commentList.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
           const commentMap = {};
   
@@ -44,9 +45,9 @@ const Comments = ({post}) => {
               (parent.children = parent.children || []).push(comment);
             }
           });
-
           // filtrujeme seznam komentaru na hlavni komentare
           return commentList.filter(comment => comment.idOfparentComment === null);
+          
         }
         setAllComments(nestComments(comments));
       }, [comments]);
@@ -56,16 +57,25 @@ const Comments = ({post}) => {
     
     // prida komentar
     const addComment = async (valueOfInput, idOfparentComment, idOfUser) => {
-        const newComment = {
+        try {
+          const newComment = {
             value: valueOfInput,
             idOfPost: post._id,
             idOfparentComment: idOfparentComment,
             idOfUser: idOfUser
+          }
+          // pridame do promenne comments novy komentar
+          await axios.post(changePath("/comments/addComment"), newComment);
+          // dostaneme vsechny komentare vztazene k prispevku
+          const newComments = await axios.get(changePath(`/comments/getComments/${post._id}`));
+          setComments(newComments.data);
+          setValueOfInput("");
+          return true
+        } catch (err) {
+          return false;
         }
-        await axios.post(changePath("/comments/addComment"), newComment);
+        
     }
-
-    
 
     return (
         <div>
@@ -74,15 +84,15 @@ const Comments = ({post}) => {
             {show && 
                 <div className="commentsContainer">
                     <div className="addComment">
-                      <input className="addCommentInput" style={{"background-color": backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
-                      <button className="addCommentButton" style={{"background-color": backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id)}>přidej komentář</button>
+                      <input className="addCommentInput" style={{backgroundColor: backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
+                      <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id)}>přidej komentář</button>
                     </div>
-                   {   
-                        allComments.map(comment => (
-                          <>
-                           <Comment comment={comment} commentMain={comment} addComment={addComment} key={comment._id} />
-                           </>
-                        ))
+                        {   
+                          allComments.map(comment => (
+                            <>
+                            <Comment comment={comment} commentMain={comment} addComment={addComment} key={comment._id} />
+                            </>
+                          ))
                         }
                 </div>
             }

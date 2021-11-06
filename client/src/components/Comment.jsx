@@ -5,6 +5,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { format } from 'timeago.js';
+import { Link } from "react-router-dom";
 
 const Comment = ({comment, addComment, commentMain}) => {
 
@@ -23,10 +24,10 @@ const Comment = ({comment, addComment, commentMain}) => {
     const [url, setUrl] = useState(null);
 
     // promenna zdali jsem komentar likenul
-    const [ifIsLiked, setIfIsLiked] = useState(comment.likes.includes(user._id));
+    const [ifIsLiked, setIfIsLiked] = useState(comment.idOfLikes.includes(user._id));
 
     // promenna pro pocet liku
-    const [lenghtOfLikes, setLenghtOfLikes] = useState(comment.likes.length);
+    const [lenghtOfLikes, setLenghtOfLikes] = useState(comment.idOfLikes.length);
 
     // ulozeni vsech deti tohoto komentare do promenne nestedComments
     const nestedComments = (comment.children || []).map((comment1) => {
@@ -45,33 +46,41 @@ const Comment = ({comment, addComment, commentMain}) => {
 
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
-        /*
+        // zmena promenne ifIsLiked
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
-        await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id })
-        */
+
+        // pridani nebo odebrani likeu v databazi
+        await axios.put(changePath(`/comments/addOrRemoveLike/${comment._id}/${user._id}`));
+        
     }
 
     
-
+    const prepareToAddComment = () => {
+        addComment(valueOfInput, comment._id, user._id).then(() => {
+            setValueOfInput("");
+        })
+    }
     
 
     return (
         <div className="comment">
-            <div className="userCommentContainer" onClick={() => setShow(!show)}>
-                <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
-                <p>{userOfComment.username}</p>
+            <div className="userCommentContainer">
+                <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
+                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
+                    <span>{userOfComment.username}</span>
+                </Link>
                 <span>{comment.value}</span>
                 {ifIsLiked ? <FcLike style={{fontSize: "25px"}} onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} onClick={addOrRemoveLike} /> }{lenghtOfLikes}
-                <span>{format(comment.createdAt, 'myLanguage')}</span>
-                <span></span>
+                <span>{format(comment.createdAt, 'myLanguage')}</span><br/>
+                <p onClick={() => setShow(!show)}>počet odpovědí {comment.children ? comment.children.length : "0"}</p>
             </div>
             {show && 
                 <div className="commentsContainer">
                     
                     <div className="addComment">
-                        <input className="addCommentInput" style={{"background-color": backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)} placeholder="co máš na mysli..." />
-                        <button className="addCommentButton" style={{"background-color": backgroundColor1}} onClick={() => addComment(valueOfInput, comment._id, user._id)}>přidej komentář</button>
+                        <input className="addCommentInput" style={{backgroundColor: backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)} placeholder="co máš na mysli..." />
+                        <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={prepareToAddComment}>přidej komentář</button>
                     </div>
                     <ul>
                         {nestedComments}

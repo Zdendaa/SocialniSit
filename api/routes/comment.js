@@ -25,8 +25,25 @@ router.post("/addComment", async (req, res) => {
         const newComment = await comment.save();
         res.status(200).send(newComment);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).json(err);
     }
 })
+
+/**PRIDANI LIKEU KE KOMENTARI */
+router.put("/addOrRemoveLike/:idOfComment/:idOfUser", async (req, res) => {
+  try {
+      const currentComment = await Comment.findById(req.params.idOfComment);
+      
+      if (currentComment.idOfLikes.includes(req.params.idOfUser)) {     
+            await currentComment.updateOne({$pull: {idOfLikes: req.params.idOfUser}});
+      } else {
+            await currentComment.updateOne({$push: {idOfLikes: req.params.idOfUser}});
+      }
+      res.status(200).json("like byl pridan ke komentari");
+  } catch (err) {
+      res.status(500).send(err);
+  }
+})
+
 
 module.exports = router;

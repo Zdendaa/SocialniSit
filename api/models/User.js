@@ -31,11 +31,11 @@ const user = new mongoose.Schema({
         type: Array,
         default: null
     },
-    followers: {
+    idOfFriends: {
         type: Array,
         default: []
     },
-    following: {
+    idOfRequests: {
         type: Array,
         default: []
     },
