@@ -94,7 +94,7 @@ const Profile = () => {
             <div className="yourProfile">
 
                 <div className="yourProfileTop">
-                    <img src={url ? url : "/img/anonymous.png"} alt="" />
+                    <img src={url ? url : "/img/anonymous.png"} alt="" style={{width: "220px", height: "220px", borderRadius: "50%", objectFit: "cover"}}/>
                     {
                     idOfUser === user._id 
                     ? 
@@ -103,7 +103,7 @@ const Profile = () => {
                         {
                             myUser?.idOfRequests.map(id => (
                                 <div>
-                                    <UserProfile idOfUser={id} style={{widht: "50px", height: "50px", borderRadius: "50%"}} />
+                                    <UserProfile idOfUser={id} style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}} />
                                     <button onClick={() => confirmRequest(id)}>přijmout nebo odmítnout žádost o přátelství</button>
                                 </div>
                             ))
