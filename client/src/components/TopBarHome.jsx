@@ -23,7 +23,7 @@ const TopBarHome = () => {
             <BiSearchAlt className="searchIcon"/>
             <div className="topBarProfile">
                 <p className="weight800">{user.username}</p>
-                <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
+                <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
             </div>
         </div>
     )

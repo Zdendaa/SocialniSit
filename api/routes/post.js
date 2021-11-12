@@ -53,5 +53,18 @@ router.put("/addOrRemoveLike/:id", async (req, res) => {
     }
 })
 
+/* DOSTANI VSECH POSTU DO JEDNOHO UZIVATELE*/
+router.get("/getAllPosts/:userId", async (req, res) => {
+    try {
+        
+        const allPosts = await Post.find({userId: req.params.userId});
+
+        // jesli se nenaskytla zadna chyba posleme data noveho postu
+        res.status(200).json(allPosts); 
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 module.exports = router;

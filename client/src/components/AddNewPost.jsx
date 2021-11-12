@@ -104,7 +104,7 @@ const AddNewPost = () => {
             <div className="addNewPostContainer">
                 <div className="topAddNewPost">
                     <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: "center"}}>
-                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
                     </Link>
                     <input type="text" value={desc} onChange={(e) => validation(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
                 </div>

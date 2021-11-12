@@ -7,27 +7,26 @@ import UserProfile from './UserProfile';
 SwiperCore.use([Pagination]);
 
 
-const SwiperOnlineFriends = ({users, type}) => {
-
+const SwiperOnlineFriends = ({users, type, classBorderRadius}) => {
     return (
         <>
             {
             type === 1 
             ?
-                <div className="swiperOnline mobile">
+                <div className={`swiperOnline ${classBorderRadius ? classBorderRadius : "mobile"}`} >
                     <Swiper slidesPerView={6} spaceBetween={0} pagination={{"clickable": true}} className="mySwiper">
                     {users.map((user, index) => (
                             <SwiperSlide key={index} >
-                                <UserProfile idOfUser={user._id} mobile={true} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}}/>
+                                <UserProfile key={user._id}  idOfUser={user._id} mobile={true} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}} />
                             </SwiperSlide>
                     ))}
                     </Swiper> 
                 </div>
             :
                 <div className="onlineListOfUsers">
-                    {users.map((user, index) => (
-                        <div className="pc">
-                            <UserProfile idOfUser={user._id} mobile={false} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}}/>
+                    {users.map((user) => (
+                        <div className="pc" key={user._id} >
+                            <UserProfile key={user._id}  idOfUser={user._id} mobile={false} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}}/>
                         </div>
                     ))}
                 </div>

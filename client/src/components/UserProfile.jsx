@@ -7,7 +7,7 @@ import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 const UserProfile = ({idOfUser, style, mobile}) => {
     const [url, setUrl] = useState(null);
 
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState([]);
 
     useEffect(() => {
         const getUrlAndCurrentUser = async () => {
@@ -23,9 +23,9 @@ const UserProfile = ({idOfUser, style, mobile}) => {
 
     
     return (
-        <Link to={`/profile/${idOfUser}`}>
-            {!mobile && <span>{currentUser?.username}</span>}
+        <Link to={`/profile/${idOfUser}`} className="userProfile">
             <img src={url ? url : "/img/anonymous.png"} alt="" style={style}/>
+            {!mobile && <span>{currentUser?.username}</span>}
         </Link>
     )
 }

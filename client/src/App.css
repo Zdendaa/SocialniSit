@@ -451,8 +451,129 @@ span {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
 }
 
+.profileContainer {
+  position: relative;
+  margin-top: 20px;
+  width: 90%;
+}
+
+.profileAllAbout {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  margin: 15px 0px 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profileImages {
+  position: relative;
+  width: 42%;
+  border-radius: 8px;
+  height: 100%;
+  overflow: auto;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+.profileInfo {
+  position: relative;
+  width: 55%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+
+.profileInfoContainers {
+  width: 100%;
+  margin: 5px;
+  height: auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.borderRadiusSwiperOnline {
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+/* TopProfile*/
+
+.topProfile {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.bottomProfile {
+  margin-top: 50px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topProfileProfilePicture {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  top: 70px;
+  border: 5px solid white;
+}
+
+/* ProfileRequests*/
+.requests {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.buttonConfirmFriendShip {
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+.topProfileBackgroundPicture {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/*UserProfile*/
+.userProfile {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.userProfile * {
+  margin-right: 8px;
+}
+
+/*ButtonForActionsFriend*/
+.buttonForActionsFriend {
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
   .mobile {
@@ -506,6 +627,37 @@ span {
   .homeContainerPosts {
     width: 400px;
   }
+  /*Profile*/
+  .profileContainer {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+  .profileAllAboutContainer {
+    width: 35%;
+  }
+
+  .postsActionsContainerProfile {
+    width: 60%;
+  }
+
+  .profileAllAbout {
+    margin: 0px;
+  }
+
+  /* ProfileRequests*/
+  .topProfileBackgroundPicture {
+    height: 300px;
+  }
+
+  /* TopProfile*/
+
+  .topProfileProfilePicture {
+    top: 120px;
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @media only screen and (min-width: 1600px) {
@@ -524,5 +676,9 @@ span {
   /* HOME */
   .homeContainerPosts {
     width: 550px;
+  }
+  /*Profile*/
+  .profileContainer {
+    width: 50%;
   }
 }

@@ -4,10 +4,15 @@ import { useParams } from 'react-router';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
-import UserProfile from '../components/UserProfile';
+import TopBarHome from '../components/TopBarHome';
+import TopProfile from '../components/TopProfile';
+import ProfileRequests from '../components/ProfileRequests';
+import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
+import AddNewPost from '../components/AddNewPost';
+import Post from '../components/Post';
 
 const Profile = () => {
-    const { user } = useContext(GlobalContext);
+    const { user, backgroundColor1} = useContext(GlobalContext);
 
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
@@ -24,10 +29,19 @@ const Profile = () => {
     const [ifAreFriends, setIfAreFriends] = useState(null);
 
     // zda uz uzivatel poslal zadost o pratelstvi
-    const [ifSendRequest, setIfSendRequtest] = useState(null)
+    const [ifSendRequest, setIfSendRequtest] = useState(null);
 
-    // prihlaseny uzivatel
-    const [currentUser, setCurrentUser] = useState(null);
+    // vsichni kamaradi daneho uzivatele
+    const [allFriends, setAllFriends] = useState([]);
+
+    // vsichni kamaradi daneho uzivatele
+    const [arrayIdOfFriends, setArrayIdOfFriends] = useState([]);
+
+    // vsechny postu vztazene k danemu uzivateli
+    const [allPosts, setAllPosts] = useState([]);
+
+    // vlastnik profilu na ktery koukame
+    const [currentUser, setCurrentUser] = useState([]);
 
     useEffect(() => {
         const downloadUrl = async () => {
@@ -38,6 +52,8 @@ const Profile = () => {
             } else {
                 // ziskame data profilu na ktery prave koukame
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
+                // ulozime vlastnika profilu
+                setCurrentUser(currentUser.data);
                 // ziskame jeho url profiloveho obrazku
                 setUrl(await getUrlImgOrNull(currentUser.data));
             }
@@ -51,6 +67,7 @@ const Profile = () => {
             // ziskame data prave prihlaseneho uzivatele
             const myUser = await axios.get(changePath(`/users/getUser/${user._id}`));
             setMyUser(myUser.data);  
+            setArrayIdOfFriends(myUser.data.idOfRequests);
         }
         downloadDataOfUser();
     }, [idOfUser, user._id])    
@@ -59,7 +76,7 @@ const Profile = () => {
         const setValueOfVariables = async () => {
                 // ziskame data profilu na ktery prave koukame
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
-                setCurrentUser(currentUser.data);
+                await downloadUsers(currentUser.data);
                 // zjistime zda jsme pratele 
                 setIfAreFriends(currentUser.data.idOfFriends.includes(user._id));
                 // zjistime zda jsem mu neposlal zadost o pratelstvi
@@ -68,7 +85,28 @@ const Profile = () => {
         setValueOfVariables();
     }, [idOfUser, user._id])
 
+    useEffect(() => {
+        const getAllPosts = async () => {
+            const posts = await axios.get(changePath(`/posts/getAllPosts/${idOfUser}`));
+            // serazeni od nejnovejsich postu po ty uplne posledni
+            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
+            setAllPosts(sortPosts);
+        }
+        getAllPosts();
+    }, [idOfUser])
+
     // funkce
+
+    // stahnuti dat vsech kamaradu daneho uzivatele
+    const downloadUsers = async (currentUser) => {
+        setAllFriends([]);
+        currentUser?.idOfFriends.forEach(async (idOfUser) => {
+            var userJson = await axios.get(changePath(`/users/getUser/${idOfUser}`));
+            var userData = userJson.data;
+            setAllFriends(friends => [...friends, userData]);
+        })
+    }
+    
 
     // pridani nebo odebrani zadosti
     const addOrRemoveRequestToUser = async () => {
@@ -78,66 +116,71 @@ const Profile = () => {
 
     // prijmuti zadosti
     const confirmRequest = async (id) => {
+        const userOfRequest = await axios.get(changePath(`/users/getUser/${id}`));
+        setArrayIdOfFriends(arrayIdOfFriends.filter(idOfrequests => idOfrequests !== id));
+        setAllFriends(friends => [...friends, userOfRequest.data]);
+        //console.log(allFriends);
         setIfAreFriends(true);
         await axios.put(changePath(`/users/addFriend/${id}/${user._id }`));
     }
 
     // zruseni pratelstvi
-    const removeFriend = async (id) => {
+    const removeFriend = async () => {
         setIfAreFriends(false);
+        setAllFriends((allFriends.filter(friends => friends._id !== user._id)));
         await axios.put(changePath(`/users/removeFriend/${idOfUser}/${user._id }`));
     }
 
     return (
         <div className="Profile">
+            <TopBarHome />
+            <TopProfile url={url} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest}/>
+            
 
-            <div className="yourProfile">
-
-                <div className="yourProfileTop">
-                    <img src={url ? url : "/img/anonymous.png"} alt="" />
+            <div className="profileContainer">
+             
+                    
+                <div className="profileAllAboutContainer">
                     {
-                    idOfUser === user._id 
-                    ? 
-                    (
-                        <div className="requestsContainer">
-                        {
-                            myUser?.idOfRequests.map(id => (
-                                <div>
-                                    <UserProfile idOfUser={id} style={{widht: "50px", height: "50px", borderRadius: "50%"}} />
-                                    <button onClick={() => confirmRequest(id)}>přijmout nebo odmítnout žádost o přátelství</button>
-                                </div>
-                            ))
-                        }
+                    idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends}/>
+                    }
+                    <div className="profileAllAbout">
+                        <div className="profileImages">
+
                         </div>
-                    ) 
-                    : 
-                    (
-                        <>
-                            {
-                            ifAreFriends 
-                            ? 
-                            <button onClick={removeFriend}>odebrat přítele</button> 
-                            :
-                            myUser?.idOfRequests.includes(idOfUser)
-                            ? 
-                            <button onClick={() => confirmRequest(idOfUser)}>přijmout žádost</button> 
-                            : 
-                            <button onClick={addOrRemoveRequestToUser}>{ifSendRequest ? "odebrat žádost" : "poslat žádost"}</button>
-                            }
-                        </>
-                    )
-                    }      
-                            <div className="friendsContainer">
-                                <span>pratele</span>
-                                {
-                                    currentUser?.idOfFriends.map(idOfFriend => (
-                                        <UserProfile idOfUser={idOfFriend} style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}}/>
-                                    ))
-                                }
+                        <div className="profileInfo">
+                            <div className="profileInfoContainers">
+                                <span>Popis:</span>
+                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Jsem nej bytost na světě</span>
                             </div>
-                            
+                            <div className="profileInfoContainers">
+                                <span>Bydlí v:</span>
+                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Ustí nad labem</span>
+                            </div>
+                            <div className="profileInfoContainers">
+                                <span>Vztah:</span>
+                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Single</span>
+                            </div>
                         </div>
                     </div>
+                
+                    <div className="friendsContainer">
+                        <span>pratele</span>
+                        <SwiperOnlineFriends users={allFriends} type={1} classBorderRadius={"borderRadiusSwiperOnline"} />
+                    </div>
+                </div>
+                <div className="postsActionsContainerProfile">
+                    {idOfUser === user._id && <AddNewPost />}
+                    {
+                        allPosts?.map((post, index) => (
+                            
+                                <Post post={post} key={index}/> 
+                            
+                        ))
+                    }
+                </div>
+            </div>
+            
         </div>
     )
 }
