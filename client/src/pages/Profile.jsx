@@ -138,8 +138,6 @@ const Profile = () => {
             
 
             <div className="profileContainer">
-             
-                    
                 <div className="profileAllAboutContainer">
                     {
                     idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends}/>
