@@ -562,6 +562,7 @@ span {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  text-decoration: none;
 }
 .userProfile * {
   margin-right: 8px;

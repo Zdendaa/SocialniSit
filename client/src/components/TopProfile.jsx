@@ -12,7 +12,7 @@ const TopProfile = ({url, user, removeFriend, ifAreFriends, myUser, idOfUser, ad
             (
                 <div className="bottomProfile">
                     <span>{user.username}</span>
-                    <ButtonForActionsFriend removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />      
+                    <ButtonForActionsFriend removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />                 
                 </div>
             )
             }

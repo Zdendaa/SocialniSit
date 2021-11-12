@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { getUrlImgOrNull } from '../storageImgActions/imgFunctions'
 import { BiSearchAlt } from 'react-icons/bi'
+import { Link } from 'react-router-dom';
 
 const TopBarHome = () => {
     const {user, backgroundColor1} = useContext(GlobalContext);
@@ -22,8 +23,10 @@ const TopBarHome = () => {
             <p className="weight800">Nazev</p>
             <BiSearchAlt className="searchIcon"/>
             <div className="topBarProfile">
-                <p className="weight800">{user.username}</p>
-                <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
+                <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
+                    <p className="weight800">{user.username}</p>
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
+                </Link>
             </div>
         </div>
     )
