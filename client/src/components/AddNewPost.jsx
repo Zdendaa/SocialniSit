@@ -129,7 +129,7 @@ const AddNewPost = () => {
                 </div>
                 <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "75%"}}/>
                 <div className="bottomAddNewPost">
-                    <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
+                    <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost opacity" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
                 </div>
             </div>
         </div>

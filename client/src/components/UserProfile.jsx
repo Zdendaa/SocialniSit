@@ -1,10 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import changePath from '../changePath';
+import { GlobalContext } from '../context/GlobalState';
 import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 
 const UserProfile = ({idOfUser, style, mobile}) => {
+    const {backgroundColor3} = useContext(GlobalContext);
     const [url, setUrl] = useState(null);
 
     const [currentUser, setCurrentUser] = useState([]);
@@ -25,7 +27,7 @@ const UserProfile = ({idOfUser, style, mobile}) => {
     return (
         <Link to={`/profile/${idOfUser}`} className="userProfile">
             <img src={url ? url : "/img/anonymous.png"} alt="" style={style}/>
-            {!mobile && <span>{currentUser?.username}</span>}
+            {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username}</span>}
         </Link>
     )
 }

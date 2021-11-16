@@ -70,13 +70,19 @@ router.get("/getUser/:userId", async (req, res) => {
 })
 
 /** DOSTAT DATA UZIVATELE POMOCI ID UZIVATELE*/
-router.get("/getAllUsers", async (req, res) => {
+router.get("/getAllFriends/:userId", async (req, res) => {
     try {
-        // vyhledani vsech uzivatelu
-        const users = await User.find();
+        // vyhledani naseho uzivatele
+        const currentUser = await User.findById(req.params.userId);
+        // vyhledani vsech nasich pratel
+        const allOurFriends = await Promise.all(
+            currentUser.idOfFriends.map(idOfFriend => {
+                return User.findById(idOfFriend);
+            })
+        );
         
         // posleme data uzivatele ve tvaru json
-        res.status(200).json(users);
+        res.status(200).json(allOurFriends);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -124,6 +130,7 @@ router.put("/addFriend/:idOfUser/:myId", async (req, res) => {
         const user1 = await User.findById(req.params.idOfUser);
         const user2 = await User.findById(req.params.myId);
         
+        // zjistime jestli nejsou pratele a pote jim pridame do pole idOfFriends id toho druheho a odebereme request
         if (!user1.idOfFriends.includes(req.params.myId) && !user2.idOfFriends.includes(req.params.idOfUser)) {
             await user1.updateOne({ $push: { idOfFriends: req.params.myId } });
             await user2.updateOne({ $push: { idOfFriends: req.params.idOfUser } });
@@ -132,13 +139,13 @@ router.put("/addFriend/:idOfUser/:myId", async (req, res) => {
 
         }
 
-
         res.status(200).send("nyni jste pratele");
     } catch (err) {
         res.status(500).json(err);
     }
 })
 
+/* ODSTRANENI PRATELSTVI*/
 router.put("/removeFriend/:idOfUser/:myId", async (req, res) => {
     try {
         // najdeme uzivatele kteremu posilame zadost
@@ -149,6 +156,21 @@ router.put("/removeFriend/:idOfUser/:myId", async (req, res) => {
         await user2.updateOne({ $pull: { idOfFriends: req.params.idOfUser } });
 
         res.status(200).send("zadost byla odeslana");
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+
+/** DOSTAT DATA UZIVATELE POMOCI ID UZIVATELE*/
+router.get("/getSearchPeople/:username", async (req, res) => {
+    try {
+        // vyhledani vsechny uzivatele ktere maji podobne jmeno jako to co jsme napsali
+        const value = req.params.username;
+        // vyhledani uzivatele podle value
+        const currentUser = await User.find( {username: new RegExp(value.toLowerCase(), "i")} );
+        // posleme data uzivatele ve tvaru json
+        res.status(200).json(currentUser);
     } catch (err) {
         res.status(500).json(err);
     }

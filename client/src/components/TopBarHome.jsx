@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { getUrlImgOrNull } from '../storageImgActions/imgFunctions'
-import { BiSearchAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
+import { useHistory } from 'react-router';
 
 const TopBarHome = () => {
-    const {user, backgroundColor1} = useContext(GlobalContext);
-
+    const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
+    const history = useHistory();
     // promenna pro zobrazeni profilove fotky uzivatele
     const [url, setUrl] = useState(null);
     
@@ -20,13 +21,24 @@ const TopBarHome = () => {
 
     return (
         <div className="topBar" style={{backgroundColor: "white", color: backgroundColor1, borderBottom: "2px solid" + backgroundColor1}}>
-            <p className="weight800">Nazev</p>
-            <BiSearchAlt className="searchIcon"/>
+            <Link to="/" style={{textDecoration: "none", color: backgroundColor1}}>
+                <p className="weight800" style={{cursor: "pointer"}}>Sociální síť</p>
+            </Link>
+            <SearchBar />
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
                     <p className="weight800">{user.username}</p>
                     <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
                 </Link>
+
+            <div className="containerLogOut">
+                <button className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={ () => { 
+                    localStorage.removeItem("user");
+                    deleteUser();
+                    history.push("/register");
+                    
+                } }>log out</button>
+            </div>
             </div>
         </div>
     )

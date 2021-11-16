@@ -6,7 +6,7 @@ const initialState = {
     user: JSON.parse(localStorage.getItem("user")), // do user se ulozi json promenna user z local storagu
     backgroundColor1: "#D88100",
     backgroundColor2: "#F4F4F4",
-    backgroundColor3: "#D88100",
+    backgroundColor3: "black",
 }
 
 export const GlobalContext = createContext(initialState);

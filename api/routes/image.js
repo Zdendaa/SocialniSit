@@ -18,6 +18,18 @@ router.post("/createNew", async (req, res) => {
     }
 })
 
+// pridani url do image
+router.put("/addUrl/:id", async (req, res) => {
+    try {
+        // vyhledani img podle img._id
+        const currentImg = await Image.findByIdAndUpdate(req.params.id, {urlOfImg: req.body.url})
+
+        res.status(200).send(currentImg)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
 // dostani dat obrazku
 router.get("/getImg", async (req, res) => {
     try {

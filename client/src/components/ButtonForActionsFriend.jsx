@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
+import {IoMdRemove, IoMdAdd, IoMdCheckmark, IoMdClose} from 'react-icons/io';
 
 const ButtonForActionsFriend = ({removeFriend, ifAreFriends, myUser, idOfUser, addOrRemoveRequestToUser, ifSendRequest, confirmRequest}) => {
     const {backgroundColor1} = useContext(GlobalContext);
@@ -8,13 +9,13 @@ const ButtonForActionsFriend = ({removeFriend, ifAreFriends, myUser, idOfUser, a
             {
             ifAreFriends 
             ? 
-            <button className="buttonForActionsFriend" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={removeFriend}>odebrat přítele</button> 
+            <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={removeFriend}><IoMdClose style={{fontSize: "20px"}}/>odebrat přítele</button> 
             :
             myUser?.idOfRequests.includes(idOfUser)
             ? 
-            <button className="buttonForActionsFriend" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={() => confirmRequest(idOfUser)}>přijmout žádost</button> 
+            <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={() => confirmRequest(idOfUser)}><IoMdCheckmark style={{fontSize: "20px"}}/>přijmout žádost</button> 
             : 
-            <button className="buttonForActionsFriend" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={addOrRemoveRequestToUser}>{ifSendRequest ? "odebrat žádost" : "poslat žádost"}</button>
+            <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={addOrRemoveRequestToUser}>{ifSendRequest ? (<><IoMdRemove style={{fontSize: "20px"}} /> odebrat žádost</>) : <><IoMdAdd style={{fontSize: "20px"}}/>poslat žádost</> }</button>
             }
         </>
     )

@@ -64,7 +64,7 @@ const Post = ({post}) => {
             <div className="postContainer">
                 <div className="userContainerPost">
                     <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
-                        <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "img/anonymous.png"} alt="" />
+                        <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "/img/anonymous.png"} alt="" />
                         <span>{userOfPost?.username}</span>
                     </Link>    
                     <span>{format(post.createdAt, 'myLanguage')}</span>
@@ -74,7 +74,7 @@ const Post = ({post}) => {
                     {urlImages && <img className="postImg" src={urlImages} alt="" />}
                 </div>
                 <div className="postBottom">
-                    {ifIsLiked ? <FcLike style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
+                    {ifIsLiked ? <FcLike style={{fontSize: "35px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
                     
                     <span>{lenghtOfLikes}</span><br />
 

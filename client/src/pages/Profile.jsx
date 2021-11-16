@@ -87,7 +87,7 @@ const Profile = () => {
 
     useEffect(() => {
         const getAllPosts = async () => {
-            const posts = await axios.get(changePath(`/posts/getAllPosts/${idOfUser}`));
+            const posts = await axios.get(changePath(`/posts/getPosts/${idOfUser}`));
             // serazeni od nejnovejsich postu po ty uplne posledni
             const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
             setAllPosts(sortPosts);
@@ -100,11 +100,14 @@ const Profile = () => {
     // stahnuti dat vsech kamaradu daneho uzivatele
     const downloadUsers = async (currentUser) => {
         setAllFriends([]);
+        const newAllFriends = await axios.get(changePath(`/users/getAllFriends/${currentUser._id}`))
+        setAllFriends(newAllFriends.data);
+        /*
         currentUser?.idOfFriends.forEach(async (idOfUser) => {
             var userJson = await axios.get(changePath(`/users/getUser/${idOfUser}`));
             var userData = userJson.data;
             setAllFriends(friends => [...friends, userData]);
-        })
+        })*/
     }
     
 

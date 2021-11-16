@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Post = require('../models/Post');
+const User = require('../models/User');
 
 /** PRIDAVANI POSTU */
 router.post("/addPost", async (req, res) => {
@@ -21,14 +22,25 @@ router.post("/addPost", async (req, res) => {
     }
 })
 
-/* DOSTANI VSECH POSTU*/
-router.get("/getAllPosts", async (req, res) => {
+/* DOSTANI VSECH TVYCH POSTU A VSECH OD TVOJICH PRATEL (TIMELINE)*/
+router.get("/getAllPosts/:userId", async (req, res) => {
     try {
-        
-        const allPosts = await Post.find();
+        // vyhledani naseho uzivatele pomoci userId 
+        const currentUser = await User.findById(req.params.userId);
+        // vyhledani vsech postu naseho uzivatele pomoci userId
+        const userPosts = await Post.find({userId: req.params.userId});
+
+        // vyhledani vsech postu nasich kamaradu
+        const allFriendsPosts = await Promise.all(
+            currentUser.idOfFriends.map((friendId) => {
+                return Post.find({userId: friendId});
+            })
+        );
+        // spojeni vsech postu od naseho uzivatele a vsech postu nasich pratel
+        const timeLinePosts = userPosts.concat(...allFriendsPosts);
 
         // jesli se nenaskytla zadna chyba posleme data noveho postu
-        res.status(200).json(allPosts); 
+        res.status(200).json(timeLinePosts); 
     } catch (err) {
         res.status(500).json(err);
     }
@@ -53,10 +65,10 @@ router.put("/addOrRemoveLike/:id", async (req, res) => {
     }
 })
 
-/* DOSTANI VSECH POSTU DO JEDNOHO UZIVATELE*/
-router.get("/getAllPosts/:userId", async (req, res) => {
+/* DOSTANI VSECH POSTU OD JEDNOHO UZIVATELE*/
+router.get("/getPosts/:userId", async (req, res) => {
     try {
-        
+        // dostat vsechny vase posty
         const allPosts = await Post.find({userId: req.params.userId});
 
         // jesli se nenaskytla zadna chyba posleme data noveho postu

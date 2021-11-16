@@ -12,6 +12,24 @@ body {
   display: none;
 }
 
+/*hover effect*/
+.scaled,
+.opacity {
+  transition: 0.2s;
+}
+.scaled:hover {
+  transform: scale(0.8);
+}
+
+.opacity:hover {
+  opacity: 0.7;
+}
+
+/*SearchBar*/
+.none {
+  display: none;
+}
+
 /* swiper */
 
 .swiper {
@@ -245,7 +263,6 @@ span {
   padding: 0px 15px 0px 15px;
   z-index: 1000;
 }
-
 .topBarProfile {
   position: relative;
   display: flex;
@@ -255,6 +272,34 @@ span {
 .topBarProfile img {
   margin-left: 7px;
 }
+
+.topBarProfile:hover .containerLogOut {
+  display: flex;
+}
+
+.containerLogOut {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 200px;
+  min-height: 50px;
+  background-color: white;
+  display: none;
+  padding: 8px 15px 8px 15px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.12);
+  align-items: center;
+  justify-content: center;
+}
+.buttonLogOut {
+  position: relative;
+  cursor: pointer;
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  border: none;
+}
+
 .profilePicture {
   width: 42px;
   height: 42px;
@@ -574,6 +619,8 @@ span {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
@@ -612,7 +659,7 @@ span {
   }
   .onlineListOfUsers {
     position: sticky;
-    top: 100px;
+    top: 90px;
     width: 200px;
     height: 500px;
     margin: 29px 0px 0px 20px;
@@ -621,13 +668,13 @@ span {
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
   }
-    /*Profile*/
-    .profileContainer {
-      width: 80%;
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row-reverse;
-    }
+  /*Profile*/
+  .profileContainer {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
 }
 
 @media only screen and (min-width: 750px) {
@@ -653,7 +700,7 @@ span {
     flex-direction: column-reverse;
   }
   .profileAllAbout {
-    height:auto;
+    height: auto;
   }
   .profileImages {
     width: 100%;

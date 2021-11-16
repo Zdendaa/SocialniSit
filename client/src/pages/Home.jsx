@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router';
 import { GlobalContext } from '../context/GlobalState';
 import TopBarHome from '../components/TopBarHome';
 import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
@@ -8,24 +7,23 @@ import axios from 'axios';
 import Post from '../components/Post';
 
 
-
-
 const Home = () => {
-    const {deleteUser} = useContext(GlobalContext);
-    const history = useHistory();
+    const {user} = useContext(GlobalContext);
+
     const [posts, setPosts] = useState(null);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
        const getPosts = async () => {
         
-           const posts = await axios.get("/posts/getAllPosts")
+           const posts = await axios.get(`/posts/getAllPosts/${user._id}`)
 
            // serazeni od nejnovejsich postu po ty uplne posledni
            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
            setPosts(sortPosts);
 
-           const users = await axios.get("/users/getAllUsers");
+           const users = await axios.get(`/users/getAllFriends/${user._id}`);
+           console.log(users.data);
            setUsers(users.data);
           
        }
@@ -36,12 +34,6 @@ const Home = () => {
     return (
         <div className="homeContainer">           
              <TopBarHome />
-             <button onClick={ () => { 
-                localStorage.removeItem("user");
-                deleteUser();
-                history.push("/register");
-                
-             } }>log out</button>
 
              <SwiperOnlineFriends users={users}  type={1}/>
 
