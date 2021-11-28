@@ -12,22 +12,20 @@ import AddNewPost from '../components/AddNewPost';
 import Post from '../components/Post';
 
 const Profile = () => {
-    const { user, backgroundColor1} = useContext(GlobalContext);
-
+    const { user, backgroundColor1 } = useContext(GlobalContext);
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
-    
     // useState promenne
 
     // prihlaseny uzivatel
     const [myUser, setMyUser] = useState(null);
-
+    
     // promenna pro url obrazku
     const [url, setUrl] = useState("");
-
+    
     // zda jsou v pratelstvi
     const [ifAreFriends, setIfAreFriends] = useState(null);
-
+    
     // zda uz uzivatel poslal zadost o pratelstvi
     const [ifSendRequest, setIfSendRequtest] = useState(null);
 
@@ -44,20 +42,20 @@ const Profile = () => {
     const [currentUser, setCurrentUser] = useState([]);
 
     useEffect(() => {
-        const downloadUrl = async () => {
+        const downloadUrl = async () => { 
             // jestli uzivatel kouka ne jaho profil
             if (idOfUser === user._id) {
                 // ziskame nase url profiloveho obrazku
-                setUrl(await getUrlImgOrNull(user));
+                setUrl(user.idOrUrlOfProfilePicture);
             } else {
                 // ziskame data profilu na ktery prave koukame
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
                 // ulozime vlastnika profilu
                 setCurrentUser(currentUser.data);
                 // ziskame jeho url profiloveho obrazku
-                setUrl(await getUrlImgOrNull(currentUser.data));
+                setUrl(currentUser.data.idOrUrlOfProfilePicture);
             }
-           
+
         }
         downloadUrl();
     }, [idOfUser, user])
@@ -66,21 +64,21 @@ const Profile = () => {
         const downloadDataOfUser = async () => {
             // ziskame data prave prihlaseneho uzivatele
             const myUser = await axios.get(changePath(`/users/getUser/${user._id}`));
-            setMyUser(myUser.data);  
+            setMyUser(myUser.data);
             setArrayIdOfFriends(myUser.data.idOfRequests);
         }
         downloadDataOfUser();
-    }, [idOfUser, user._id])    
+    }, [idOfUser, user._id])
 
     useEffect(() => {
         const setValueOfVariables = async () => {
-                // ziskame data profilu na ktery prave koukame
-                const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
-                await downloadUsers(currentUser.data);
-                // zjistime zda jsme pratele 
-                setIfAreFriends(currentUser.data.idOfFriends.includes(user._id));
-                // zjistime zda jsem mu neposlal zadost o pratelstvi
-                setIfSendRequtest(currentUser.data.idOfRequests.includes(user._id));
+            // ziskame data profilu na ktery prave koukame
+            const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
+            await downloadUsers(currentUser.data);
+            // zjistime zda jsme pratele 
+            setIfAreFriends(currentUser.data.idOfFriends.includes(user._id));
+            // zjistime zda jsem mu neposlal zadost o pratelstvi
+            setIfSendRequtest(currentUser.data.idOfRequests.includes(user._id));
         }
         setValueOfVariables();
     }, [idOfUser, user._id])
@@ -89,7 +87,7 @@ const Profile = () => {
         const getAllPosts = async () => {
             const posts = await axios.get(changePath(`/posts/getPosts/${idOfUser}`));
             // serazeni od nejnovejsich postu po ty uplne posledni
-            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
+            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt) });
             setAllPosts(sortPosts);
         }
         getAllPosts();
@@ -102,19 +100,13 @@ const Profile = () => {
         setAllFriends([]);
         const newAllFriends = await axios.get(changePath(`/users/getAllFriends/${currentUser._id}`))
         setAllFriends(newAllFriends.data);
-        /*
-        currentUser?.idOfFriends.forEach(async (idOfUser) => {
-            var userJson = await axios.get(changePath(`/users/getUser/${idOfUser}`));
-            var userData = userJson.data;
-            setAllFriends(friends => [...friends, userData]);
-        })*/
     }
-    
 
-    // pridani nebo odebrani zadosti
+
+    // pridani nebo odebrani zadosti 
     const addOrRemoveRequestToUser = async () => {
         setIfSendRequtest(!ifSendRequest);
-        await axios.put(changePath(`/users/addOrRemoveRequest/${idOfUser}/${user._id }`));
+        await axios.put(changePath(`/users/addOrRemoveRequest/${idOfUser}/${user._id}`));
     }
 
     // prijmuti zadosti
@@ -124,26 +116,24 @@ const Profile = () => {
         setAllFriends(friends => [...friends, userOfRequest.data]);
         //console.log(allFriends);
         setIfAreFriends(true);
-        await axios.put(changePath(`/users/addFriend/${id}/${user._id }`));
+        await axios.put(changePath(`/users/addFriend/${id}/${user._id}`));
     }
 
     // zruseni pratelstvi
     const removeFriend = async () => {
         setIfAreFriends(false);
         setAllFriends((allFriends.filter(friends => friends._id !== user._id)));
-        await axios.put(changePath(`/users/removeFriend/${idOfUser}/${user._id }`));
+        await axios.put(changePath(`/users/removeFriend/${idOfUser}/${user._id}`));
     }
 
     return (
         <div className="Profile">
             <TopBarHome />
-            <TopProfile url={url} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest}/>
-            
-
+            <TopProfile url={url} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
             <div className="profileContainer">
                 <div className="profileAllAboutContainer">
                     {
-                    idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends}/>
+                        idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} />
                     }
                     <div className="profileAllAbout">
                         <div className="profileImages">
@@ -152,19 +142,18 @@ const Profile = () => {
                         <div className="profileInfo">
                             <div className="profileInfoContainers">
                                 <span>Popis:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Jsem nej bytost na světě</span>
+                                <span style={{ color: backgroundColor1, fontWeight: "500" }}>Jsem nej bytost na světě</span>
                             </div>
                             <div className="profileInfoContainers">
                                 <span>Bydlí v:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Ustí nad labem</span>
+                                <span style={{ color: backgroundColor1, fontWeight: "500" }}>Ustí nad labem</span>
                             </div>
                             <div className="profileInfoContainers">
                                 <span>Vztah:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Single</span>
+                                <span style={{ color: backgroundColor1, fontWeight: "500" }}>Single</span>
                             </div>
                         </div>
                     </div>
-                
                     <div className="friendsContainer">
                         <span>pratele</span>
                         <SwiperOnlineFriends users={allFriends} type={1} classBorderRadius={"borderRadiusSwiperOnline"} />
@@ -174,14 +163,11 @@ const Profile = () => {
                     {idOfUser === user._id && <AddNewPost />}
                     {
                         allPosts?.map((post, index) => (
-                            
-                                <Post post={post} key={index}/> 
-                            
+                            <Post post={post} key={index} />
                         ))
                     }
                 </div>
             </div>
-            
         </div>
     )
 }

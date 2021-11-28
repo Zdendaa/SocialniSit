@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useHistory } from 'react-router';
 import { GlobalContext } from '../context/GlobalState'
-import { uploadImg } from '../storageImgActions/imgFunctions'
+import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions'
 import axios from 'axios'
 import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { Link } from 'react-router-dom'
@@ -77,14 +77,15 @@ const Register = () => {
                 setIfWaiting(false);
             } else {
                 try {
-                    // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
-                    const img = image ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
+                    // jestli uzivatel vybral obrazek
+                    const img = image ? image : null;
                     
                     // jestli existuje img ulozi se img do storage
                     if(img) {
-                        const newImgName = "users/" + name.current.value + "/" + img.data._id;
-                        await uploadImg(image, newImgName).then(async() => {
-                        await setAndSaveUser(img);
+                        const newImgName = "users/" + name.current.value + "/" + img.name + "" + Math.floor( Date.now() / 1000 );
+                        await uploadImg(img, newImgName).then(async() => {
+                            const urlOfImg = await downloadUrlImg(newImgName);
+                            await setAndSaveUser(urlOfImg);
                         });
                     } else {
                         await setAndSaveUser(img);
@@ -105,12 +106,12 @@ const Register = () => {
         
     }
 
-    const setAndSaveUser = async (img) => {
+    const setAndSaveUser = async (url) => {
         const newUser = {
             username: name.current.value,
             email: email.current.value,
             password: password.current.value,
-            idOrUrlOfProfilePicture: img ? img.data._id : null, // id obrazku ktery jsme uz ulozili
+            idOrUrlOfProfilePicture: url, // url obrazku ktery jsme uz ulozili
             isGoogleAccount: false,
         }
 

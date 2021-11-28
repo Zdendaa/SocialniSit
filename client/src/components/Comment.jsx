@@ -20,9 +20,6 @@ const Comment = ({comment, addComment, commentMain}) => {
     // promenna vlastnika komentare
     const [userOfComment, setUserOfComment] = useState([]);
 
-    // promenna pro zobrazeni profilove fotky uzivatele
-    const [url, setUrl] = useState(null);
-
     // promenna zdali jsem komentar likenul
     const [ifIsLiked, setIfIsLiked] = useState(comment.idOfLikes.includes(user._id));
 
@@ -38,8 +35,6 @@ const Comment = ({comment, addComment, commentMain}) => {
         const getUserOfComment = async () => {
             const userOfCommnent = await axios.get(changePath(`/users/getUser/${comment.idOfUser}`));
             setUserOfComment(userOfCommnent.data);
-            // dostani url obrazku uzivatele
-            setUrl(await getUrlImgOrNull(userOfCommnent.data));
         }
         getUserOfComment();
     }, [])
@@ -49,25 +44,22 @@ const Comment = ({comment, addComment, commentMain}) => {
         // zmena promenne ifIsLiked
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
-
         // pridani nebo odebrani likeu v databazi
         await axios.put(changePath(`/comments/addOrRemoveLike/${comment._id}/${user._id}`));
         
     }
 
-    
     const prepareToAddComment = () => {
         addComment(valueOfInput, comment._id, user._id).then(() => {
             setValueOfInput("");
         })
     }
     
-
     return (
         <div className="comment">
             <div className="userCommentContainer">
                 <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
-                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? url : "img/anonymous.png"} alt="" />
+                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" />
                     <span>{userOfComment.username}</span>
                 </Link>
                 <span>{comment.value}</span>

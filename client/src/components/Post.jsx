@@ -15,7 +15,7 @@ const Post = ({post}) => {
 
     // zavolani prihlaseneho usera
     const {user} = useContext(GlobalContext);
-
+    
     // Promenne UseState
 
     // promenna pro pocet liku
@@ -27,28 +27,14 @@ const Post = ({post}) => {
     // promenna pro ulozeni vlastnika prispevku
     const [userOfPost, setUserOfPost] = useState(null);
 
-    // promenna pro zobrazeni profilove fotky uzivatele
-    const [urlProfilePicture, setUrlProfilePicture] = useState(null);
-
-    // promenna pro zobrazeni fotky v prispevku
-    const [urlImages, setUrlImages] = useState(null);
-
-   
-
     useEffect(() => {
         // funkce pro ziskani dat vlastnika prispevku
         const getUser = async () => {
             const userOfPost = await axios.get(changePath(`/users/getUser/${post.userId}`));
             setUserOfPost(userOfPost.data)
-            await downloadUrl(userOfPost.data);
-        }
-        const downloadUrl = async (user) => {
-            // dostanu url obrazku uzivatele
-            setUrlProfilePicture(await getUrlImgOrNull(user));
-            post.idOfImg ? (setUrlImages(await downloadUrlImg(`posts/${user?.username}/${post.idOfImg}`))) : (post.urlOfImg ? setUrlImages(post.urlOfImg) : setUrlImages(null));
         }
         getUser();
-    }, [post.idOfImg, post.urlOfImg, post.userId])
+    }, [post.userId])
 
     // funkce 
 
@@ -64,14 +50,14 @@ const Post = ({post}) => {
             <div className="postContainer">
                 <div className="userContainerPost">
                     <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
-                        <img className="profilePicture" src={urlProfilePicture ? urlProfilePicture : "/img/anonymous.png"} alt="" />
+                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
                         <span>{userOfPost?.username}</span>
                     </Link>    
                     <span>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="postContent">
                     <span className="postDescContent">{post.desc}</span>
-                    {urlImages && <img className="postImg" src={urlImages} alt="" />}
+                    {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" />}
                 </div>
                 <div className="postBottom">
                     {ifIsLiked ? <FcLike style={{fontSize: "35px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }

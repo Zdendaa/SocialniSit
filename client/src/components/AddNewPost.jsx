@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
-import { getUrlImgOrNull, uploadImg } from '../storageImgActions/imgFunctions';
+import { downloadUrlImg, getUrlImgOrNull, uploadImg } from '../storageImgActions/imgFunctions';
 import { TiDelete } from 'react-icons/ti';
 import changePath from '../changePath';
 import axios from 'axios';
@@ -10,9 +10,6 @@ import { Link } from "react-router-dom";
 
 const AddNewPost = () => {
     const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
-
-    // promenna pro zobrazeni profilove fotky uzivatele
-    const [url, setUrl] = useState(null);
    
     // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
     const [image, setImage] = useState(null);
@@ -27,16 +24,6 @@ const AddNewPost = () => {
 
     // loading
     const [loading, setLoading] = useState(false);
-
-
-    useEffect(() => {
-        // funkce ve ktere se ulozi do promenne url url obrazku nebo hodnota null
-        const downloadUrl = async () => {
-            // dostani url obrazku uzivatele
-            setUrl(await getUrlImgOrNull(user));
-        }
-        downloadUrl();
-    }, [user.idOrUrlOfProfilePicture, user.username, user]);
 
     // funkce 
 
@@ -60,17 +47,17 @@ const AddNewPost = () => {
         setLoading(true)
 
         // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
-        const img = (image && (typeof image === "object")) ? await axios.post(changePath("/images/createNew"), {name: image.name}) : null;
+        const img = (image && (typeof image === "object")) ? image : null;
 
         // jeslit obrzek existuje ulozeme ho do storage
         if (img) {
             // promenna cesta k souboru (obrazku)
-            const newImgName = "posts/" + user.username + "/" + img.data._id;
+            const newImgName = "posts/" + user.username + "/" + img.name + "" + Math.floor( Date.now() / 1000 );
             // obrazek se ulozi do storage
             await uploadImg(image, newImgName).then(async() => {
                 console.log('upload img succesfully');
-
-                await setDataOfPost(img.data);
+                const urlOfImg = await downloadUrlImg(newImgName);
+                await setDataOfPost(urlOfImg);
                 
             });
         } else {
@@ -87,8 +74,7 @@ const AddNewPost = () => {
             const newPost = { 
                 userId: user._id, 
                 desc: desc, 
-                urlOfImg: validator.isURL(valueUrlInput) ? image : null,
-                idOfImg: img ? img._id : null,
+                urlOfImg: validator.isURL(valueUrlInput) ? image : (img ? img : null)
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
             axios.post(changePath("/posts/addPost"), newPost);
@@ -104,7 +90,7 @@ const AddNewPost = () => {
             <div className="addNewPostContainer">
                 <div className="topAddNewPost">
                     <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: "center"}}>
-                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
                     </Link>
                     <input type="text" value={desc} onChange={(e) => validation(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
                 </div>
