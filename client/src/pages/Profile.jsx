@@ -118,8 +118,8 @@ const Profile = () => {
     }
 
     // prijmuti zadosti
-    const confirmRequest = async (id) => {
-        const userOfRequest = await axios.get(changePath(`/users/getUser/${id}`));
+    const confirmRequest = async (id, myUserId) => {
+        const userOfRequest = await axios.get(changePath(`/users/getUser/${myUserId ? myUserId : id}`));
         setArrayIdOfFriends(arrayIdOfFriends.filter(idOfrequests => idOfrequests !== id));
         setAllFriends(friends => [...friends, userOfRequest.data]);
         //console.log(allFriends);
@@ -143,7 +143,7 @@ const Profile = () => {
             <div className="profileContainer">
                 <div className="profileAllAboutContainer">
                     {
-                    idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends}/>
+                    idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id}/>
                     }
                     <div className="profileAllAbout">
                         <div className="profileImages">
@@ -152,11 +152,11 @@ const Profile = () => {
                         <div className="profileInfo">
                             <div className="profileInfoContainers">
                                 <span>Popis:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Jsem nej bytost na světě</span>
+                                <span style={{color: backgroundColor1, fontWeight: "500"}}>něco něco</span>
                             </div>
                             <div className="profileInfoContainers">
                                 <span>Bydlí v:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Ustí nad labem</span>
+                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Ústí nad Labem</span>
                             </div>
                             <div className="profileInfoContainers">
                                 <span>Vztah:</span>
