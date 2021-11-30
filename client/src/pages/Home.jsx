@@ -25,7 +25,6 @@ const Home = () => {
            const users = await axios.get(`/users/getAllFriends/${user._id}`);
            console.log(users.data);
            setUsers(users.data);
-          
        }
        getPosts();
     }, [])

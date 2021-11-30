@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import UserProfile from './UserProfile'
 
-const ProfileRequests = ({idOfRequests, confirmRequest, myId}) => {
+const ProfileRequests = ({idOfRequests, confirmRequest}) => {
 
     const {backgroundColor1} = useContext(GlobalContext);
     return (

@@ -69,7 +69,7 @@ router.get("/getUser/:userId", async (req, res) => {
     }
 })
 
-/** DOSTAT DATA UZIVATELE POMOCI ID UZIVATELE*/
+/** DOSTAT DATA VSECH PRATEL DANEHO UZIVTELE*/
 router.get("/getAllFriends/:userId", async (req, res) => {
     try {
         // vyhledani naseho uzivatele

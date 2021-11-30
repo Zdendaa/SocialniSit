@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
 
 const TopBarHome = () => {
-    const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
+const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
     const history = useHistory();
     // promenna pro zobrazeni profilove fotky uzivatele
     const [url, setUrl] = useState(null);
@@ -37,7 +37,7 @@ const TopBarHome = () => {
                     deleteUser();
                     history.push("/register");
                     
-                } }>log out</button>
+                } }>odhlásit se</button>
             </div>
             </div>
         </div>

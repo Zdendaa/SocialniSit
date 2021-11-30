@@ -8,7 +8,7 @@ const ButtonForActionsFriend = ({removeFriend, ifAreFriends, myUser, idOfUser, a
         <>
             {
             ifAreFriends 
-            ? 
+            ?  
             <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={removeFriend}><IoMdClose style={{fontSize: "20px"}}/>odebrat přítele</button> 
             :
             myUser?.idOfRequests.includes(idOfUser)

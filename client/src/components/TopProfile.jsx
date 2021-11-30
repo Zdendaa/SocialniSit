@@ -8,7 +8,7 @@ const TopProfile = ({url, user, removeFriend, ifAreFriends, myUser, idOfUser, ad
             <img className="topProfileProfilePicture" src={url ? url : "/img/anonymous.png"} alt="" />
             
             { 
-            idOfUser === user._id && 
+            idOfUser === user._id &&
             (
                 <div className="bottomProfile">
                     <span>{user.username}</span>

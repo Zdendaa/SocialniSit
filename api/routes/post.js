@@ -9,8 +9,7 @@ router.post("/addPost", async (req, res) => {
         const post = new Post({
             userId: req.body.userId,
             desc: req.body.desc,
-            urlOfImg: req.body.urlOfImg,
-            idOfImg: req.body.idOfImg
+            urlOfImg: req.body.urlOfImg
         })
         // ulozeni postu do db
         const newPost = await post.save();
