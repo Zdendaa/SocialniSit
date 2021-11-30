@@ -4,10 +4,12 @@ import { downloadUrlImg, getUrlImgOrNull } from '../storageImgActions/imgFunctio
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+import { FiShare } from "react-icons/fi"
 import { GlobalContext } from '../context/GlobalState'
 import Comments from './Comments';
 import changePath from '../changePath';
 import { Link } from "react-router-dom";
+import Share from './Share';
 
 const Post = ({post}) => {
     // registrovani cestiny do formatjs
@@ -26,6 +28,9 @@ const Post = ({post}) => {
 
     // promenna pro ulozeni vlastnika prispevku
     const [userOfPost, setUserOfPost] = useState(null);
+
+    // promenna pro zjisteni zda je uzivatel sdilejici prispevek
+    const [ifSharing, setifSharing] = useState(false);
 
     useEffect(() => {
         // funkce pro ziskani dat vlastnika prispevku
@@ -60,7 +65,11 @@ const Post = ({post}) => {
                     {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" />}
                 </div>
                 <div className="postBottom">
-                    {ifIsLiked ? <FcLike style={{fontSize: "35px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
+                    <div className="acitonsForPosts">
+                        {ifIsLiked ? <FcLike style={{fontSize: "35px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
+                        <FiShare onClick={() => setifSharing(!ifSharing)}/>
+                        
+                    </div>
                     
                     <span>{lenghtOfLikes}</span><br />
 
@@ -68,6 +77,8 @@ const Post = ({post}) => {
                     
                 </div>
             </div>
+            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing}/> </> }
+            
         </div>
     )
 }
