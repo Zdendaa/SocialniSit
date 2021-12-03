@@ -1,29 +1,24 @@
 const mongoose = require('mongoose');
 
-// schema postu
-const post = new mongoose.Schema({
+const sharedPost = new mongoose.Schema({
     userId: {
         type: String,
         required: true,
+    },
+    idOfSharingToUser: {
+        type: String,
+        default: null
     },
     desc: {
         type: String,
         default: null
     },
-    urlOfImg: {
+    idOfMainPost: {
         type: String,
-        default: null
-    },
-    idOfLikes: {
-        type: Array,
-        default: []
-    },
-    idOfComment: {
-        type: Array,
-        default: null
+        required: true
     }
 },
 { timestamps: true } // kazdy post bude mit datum vytvoreni
 );
 
-module.exports = mongoose.model("Post", post);
+module.exports = mongoose.model("SharedPost", sharedPost);

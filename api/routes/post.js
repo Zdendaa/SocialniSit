@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Post = require('../models/Post');
+const SharedPost = require('../models/SharedPost');
 const User = require('../models/User');
 
 /** PRIDAVANI POSTU */
@@ -31,10 +32,32 @@ router.get("/getAllPosts/:userId", async (req, res) => {
 
         // vyhledani vsech postu nasich kamaradu
         const allFriendsPosts = await Promise.all(
-            currentUser.idOfFriends.map((friendId) => {
-                return Post.find({userId: friendId});
+            currentUser.idOfFriends.map(async (friendId, index) => {
+                const sharedPost = await SharedPost.find({userId: friendId}); 
+                const dataOfSharedPost = await Post.findById(sharedPost[index]?.idOfMainPost);
+                
+                var ff;
+                if(dataOfSharedPost) {
+                    ff = {
+                        _id: dataOfSharedPost._id,
+                        userId: dataOfSharedPost.userId,
+                        desc: dataOfSharedPost.desc,
+                        urlOfImg: dataOfSharedPost.urlOfImg,
+                        idOfLikes: dataOfSharedPost.idOfLikes,
+                        idOfComment: dataOfSharedPost.idOfComment,
+                        createdAt: sharedPost[index].createdAt,
+                        sharedUserId: sharedPost[index].userId,
+                        sharedDesc: sharedPost[index].desc
+                    }
+                }
+                
+                //const ff = [dataOfSharedPost, { sharedUserId: sharedPost[index].userId, sharedDesc: sharedPost[index].desc }];
+                const newPost = await Post.find({userId: friendId});     
+                return dataOfSharedPost ? newPost.concat(ff) : newPost;
             })
         );
+
+     //   console.log(...allFriendsPosts);
         // spojeni vsech postu od naseho uzivatele a vsech postu nasich pratel
         const timeLinePosts = userPosts.concat(...allFriendsPosts);
 

@@ -10,6 +10,7 @@ import Comments from './Comments';
 import changePath from '../changePath';
 import { Link } from "react-router-dom";
 import Share from './Share';
+import UserProfile from './UserProfile';
 
 const Post = ({post}) => {
     // registrovani cestiny do formatjs
@@ -39,6 +40,7 @@ const Post = ({post}) => {
             setUserOfPost(userOfPost.data)
         }
         getUser();
+       console.log(post.createdAt);
     }, [post.userId])
 
     // funkce 
@@ -52,6 +54,8 @@ const Post = ({post}) => {
     
     return (
         <div className="post">
+            {post?.sharedUserId && <div style={{margin: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>}
+            {post?.sharedUserId && <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/>}
             <div className="postContainer">
                 <div className="userContainerPost">
                     <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
@@ -75,7 +79,7 @@ const Post = ({post}) => {
                     <Comments post={post} key={post._id}/>
                 </div>
             </div>
-            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing}/> </> }
+            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing} idOfPost={post._id}/> </> }
         </div>
     )
 }
