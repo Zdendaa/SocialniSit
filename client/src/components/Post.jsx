@@ -4,7 +4,7 @@ import { downloadUrlImg, getUrlImgOrNull } from '../storageImgActions/imgFunctio
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { FiShare } from "react-icons/fi"
+import { FaShare } from "react-icons/fa"
 import { GlobalContext } from '../context/GlobalState'
 import Comments from './Comments';
 import changePath from '../changePath';
@@ -16,7 +16,7 @@ const Post = ({post}) => {
     register('myLanguage', czDataFormat);
 
     // zavolani prihlaseneho usera
-    const {user} = useContext(GlobalContext);
+    const {user, backgroundColor1} = useContext(GlobalContext);
     
     // Promenne UseState
 
@@ -66,21 +66,20 @@ const Post = ({post}) => {
                 </div>
                 <div className="postBottom">
                     <div className="acitonsForPosts">
-                        {ifIsLiked ? <FcLike style={{fontSize: "35px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px"}} onClick={addOrRemoveLike} /> }
-                        <FiShare onClick={() => setifSharing(!ifSharing)}/>
-                        
+                        <div>
+                            {ifIsLiked ? <FcLike style={{fontSize: "35px", cursor: "pointer"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px", cursor: "pointer"}} onClick={addOrRemoveLike} /> }
+                            <span>{lenghtOfLikes}</span>
+                        </div>
+                        <FaShare style={{fontSize: "30px", cursor: "pointer", color: backgroundColor1}} className="scaled" onClick={() => setifSharing(!ifSharing)}/>
                     </div>
-                    
-                    <span>{lenghtOfLikes}</span><br />
-
                     <Comments post={post} key={post._id}/>
-                    
                 </div>
             </div>
             {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing}/> </> }
-            
         </div>
     )
 }
 
 export default Post
+
+

@@ -99,7 +99,7 @@ const AddNewPost = () => {
                 
                         <div className="imgShowContainerAddPost">
                             <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') === 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image) } alt="obrázek nelze najít" className="imgShowAddPost"/>
-                            <TiDelete className="removeImgShow" onClick={(e) => {setImage(null)}} />
+                            <TiDelete className="removeImgShow scaled" onClick={(e) => {setImage(null)}} />
                         </div>
                         
                 }

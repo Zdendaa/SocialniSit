@@ -20,7 +20,7 @@ const SearchBar = () => {
     }
     return (
         <div>
-            <BiSearchAlt className={isTyping ? "none" : "searchIcon"} onClick={() => setIsTyping(!isTyping)}/>
+            <BiSearchAlt className={isTyping ? "none" : "searchIcon scaled"} onClick={() => setIsTyping(!isTyping)}/>
             <div className={isTyping ? "resultSearchContainer" : "none"}>
                 <input onChange={(e) => searchUsers(e.target.value)}type="text" style={isTyping ? {width: "250px"} : {width: "0px"}}/>
                 <span onClick={() => setIsTyping(!isTyping)}>x</span>

@@ -11,9 +11,11 @@ const Share = ({ setifSharing }) => {
     const [allFriends, setAllFriends] = useState([]);
 
     useEffect(() => {
+        // nacteni vsech pratel
         const loadAllUsersFriends = async () => {
-            const friends = await axios.get(`users/getAllFriends/${user._id}`);
+            const friends = await axios.get(`/users/getAllFriends/${user._id}`);
             setAllFriends(friends.data);
+            console.log(friends.data);
         }
         loadAllUsersFriends();
     }, [user._id]);
@@ -25,8 +27,8 @@ const Share = ({ setifSharing }) => {
                             <span>{friends.username}</span>
                     ))
                 }
+                <TiDelete className="scaled removeImgShow" onClick={() => setifSharing(ifSharing => !ifSharing)} />
             </div>
-            <TiDelete onClick={() => setifSharing(ifSharing => !ifSharing)}/>
         </div>
     )
 }

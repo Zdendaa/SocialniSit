@@ -249,6 +249,14 @@ span {
   flex-wrap: wrap;
 }
 
+/* POST */
+.acitonsForPosts {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* TopBarHome */
 
 .topBar {
@@ -335,6 +343,7 @@ span {
 }
 
 .shareContainer {
+  position: relative;
   width: 70%;
   height: 500px;
   background-color: white;
