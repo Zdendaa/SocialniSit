@@ -4,7 +4,7 @@ import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const SharingButton = ({ addSharedPost, idOfUser, idOfPost }) => {
+const SharingButton = ({addSharedPost, idOfUser, idOfPost }) => {
     const {backgroundColor2, backgroundColor1, user} = useContext(GlobalContext);
 
     // promenna zda li uz uzivatel sdilel prispevek tomuto uzivateli
@@ -29,8 +29,6 @@ const SharingButton = ({ addSharedPost, idOfUser, idOfPost }) => {
         }
 
         const sharedPost = await axios.post(changePath("/sharedPosts/ifAlreadyShared"), postData);
-
-        console.log(sharedPost.data?._id);
        
         setIdOfSharedPost(sharedPost.data ? sharedPost.data._id : null);
         setIfIsShare(sharedPost.data ? true : false);
@@ -47,7 +45,7 @@ const SharingButton = ({ addSharedPost, idOfUser, idOfPost }) => {
     }
     return (
         <>
-            <button onClick={ async () => await addOrRemovePost()} className="shareButton" style={{backgroundColor: backgroundColor1, color: backgroundColor2}}>{ifLoading ? <ClipLoader color={backgroundColor2} size={10} ></ClipLoader> : ifIsShare ? "sdíleno" : "sdílej"}</button>
+            <button onClick={ async () => await addOrRemovePost()} className="shareButton opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor2}}>{ifLoading ? <ClipLoader color={backgroundColor2} size={10} ></ClipLoader> : ifIsShare ? "sdíleno" : "sdílej"}</button>
         </>
     )
 }

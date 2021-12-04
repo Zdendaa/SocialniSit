@@ -54,8 +54,16 @@ const Post = ({post}) => {
     
     return (
         <div className="post">
-            {post?.sharedUserId && <div style={{margin: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>}
-            {post?.sharedUserId && <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/>}
+            {post?.sharedUserId && 
+            <> 
+                <div style={{padding: "15px 0px 0px 15px"}}>
+                    <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
+                    <span>{post.sharedDesc}</span>
+                </div> 
+                
+                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/> 
+            </>
+            }
             <div className="postContainer">
                 <div className="userContainerPost">
                     <Link to={`profile/${userOfPost?._id}`} className="userDivPost">

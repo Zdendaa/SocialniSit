@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
-import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 import TopBarHome from '../components/TopBarHome';
 import TopProfile from '../components/TopProfile';
 import ProfileRequests from '../components/ProfileRequests';

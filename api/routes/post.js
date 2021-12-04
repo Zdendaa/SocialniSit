@@ -30,36 +30,64 @@ router.get("/getAllPosts/:userId", async (req, res) => {
         // vyhledani vsech postu naseho uzivatele pomoci userId
         const userPosts = await Post.find({userId: req.params.userId});
 
+        // vyhledani vsech prispevku ktere sdilel nas uzivatel
+        const sharedPosts = await SharedPost.find({userId: req.params.userId});
+
+        const userSharedPosts = await Promise.all(
+            sharedPosts.map(async (sharedPost) => {
+                const dataOfSharedPost = await Post.findById(sharedPost.idOfMainPost);
+                    
+                const newDataOfPost = {
+                    _id: dataOfSharedPost._id,
+                    userId: dataOfSharedPost.userId,
+                    desc: dataOfSharedPost.desc,
+                    urlOfImg: dataOfSharedPost.urlOfImg,
+                    idOfLikes: dataOfSharedPost.idOfLikes,
+                    idOfComment: dataOfSharedPost.idOfComment,
+                    createdAt: sharedPost.createdAt,
+                    sharedUserId: sharedPost.userId,
+                    sharedDesc: sharedPost.desc
+                }
+                return newDataOfPost;
+            })
+        )
+
         // vyhledani vsech postu nasich kamaradu
         const allFriendsPosts = await Promise.all(
-            currentUser.idOfFriends.map(async (friendId, index) => {
-                const sharedPost = await SharedPost.find({userId: friendId}); 
-                const dataOfSharedPost = await Post.findById(sharedPost[index]?.idOfMainPost);
-                
-                var ff;
-                if(dataOfSharedPost) {
-                    ff = {
-                        _id: dataOfSharedPost._id,
-                        userId: dataOfSharedPost.userId,
-                        desc: dataOfSharedPost.desc,
-                        urlOfImg: dataOfSharedPost.urlOfImg,
-                        idOfLikes: dataOfSharedPost.idOfLikes,
-                        idOfComment: dataOfSharedPost.idOfComment,
-                        createdAt: sharedPost[index].createdAt,
-                        sharedUserId: sharedPost[index].userId,
-                        sharedDesc: sharedPost[index].desc
-                    }
-                }
-                
-                //const ff = [dataOfSharedPost, { sharedUserId: sharedPost[index].userId, sharedDesc: sharedPost[index].desc }];
-                const newPost = await Post.find({userId: friendId});     
-                return dataOfSharedPost ? newPost.concat(ff) : newPost;
+            currentUser.idOfFriends.map(async (friendId) => {
+                const sharedPosts = await SharedPost.find({userId: friendId}); // vyhledam vsechny nam sdilene prispevky od jesdnoho uzivatele
+
+                const allSharedPosts = await Promise.all(sharedPosts.map(async (sharedPost) => {
+                    // jetli je prispevek sdílený pro všechny přátelé nebo jen pro našeho uživatele
+                    if(!sharedPosts.idOfSharingToUser || sharedPosts.idOfSharingToUser === req.params.userId) {
+                        // nahrajeme si vsechny dane prispevky
+                        const dataOfSharedPost = await Post.findById(sharedPost.idOfMainPost);
+                    
+                        const newDataOfPost = {
+                            _id: dataOfSharedPost._id,
+                            userId: dataOfSharedPost.userId,
+                            desc: dataOfSharedPost.desc,
+                            urlOfImg: dataOfSharedPost.urlOfImg,
+                            idOfLikes: dataOfSharedPost.idOfLikes,
+                            idOfComment: dataOfSharedPost.idOfComment,
+                            createdAt: sharedPost.createdAt,
+                            sharedUserId: sharedPost.userId,
+                            sharedDesc: sharedPost.desc
+                        }
+                        return newDataOfPost;
+                    }  
+                }));
+
+                const newPost = await Post.find({userId: friendId}); // vsechny prispevky daneho uzivatele
+
+                return sharedPosts ? newPost.concat(allSharedPosts) : newPost; // spojeni vsech postu nasich kamaradu a vsech postu ktere nasi kamaradi sdileli
             })
         );
 
-     //   console.log(...allFriendsPosts);
+        // spjojeni vsech prispevk naseho uzivatele a vsech prispevku ktere sdilel
+        const allPosts = userPosts.concat(...userSharedPosts);
         // spojeni vsech postu od naseho uzivatele a vsech postu nasich pratel
-        const timeLinePosts = userPosts.concat(...allFriendsPosts);
+        const timeLinePosts = allPosts.concat(...allFriendsPosts);
 
         // jesli se nenaskytla zadna chyba posleme data noveho postu
         res.status(200).json(timeLinePosts); 
@@ -91,7 +119,31 @@ router.put("/addOrRemoveLike/:id", async (req, res) => {
 router.get("/getPosts/:userId", async (req, res) => {
     try {
         // dostat vsechny vase posty
-        const allPosts = await Post.find({userId: req.params.userId});
+        const ourPosts = await Post.find({userId: req.params.userId});
+
+        // vyhledani vsech prispevku ktere sdilel nas uzivatel
+        const sharedPosts = await SharedPost.find({userId: req.params.userId});
+        
+        const userSharedPosts = await Promise.all(
+            sharedPosts.map(async (sharedPost) => {
+                const dataOfSharedPost = await Post.findById(sharedPost.idOfMainPost);
+                    
+                const newDataOfPost = {
+                    _id: dataOfSharedPost._id,
+                    userId: dataOfSharedPost.userId,
+                    desc: dataOfSharedPost.desc,
+                    urlOfImg: dataOfSharedPost.urlOfImg,
+                    idOfLikes: dataOfSharedPost.idOfLikes,
+                    idOfComment: dataOfSharedPost.idOfComment,
+                    createdAt: sharedPost.createdAt,
+                    sharedUserId: sharedPost.userId,
+                    sharedDesc: sharedPost.desc
+                }
+                return newDataOfPost;
+            })
+        )
+
+        const allPosts = ourPosts.concat(...userSharedPosts);
 
         // jesli se nenaskytla zadna chyba posleme data noveho postu
         res.status(200).json(allPosts); 

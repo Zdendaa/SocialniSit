@@ -8,7 +8,7 @@ import SharingButton from './SharingButton';
 
 const Share = ({ setifSharing, idOfPost }) => {
     // zavolani prihlaseneho usera
-    const {user} = useContext(GlobalContext);
+    const {user, backgroundColor1} = useContext(GlobalContext);
 
     // promenna pro ulozeni dat pratel
     const [allFriends, setAllFriends] = useState([]);
@@ -46,12 +46,16 @@ const Share = ({ setifSharing, idOfPost }) => {
     return (
         <div className="Share">
             <div className="shareContainer">
-                <input type="text" placeholder="napsat něco k danému sdílenému příspěvku..." onChange={(e) => setValOfInput(e.target.value)} value={valOfInput}/>
-                <SharingButton addSharedPost={addSharedPost} idOfPost={idOfPost} />
+                <h4 style={{color: backgroundColor1}}>Sdílet všem přátelům</h4>
+                <div className="shareMainBox">
+                    <input type="text" className="inputValShare" placeholder="napsat něco k danému sdílenému příspěvku..." onChange={(e) => setValOfInput(e.target.value)} value={valOfInput}/>
+                    <SharingButton addSharedPost={addSharedPost} idOfPost={idOfPost} />
+                </div>
+                <h4 style={{color: backgroundColor1}}>Nebo sdílet pouze některým</h4>
                 <div className="shareAllFriends">
                 {
                     allFriends?.map((friends) => (    
-                        <UserProfile idOfUser={friends._id} style={{width: "70px", height: "70px", borderRadius: "50%", objectFit: "cover"}} sharing={true} addSharedPost={addSharedPost} idOfPost={idOfPost} />          
+                        <UserProfile idOfUser={friends._id} style={{width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover"}} sharing={true} addSharedPost={addSharedPost} idOfPost={idOfPost} />          
                     ))
                 }
                 </div>

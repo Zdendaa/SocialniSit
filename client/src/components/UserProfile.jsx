@@ -5,7 +5,7 @@ import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import SharingButton from './SharingButton';
 
-const UserProfile = ({idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost}) => {
+const UserProfile = ({idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, }) => {
     const {backgroundColor3, backgroundColor1} = useContext(GlobalContext);
 
     const [currentUser, setCurrentUser] = useState([]);
@@ -21,7 +21,7 @@ const UserProfile = ({idOfUser, style, mobile, sharing, addSharedPost, idOfPost,
     }, [idOfUser])
 
     return (  
-        <div style={sharing && {display: "flex", alignItems: "center", justifyContent: "center", marginTop: "5px"}}>
+        <div style={sharing && {display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "5px"}}>
             <Link to={`/profile/${idOfUser}`} className="userProfile">
                 <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style}/>
                 {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}

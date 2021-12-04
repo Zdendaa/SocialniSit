@@ -357,9 +357,32 @@ span {
 }
 
 .shareAllFriends {
-  width: 90%;
+  width: 80%;
   padding: 15px;
   overflow: auto;
+}
+.shareButton {
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.shareMainBox {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.inputValShare {
+  border: none;
+  width: 70%;
+  height: 100%;
+  margin: 5px;
+}
+.inputValShare:focus {
+  outline: none;
 }
 
 .searchIcon {
@@ -677,6 +700,7 @@ span {
   display: flex;
   align-items: center;
 }
+
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
   .mobile {
@@ -730,18 +754,6 @@ span {
     justify-content: space-between;
     flex-direction: row-reverse;
   }
-  /*Share*/
-  .shareContainer {
-    width: 40%;
-  }
-  .shareButton {
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
 }
 
 @media only screen and (min-width: 750px) {
@@ -790,6 +802,16 @@ span {
     top: 120px;
     width: 200px;
     height: 200px;
+  }
+  /*Share*/
+  .shareContainer {
+    width: 40%;
+  }
+  .shareAllFriends {
+    width: 60%;
+  }
+  .shareMainBox {
+    width: 60%;
   }
 }
 
