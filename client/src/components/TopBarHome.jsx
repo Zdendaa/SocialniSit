@@ -8,16 +8,6 @@ import { useHistory } from 'react-router';
 const TopBarHome = () => {
 const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
     const history = useHistory();
-    // promenna pro zobrazeni profilove fotky uzivatele
-    const [url, setUrl] = useState(null);
-    
-    useEffect(() => {
-        const downloadUrl = async () => {
-            // dostani url obrazku uzivatele
-            setUrl(await getUrlImgOrNull(user));
-        }
-        downloadUrl();
-    }, [user.idOrUrlOfProfilePicture, user.username, user]);
 
     return (
         <div className="topBar" style={{backgroundColor: "white", color: backgroundColor1, borderBottom: "2px solid" + backgroundColor1}}>
@@ -28,7 +18,7 @@ const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
                     <p className="weight800">{user.username}</p>
-                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? url : "/img/anonymous.png"} alt="" />
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
                 </Link>
 
             <div className="containerLogOut">
@@ -38,6 +28,7 @@ const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
                     history.push("/register");
                     
                 } }>odhlásit se</button>
+                <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}}>nasatvení profilu</Link>
             </div>
             </div>
         </div>

@@ -289,7 +289,7 @@ span {
   position: absolute;
   top: 50px;
   right: 0px;
-  width: 200px;
+  width: 300px;
   min-height: 50px;
   background-color: white;
   display: none;
@@ -304,6 +304,7 @@ span {
   position: relative;
   cursor: pointer;
   padding: 8px 15px 8px 15px;
+  margin: 3px;
   border-radius: 5px;
   border: none;
 }
@@ -567,7 +568,7 @@ span {
 }
 
 /* Profile */
-.Profile {
+.Profile, .ProfileSettings {
   position: absolute;
   width: 100%;
   height: auto;
