@@ -5,6 +5,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+button {
+  font-family: "Roboto", sans-serif;
+}
+
 .mobile {
   display: block;
 }
@@ -568,7 +572,8 @@ span {
 }
 
 /* Profile */
-.Profile, .ProfileSettings {
+.Profile,
+.ProfileSettings {
   position: absolute;
   width: 100%;
   height: auto;
@@ -576,6 +581,21 @@ span {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.requestsContainer {
+  margin-bottom: 15px;
+}
+
+.buttonSettingsContainer {
+  display: flex;
+}
+
+.profileAllAboutContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: auto;
 }
 
 .profileContainer {
@@ -751,9 +771,6 @@ span {
   /*Profile*/
   .profileContainer {
     width: 80%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
   }
 }
 
@@ -813,6 +830,13 @@ span {
   }
   .shareMainBox {
     width: 60%;
+  }
+
+  /*Profile*/
+  .profileContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
   }
 }
 

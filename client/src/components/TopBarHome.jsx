@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState';
-import { getUrlImgOrNull } from '../storageImgActions/imgFunctions'
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
@@ -21,15 +20,16 @@ const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
                     <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
                 </Link>
 
-            <div className="containerLogOut">
-                <button className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={ () => { 
-                    localStorage.removeItem("user");
-                    deleteUser();
-                    history.push("/register");
-                    
-                } }>odhlásit se</button>
-                <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}}>nasatvení profilu</Link>
-            </div>
+                <div className="containerLogOut">
+                    <button className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={ () => { 
+                        localStorage.removeItem("user");
+                        deleteUser();
+                        history.push("/register");
+                        
+                    } }>odhlásit se
+                    </button>
+                    <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white", textDecoration: "none", fontSize: "13.33px"}}>nasatvení profilu</Link>
+                </div>
             </div>
         </div>
     )

@@ -9,6 +9,7 @@ import ProfileRequests from '../components/ProfileRequests';
 import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
 import AddNewPost from '../components/AddNewPost';
 import Post from '../components/Post';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { user, backgroundColor1 } = useContext(GlobalContext);
@@ -129,10 +130,17 @@ const Profile = () => {
         <div className="Profile">
             <TopBarHome />
             <TopProfile url={url} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
+            
             <div className="profileContainer">
                 <div className="profileAllAboutContainer">
                     {
-                        idOfUser === user._id && <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id}/>
+                        idOfUser === user._id && 
+                        <>
+                            <div className="buttonSettingsContainer">
+                                    <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white", textDecoration: "none", fontSize: "13.33px", padding: "12px", borderRadius: "10px", margin: "0px 0px 15px 0px"}}>nasatvení profilu</Link>
+                            </div>
+                            <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id}/>
+                        </>
                     }
                     <div className="profileAllAbout">
                         <div className="profileImages">

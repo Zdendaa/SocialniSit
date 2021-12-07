@@ -15,19 +15,25 @@ const Home = () => {
 
     useEffect(() => {
        const getPosts = async () => {
-        
+           // nacteni postu naseho uzivatele
            const posts = await axios.get(`/posts/getAllPosts/${user._id}`)
         
            // serazeni od nejnovejsich postu po ty uplne posledni 
            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
            setPosts(sortPosts);
-
-           const users = await axios.get(`/users/getAllFriends/${user._id}`);
-           console.log(users.data);
-           setUsers(users.data);
        }
        getPosts();
-    }, [])
+    }, [user._id])
+    
+    useEffect(() => {
+        const getFrinends = async () => {
+            // nacteni pratel
+            const users = await axios.get(`/users/getAllFriends/${user._id}`);
+            console.log(users.data);
+            setUsers(users.data);
+        }
+        getFrinends();
+     }, [user._id])
     
     
     return (
