@@ -10,18 +10,23 @@ import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
 import AddNewPost from '../components/AddNewPost';
 import Post from '../components/Post';
 import { Link } from 'react-router-dom';
+import ImagesOfUser from '../components/ImagesOfUser';
+import UserInfo from '../components/UserInfo';
 
 const Profile = () => {
     const { user, backgroundColor1 } = useContext(GlobalContext);
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
     // useState promenne
-
-    // prihlaseny uzivatel
-    const [myUser, setMyUser] = useState(null);
     
-    // promenna pro url obrazku
-    const [url, setUrl] = useState("");
+    // prihlaseny uzivatel
+    const [myUser, setMyUser] = useState([]);
+    
+    // promenna pro url profiloveho obrazku
+    const [urlOfProfileImg, setUrlOfProfileImg] = useState("");
+
+    // promenna pro url obrazku na pozadi
+    const [urlOfCoverImg, setUrlOfCoverImg] = useState("");
     
     // zda jsou v pratelstvi
     const [ifAreFriends, setIfAreFriends] = useState(null);
@@ -46,14 +51,20 @@ const Profile = () => {
             // jestli uzivatel kouka ne jaho profil
             if (idOfUser === user._id) {
                 // ziskame nase url profiloveho obrazku
-                setUrl(user.idOrUrlOfProfilePicture);
+                setUrlOfProfileImg(user.idOrUrlOfProfilePicture);
+                // ziskame jeho url obrazku na pozadi
+                setUrlOfCoverImg(user.idOrUrlOfCoverPicture);
             } else {
                 // ziskame data profilu na ktery prave koukame
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
+                
                 // ulozime vlastnika profilu
                 setCurrentUser(currentUser.data);
                 // ziskame jeho url profiloveho obrazku
-                setUrl(currentUser.data.idOrUrlOfProfilePicture);
+                setUrlOfProfileImg(currentUser.data.idOrUrlOfProfilePicture);
+
+                // ziskame jeho url obrazku na pozadi
+                setUrlOfCoverImg(currentUser.data.idOrUrlOfCoverPicture);
             }
 
         }
@@ -129,7 +140,7 @@ const Profile = () => {
     return (
         <div className="Profile">
             <TopBarHome />
-            <TopProfile url={url} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
+            <TopProfile urlOfProfileImg={urlOfProfileImg} urlOfCoverImg={urlOfCoverImg} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
             
             <div className="profileContainer">
                 <div className="profileAllAboutContainer">
@@ -143,23 +154,22 @@ const Profile = () => {
                         </>
                     }
                     <div className="profileAllAbout">
-                        <div className="profileImages">
-
-                        </div>
+                        {
+                            idOfUser === user._id 
+                            ? 
+                            <ImagesOfUser user={myUser}/>
+                            :
+                            <ImagesOfUser user={currentUser}/>
+                        }
+                        
                         <div className="profileInfo">
-                            <div className="profileInfoContainers">
-                                <span>Popis:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>něco něco</span>
-                            </div>
-                            <div className="profileInfoContainers">
-                                <span>Bydlí v:</span>
-                                <span style={{color: backgroundColor1, fontWeight: "500"}}>Ústí nad Labem</span>
-
-                            </div>
-                            <div className="profileInfoContainers">
-                                <span>Vztah:</span>
-                                <span style={{ color: backgroundColor1, fontWeight: "500" }}>Single</span>
-                            </div>
+                        {
+                            idOfUser === user._id 
+                            ? 
+                            <UserInfo user={myUser}/>
+                            :
+                            <UserInfo user={currentUser}/>
+                        } 
                         </div>
                     </div>
                     <div className="friendsContainer">

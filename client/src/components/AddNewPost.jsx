@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
-import { downloadUrlImg, getUrlImgOrNull, uploadImg } from '../storageImgActions/imgFunctions';
+import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions';
 import { TiDelete } from 'react-icons/ti';
 import changePath from '../changePath';
 import axios from 'axios';

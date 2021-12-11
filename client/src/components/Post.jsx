@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {useContext, useEffect, useState } from 'react'
-import { downloadUrlImg, getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
@@ -40,7 +39,6 @@ const Post = ({post}) => {
             setUserOfPost(userOfPost.data)
         }
         getUser();
-       console.log(post.createdAt);
     }, [post.userId])
 
     // funkce 
@@ -66,8 +64,8 @@ const Post = ({post}) => {
             }
             <div className="postContainer">
                 <div className="userContainerPost">
-                    <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
-                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerpolicy="no-referrer"/>
+                    <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
+                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                         <span>{userOfPost?.username}</span>
                     </Link>    
                     <span>{format(post.createdAt, 'myLanguage')}</span>

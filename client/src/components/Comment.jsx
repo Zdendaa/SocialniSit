@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
-import { getUrlImgOrNull } from '../storageImgActions/imgFunctions';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { format } from 'timeago.js';
 import { Link } from "react-router-dom";
@@ -37,7 +36,7 @@ const Comment = ({comment, addComment, commentMain}) => {
             setUserOfComment(userOfCommnent.data);
         }
         getUserOfComment();
-    }, [])
+    }, [comment.idOfUser])
 
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {

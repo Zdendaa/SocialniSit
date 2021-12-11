@@ -20,6 +20,7 @@ const Reducer = (state, action) => {
             }
         case "CHANGE_COVER_IMG":
             return {
+                ...state,
                 user: {
                     ...state.user,
                     idOrUrlOfCoverPicture: action.payload

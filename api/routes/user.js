@@ -200,4 +200,16 @@ router.put("/setNewCoverPicture", async (req, res) => {
     }
 })
 
+/** PRIDANI FOTKY DO OSTATNICH FOTEK UZIVATELE */
+router.put("/addPhoto", async (req, res) => {
+    try {
+        // vyhledani naseho uzivatele a pridani url stare fotky do pole fotek
+        await User.findByIdAndUpdate(req.body.id, {$push: {idOfAllPicture: req.body.idOfImg}});
+
+        res.status(200).json('Fotka byla pridana do db');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router;

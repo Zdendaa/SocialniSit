@@ -583,6 +583,10 @@ span {
   align-items: center;
 }
 
+.ProfileSettingsContainer {
+  width: 95%;
+}
+
 .requestsContainer {
   margin-bottom: 15px;
 }
@@ -638,7 +642,7 @@ span {
 
 .profileInfoContainers {
   width: 100%;
-  margin: 5px;
+  padding: 5px 0px 5px 0px;
   height: auto;
   overflow: auto;
   display: flex;
@@ -723,7 +727,20 @@ span {
 }
 
 /*ChangeProfileImg ChangeCoverImg*/
-.settingsChangeProfilePicture {
+.settingsChangeProfilePicture,
+.settingsChangeCoverPicture {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px 20px 0px;
+}
+
+.CropperImage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 450px) {
@@ -776,6 +793,26 @@ span {
   .profileContainer {
     width: 80%;
   }
+  /*ChangeProfileImg ChangeCoverImg*/
+  .settingsChangeProfilePicture,
+  .settingsChangeCoverPicture {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 20px 0px 20px 0px;
+  }
+
+  .ProfileSettingsContainer {
+    width: 80%;
+  }
+
+  .CropperImage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 @media only screen and (min-width: 750px) {
@@ -809,7 +846,7 @@ span {
   }
   .profileInfo {
     width: 100%;
-    height: 130px;
+    height: 150px;
     margin-bottom: 20px;
   }
 
@@ -841,6 +878,20 @@ span {
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
+  }
+
+  /*ChangeProfileImg ChangeCoverImg*/
+  .settingsChangeProfilePicture,
+  .settingsChangeCoverPicture,
+  .CropperImage {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .ProfileSettingsContainer {
+    width: 50%;
   }
 }
 

@@ -33,9 +33,20 @@ router.put("/addUrl/:id", async (req, res) => {
 })
 
 // dostani dat obrazku
-router.get("/getImg", async (req, res) => {
+router.get("/getImg/:id", async (req, res) => {
     try {
-        const image = await Image.findById(req.body.id);
+        const image = await Image.findById(req.params.id);
+        res.status(200).json(image);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// vyhledani obrazku pomoci url adresy
+router.post("/getImgByUrl", async (req, res) => {
+    try {
+        const image = await Image.findOne({url: req.body.url});
+
         res.status(200).json(image);
     } catch (err) {
         res.status(500).json(err);

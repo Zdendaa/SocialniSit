@@ -8,6 +8,7 @@ const image = require('./routes/image');
 const post = require('./routes/post');
 const comment = require('./routes/comment');
 const sharedPost = require('./routes/sharedPost');
+const userInfo = require('./routes/userInfo');
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/images", image);
 app.use("/api/posts", post);
 app.use("/api/comments", comment);
 app.use("/api/sharedPosts", sharedPost);
+app.use("/api/userInfos", userInfo);
 
 /*
 app.get("/", (req, res) => {

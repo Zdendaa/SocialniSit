@@ -11,7 +11,7 @@ const ButtonForActionsFriend = ({removeFriend, ifAreFriends, myUser, idOfUser, a
             ?  
             <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={removeFriend}><IoMdClose style={{fontSize: "20px"}}/>odebrat přítele</button> 
             :
-            myUser?.idOfRequests.includes(idOfUser)
+            myUser?.idOfRequests?.includes(idOfUser)
             ? 
             <button className="buttonForActionsFriend opacity" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={() => confirmRequest(idOfUser ,myUser._id)}><IoMdCheckmark style={{fontSize: "20px"}}/>přijmout žádost</button> 
             : 
