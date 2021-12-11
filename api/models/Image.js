@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 // schema obrazku
 const image = new mongoose.Schema({
-    name: {
+    url: {
         type: String,
-        required: true
+        default: null
     },
     likes: {
         type: Array,

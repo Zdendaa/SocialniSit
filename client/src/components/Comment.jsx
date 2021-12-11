@@ -59,7 +59,7 @@ const Comment = ({comment, addComment, commentMain}) => {
         <div className="comment">
             <div className="userCommentContainer">
                 <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
-                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" />
+                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                     <span>{userOfComment.username}</span>
                 </Link>
                 <span>{comment.value}</span>

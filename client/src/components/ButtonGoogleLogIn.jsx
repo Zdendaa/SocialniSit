@@ -48,6 +48,7 @@ const ButtonGoogleLogIn = () => {
     }
 
     const saveUser = (userData) => {
+        console.log(userData);
         const newUserData = userData.data;
         console.log(userData);
         // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky

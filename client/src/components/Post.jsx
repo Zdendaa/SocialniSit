@@ -67,14 +67,14 @@ const Post = ({post}) => {
             <div className="postContainer">
                 <div className="userContainerPost">
                     <Link to={`profile/${userOfPost?._id}`} className="userDivPost">
-                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
+                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerpolicy="no-referrer"/>
                         <span>{userOfPost?.username}</span>
                     </Link>    
                     <span>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="postContent">
                     <span className="postDescContent">{post.desc}</span>
-                    {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" />}
+                    {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" referrerPolicy="no-referrer"/>}
                 </div>
                 <div className="postBottom">
                     <div className="acitonsForPosts">

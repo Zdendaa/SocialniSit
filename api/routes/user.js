@@ -176,4 +176,28 @@ router.get("/getSearchPeople/:username", async (req, res) => {
     }
 })
 
+/** PRIDANI NOVE PROFILOVE FOTKY*/
+router.put("/setNewProfilePicture", async (req, res) => {
+    try {
+        // vyhledani naseho uzivatele a pridani url nove fotky
+        await User.findByIdAndUpdate(req.body.id, {$set: {idOrUrlOfProfilePicture: req.body.imgUrl}});
+        
+        res.status(200).json('profilová fotka byla úspěšně změněna');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+/** PRIDANI NOVE FOTKY NA POZADI */
+router.put("/setNewCoverPicture", async (req, res) => {
+    try {
+        // vyhledani naseho uzivatele a pridani url nove fotky
+        await User.findByIdAndUpdate(req.body.id, {$set: {idOrUrlOfCoverPicture: req.body.imgUrl}});
+
+        res.status(200).json('fotka na pozadi byla úspěšně změněna');
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router;

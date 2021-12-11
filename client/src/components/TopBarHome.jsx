@@ -17,7 +17,7 @@ const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
                     <p className="weight800">{user.username}</p>
-                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                 </Link>
 
                 <div className="containerLogOut">

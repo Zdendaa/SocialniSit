@@ -90,7 +90,7 @@ const AddNewPost = () => {
             <div className="addNewPostContainer">
                 <div className="topAddNewPost">
                     <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: "center"}}>
-                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" />
+                    <img className="profilePicture" src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                     </Link>
                     <input type="text" value={desc} onChange={(e) => validation(e.target.value)} className="inputAddNewPost" placeholder="co se vám honí hlavou..."/>
                 </div>
@@ -98,7 +98,7 @@ const AddNewPost = () => {
                 {image && 
                 
                         <div className="imgShowContainerAddPost">
-                            <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') === 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image) } alt="obrázek nelze najít" className="imgShowAddPost"/>
+                            <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') === 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image) } alt="obrázek nelze najít" className="imgShowAddPost" referrerPolicy="no-referrer"/>
                             <TiDelete className="removeImgShow scaled" onClick={(e) => {setImage(null)}} />
                         </div>
                         

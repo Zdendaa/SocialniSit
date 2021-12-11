@@ -23,7 +23,7 @@ const UserProfile = ({idOfUser, style, mobile, sharing, addSharedPost, idOfPost,
     return (  
         <div style={sharing && {display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "5px"}}>
             <Link to={`/profile/${idOfUser}`} className="userProfile">
-                <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style}/>
+                <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
                 {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
             </Link>
             {sharing && <SharingButton addSharedPost={addSharedPost} idOfUser={idOfUser} idOfPost={idOfPost}/>}

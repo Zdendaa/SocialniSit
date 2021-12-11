@@ -722,6 +722,10 @@ span {
   align-items: center;
 }
 
+/*ChangeProfileImg ChangeCoverImg*/
+.settingsChangeProfilePicture {
+}
+
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
   .mobile {

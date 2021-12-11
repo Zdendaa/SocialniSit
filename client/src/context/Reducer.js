@@ -6,10 +6,25 @@ const Reducer = (state, action) => {
                 user: action.payload
             }
         case "DELETE_USER":
-                return {
-                    ...state,
-                    user: null
+            return {
+                ...state,
+                user: null
+            }
+        case "CHANGE_PROFILE_IMG":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    idOrUrlOfProfilePicture: action.payload
                 }
+            }
+        case "CHANGE_COVER_IMG":
+            return {
+                user: {
+                    ...state.user,
+                    idOrUrlOfCoverPicture: action.payload
+                }
+            }
         default: 
             return state;
     }
