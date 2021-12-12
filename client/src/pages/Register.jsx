@@ -82,9 +82,12 @@ const Register = () => {
                     
                     // jestli existuje img ulozi se img do storage
                     if(img) {
+                        
                         const newImgName = "users/" + name.current.value + "/" + img.name + "" + Math.floor( Date.now() / 1000 );
                         await uploadImg(img, newImgName).then(async() => {
                             const urlOfImg = await downloadUrlImg(newImgName);
+                            // vytvroime zaznam v tabulce images
+                            await axios.post(changePath("/images/createNew"), {url: urlOfImg});
                             await setAndSaveUser(urlOfImg);
                         });
                     } else {

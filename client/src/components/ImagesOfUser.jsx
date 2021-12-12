@@ -12,6 +12,7 @@ const ImagesOfUser = ({ user }) => {
             await user?.idOfAllPicture?.map(async (idOfImage) => {
                 const image = await axios.get(changePath(`/images/getImg/${idOfImage}`));
                 const dataOfImage = image.data;
+                
                 setUrlOfImages(data => [...data, dataOfImage.url]);
             })
         }

@@ -14,6 +14,8 @@ const image = new mongoose.Schema({
         type: Array,
         default: []
     }
-})
+},
+{ timestamps: true } // kazdy post bude mit datum vytvoreni
+)
 
 module.exports = mongoose.model("Image", image);

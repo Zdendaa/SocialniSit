@@ -21,7 +21,6 @@ router.post("/addComment", async (req, res) => {
             idOfPost: req.body.idOfPost,
             idOfUser: req.body.idOfUser
         })
-        console.log(comment);
         const newComment = await comment.save();
         res.status(200).send(newComment);
     } catch (err) {
