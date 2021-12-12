@@ -544,8 +544,23 @@ span {
 /* Comment*/
 .userCommentContainer {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin: 9px 0px 9px 0px;
+  padding: 9px;
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
 }
+.userCommentTop,
+.userCommentBottom {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .imgUserComment {
   width: 30px;
   height: 30px;
@@ -621,11 +636,22 @@ span {
 .profileImages {
   position: relative;
   width: 42%;
+  display: flex;
+  justify-content: center;
   border-radius: 8px;
   height: 100%;
-  overflow: auto;
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+}
+.profileImagesContainer {
+  position: relative;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+.profileImagesContainer * {
+  margin: 5px 5px 0px 0px;
 }
 .profileInfo {
   position: relative;
@@ -716,6 +742,16 @@ span {
   margin-right: 8px;
 }
 
+/*SetUserInfo*/
+.SetUserInfo {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0px 20px 0px;
+}
+
 /*ButtonForActionsFriend*/
 .buttonForActionsFriend {
   padding: 8px;
@@ -741,6 +777,30 @@ span {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.inputInfo {
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  margin: 10px 0px 10px 0px;
+}
+
+.inputInfo:focus {
+  outline: none;
+}
+
+.buttonSetInfo {
+  border: none;
+  padding: 12px 20px 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.buttonSetInfo:focus {
+  outline: none;
 }
 
 @media only screen and (min-width: 450px) {
@@ -812,6 +872,10 @@ span {
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+
+  .SetUserInfo {
+    align-items: flex-start;
   }
 }
 

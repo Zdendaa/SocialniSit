@@ -9,17 +9,12 @@ const userInfo = new mongoose.Schema({
         type: String,
         max: 50
     },
-    city: {
-        type: String,
-        max: 50
-    },
     from: {
         type: String,
         max: 50
     },
-    ralationship: {
-        type: Number,
-        enum: [1,2,3]
+    relationShip: {
+        type: String
     }
 },
 { timestamps: true }

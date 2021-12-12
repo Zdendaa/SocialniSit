@@ -57,14 +57,22 @@ const Comment = ({comment, addComment, commentMain}) => {
     return (
         <div className="comment">
             <div className="userCommentContainer">
-                <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
-                    <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
-                    <span>{userOfComment.username}</span>
-                </Link>
-                <span>{comment.value}</span>
-                {ifIsLiked ? <FcLike style={{fontSize: "25px"}} onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} onClick={addOrRemoveLike} /> }{lenghtOfLikes}
-                <span>{format(comment.createdAt, 'myLanguage')}</span><br/>
-                <p onClick={() => setShow(!show)}>počet odpovědí {comment.children ? comment.children.length : "0"}</p>
+                <div className="userCommentTop">
+                    <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
+                        <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
+                        <span>{userOfComment.username}</span>
+                    </Link>
+                    <span>{format(comment.createdAt, 'myLanguage')}</span>
+                </div>
+                <div className="userCommentMid">
+                    <span>{comment.value}</span>
+                </div>
+                <div className="userCommentBottom">
+                    <span>{ifIsLiked ? <FcLike style={{fontSize: "25px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} className="scaled" onClick={addOrRemoveLike} /> }{lenghtOfLikes}</span>
+                    <span onClick={() => setShow(!show)}>počet odpovědí {comment.children ? comment.children.length : "0"}</span>
+                </div>
+                
+                
             </div>
             {show && 
                 <div className="commentsContainer">

@@ -27,8 +27,9 @@ const ButtonGoogleLogIn = () => {
                     const newUser = await axios.post(changePath("/users/login"), userData);
                     saveUser(newUser);
                 } catch (err) {
-                    console.log("ach jaj");
-                    // jestli uzivatel neexistuje registrujeme ho
+                    // jestli uzivatel neexistuje registrujeme ho a vytvroime zaznam v tabulce images
+                    await axios.post(changePath("/images/createNew"), {url: data.user.photoURL});
+                    // vytvoreni zaznamu v tabulkce users
                     const newUser = {
                         username: data.user.displayName,
                         email: data.user.email,

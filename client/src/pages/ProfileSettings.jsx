@@ -2,6 +2,7 @@
 import React from 'react'
 import ChangeCoverImg from '../components/ChangeCoverImg';
 import ChangeProfileImg from '../components/ChangeProfileImg';
+import SetUserInfo from '../components/SetUserInfo';
 import TopBarHome from '../components/TopBarHome'
 
 const ProfileSettings = () => { 
@@ -10,7 +11,8 @@ const ProfileSettings = () => {
             <TopBarHome />
             <div className="ProfileSettingsContainer">
                 <ChangeProfileImg />
-                <ChangeCoverImg />    
+                <ChangeCoverImg />   
+                <SetUserInfo /> 
             </div>
         </div>
     )

@@ -38,7 +38,21 @@ const UserInfo = ({ user }) => {
                     </div> 
                 </>
                 :
-                <p>sdf</p>
+                <>
+                    <div className="profileInfoContainers">
+                        <span>Popis:</span>
+                        <span style={{color: backgroundColor1, fontWeight: "500"}}>{info.desc}</span>
+                    </div>
+                    <div className="profileInfoContainers">
+                        <span>Bydlí v:</span>
+                        <span style={{color: backgroundColor1, fontWeight: "500"}}>{info.from}</span>
+
+                    </div>
+                    <div className="profileInfoContainers">
+                        <span>Vztah:</span>
+                        <span style={{ color: backgroundColor1, fontWeight: "500" }}>{info.relationShip}</span>
+                    </div> 
+                </>
             }
         </div>
     )

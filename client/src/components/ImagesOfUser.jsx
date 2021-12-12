@@ -20,11 +20,13 @@ const ImagesOfUser = ({ user }) => {
 
     return (
         <div className="profileImages">
+            <div className="profileImagesContainer">
             {
                 urlOfImages?.map((idOfImage) => (
                     <img src={idOfImage} alt="allPicture" style={{width: "70px", height: "70px", objectFit: "cover"}}/>
                 ))
             }
+            </div>
         </div>
     )
 }
