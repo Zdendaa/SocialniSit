@@ -21,6 +21,7 @@ const Home = () => {
            // serazeni od nejnovejsich postu po ty uplne posledni 
            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
            setPosts(sortPosts);
+           console.log(sortPosts)
        }
        getPosts();
     }, [user._id])

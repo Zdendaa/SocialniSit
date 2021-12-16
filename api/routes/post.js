@@ -72,7 +72,8 @@ router.get("/getAllPosts/:userId", async (req, res) => {
                             idOfComment: dataOfSharedPost.idOfComment,
                             createdAt: sharedPost.createdAt,
                             sharedUserId: sharedPost.userId,
-                            sharedDesc: sharedPost.desc
+                            sharedDesc: sharedPost.desc,
+                            idOfSharingToUser: sharedPost.idOfSharingToUser
                         }
                         return newDataOfPost;
                     }  
