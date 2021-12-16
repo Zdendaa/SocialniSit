@@ -5,6 +5,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { format } from 'timeago.js';
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Comment = ({comment, addComment, commentMain}) => {
 
@@ -24,6 +25,9 @@ const Comment = ({comment, addComment, commentMain}) => {
 
     // promenna pro pocet liku
     const [lenghtOfLikes, setLenghtOfLikes] = useState(comment.idOfLikes.length);
+
+    // promenna zda uzivatel kliknul na talickto pridej komentar a stranka se nacita
+    const [ifLoading, setifLoading] = useState(false);
 
     // ulozeni vsech deti tohoto komentare do promenne nestedComments
     const nestedComments = (comment.children || []).map((comment1) => {
@@ -49,8 +53,10 @@ const Comment = ({comment, addComment, commentMain}) => {
     }
 
     const prepareToAddComment = () => {
+        setifLoading(true);
         addComment(valueOfInput, comment._id, user._id).then(() => {
             setValueOfInput("");
+            setifLoading(false);
         })
     }
     
@@ -79,7 +85,7 @@ const Comment = ({comment, addComment, commentMain}) => {
                     
                     <div className="addComment">
                         <input className="addCommentInput" style={{backgroundColor: backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)} placeholder="co máš na mysli..." />
-                        <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={prepareToAddComment}>přidej komentář</button>
+                        <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={prepareToAddComment}>{!ifLoading ? "přidej komentář" : <ClipLoader color={backgroundColor2} size={10} />}</button>
                     </div>
                     <ul>
                         {nestedComments}

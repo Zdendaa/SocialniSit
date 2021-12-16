@@ -59,7 +59,7 @@ router.get("/getAllPosts/:userId", async (req, res) => {
 
                 const allSharedPosts = await Promise.all(sharedPosts.map(async (sharedPost) => {
                     // jetli je prispevek sdílený pro všechny přátelé nebo jen pro našeho uživatele
-                    if(!sharedPosts.idOfSharingToUser || sharedPosts.idOfSharingToUser === req.params.userId) {
+                    if(!sharedPost.idOfSharingToUser || sharedPost.idOfSharingToUser === req.params.userId) {
                         // nahrajeme si vsechny dane prispevky
                         const dataOfSharedPost = await Post.findById(sharedPost.idOfMainPost);
                     
@@ -78,10 +78,12 @@ router.get("/getAllPosts/:userId", async (req, res) => {
                         return newDataOfPost;
                     }  
                 }));
+                // vyfiltrovani z pole vsechny nulove hodnoty
+                const allPosts = allSharedPosts.filter(x => x != null);
 
                 const newPost = await Post.find({userId: friendId}); // vsechny prispevky daneho uzivatele
-
-                return sharedPosts ? newPost.concat(allSharedPosts) : newPost; // spojeni vsech postu nasich kamaradu a vsech postu ktere nasi kamaradi sdileli
+                
+                return sharedPosts ? newPost.concat(allPosts) : newPost; // spojeni vsech postu nasich kamaradu a vsech postu ktere nasi kamaradi sdileli
             })
         );
 

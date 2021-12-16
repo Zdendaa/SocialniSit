@@ -79,8 +79,9 @@ const CropperImage = ({ aspect, rect }) => {
         })
     }
 
-    const getCroppedImg = async () => {
-        if (!urlImage) return;
+    const getCroppedImg = async () => {    
+        if (!image || (crop.width === 0 && crop.height === 0)) return;
+        // vytvoreni canvasu
         const canvas = document.createElement("canvas");
         const scaleX = image.naturalWidth / image.width;
         const scaleY = image.naturalHeight / image.height;
@@ -114,9 +115,6 @@ const CropperImage = ({ aspect, rect }) => {
             await getNewCroppedPicture(blob);
         });
     }
-
-
-   // }));
 
     return (
         <div className="CropperImage">
