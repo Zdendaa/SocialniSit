@@ -53,10 +53,8 @@ const Comment = ({comment, addComment, commentMain}) => {
     }
 
     const prepareToAddComment = () => {
-        setifLoading(true);
-        addComment(valueOfInput, comment._id, user._id).then(() => {
+        addComment(valueOfInput, comment._id, user._id, setifLoading).then(() => {
             setValueOfInput("");
-            setifLoading(false);
         })
     }
     

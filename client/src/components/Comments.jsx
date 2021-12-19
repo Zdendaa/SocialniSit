@@ -60,9 +60,9 @@ const Comments = ({post}) => {
     // funkce
     
     // prida komentar
-    const addComment = async (valueOfInput, idOfparentComment, idOfUser) => {
+    const addComment = async (valueOfInput, idOfparentComment, idOfUser, setifLoadingValue) => {
         try {
-          setifLoading(true);
+          setifLoadingValue(true);
           const newComment = {
             value: valueOfInput,
             idOfPost: post._id,
@@ -74,7 +74,7 @@ const Comments = ({post}) => {
           // dostaneme vsechny komentare vztazene k prispevku
           const newComments = await axios.get(changePath(`/comments/getComments/${post._id}`));
           setComments(newComments.data);
-          setifLoading(false);
+          setifLoadingValue(false);
           setValueOfInput("");
           return true
         } catch (err) {
@@ -91,7 +91,7 @@ const Comments = ({post}) => {
                 <div className="commentsContainer">
                     <div className="addComment">
                       <input className="addCommentInput" style={{backgroundColor: backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
-                      <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id)}>{!ifLoading ? "přidej komentář" : <ClipLoader color={backgroundColor2} size={10} />}</button>
+                      <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id, setifLoading)}>{!ifLoading ? "přidej komentář" : <ClipLoader color={backgroundColor2} size={10} />}</button>
                     </div>
                         {   
                           allComments.map(comment => (
