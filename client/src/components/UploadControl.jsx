@@ -9,7 +9,7 @@ const UploadControl = ({children, setUrlImage, id}) => {
                 style={{ display: 'none' }}
                 id={id}
                 type="file"
-                onChange={ (e) => setUrlImage(URL.createObjectURL(e.target.files[0])) } 
+                onChange={ (e) => e.target.files[0] && setUrlImage(URL.createObjectURL(e.target.files[0])) } 
             />
             {children}
         </label>
