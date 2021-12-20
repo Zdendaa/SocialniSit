@@ -9,6 +9,10 @@ button {
   font-family: "Roboto", sans-serif;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .mobile {
   display: block;
 }
@@ -32,6 +36,29 @@ button {
 /*SearchBar*/
 .none {
   display: none;
+}
+
+.resultSearchContainer {
+  display: flex;
+}
+
+.searchBarInput {
+  padding: 5px;
+  border: none;
+}
+
+.searchBarInput:focus {
+  outline: none;
+}
+
+.stopSearchPeople {
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 25px;
+  height: 25px;
 }
 
 /* swiper */

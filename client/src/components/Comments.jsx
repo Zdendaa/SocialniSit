@@ -85,7 +85,7 @@ const Comments = ({post}) => {
 
     return (
         <div>
-            <span onClick={() => setShow(!show)}>počet komentářů {comments.length} {show ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+            <span onClick={() => setShow(!show)} className="pointer" >počet komentářů {comments.length} {show ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
 
             {show && 
                 <div className="commentsContainer">

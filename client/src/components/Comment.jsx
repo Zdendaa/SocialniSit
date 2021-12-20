@@ -72,8 +72,8 @@ const Comment = ({comment, addComment, commentMain}) => {
                     <span>{comment.value}</span>
                 </div>
                 <div className="userCommentBottom">
-                    <span>{ifIsLiked ? <FcLike style={{fontSize: "25px"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} className="scaled" onClick={addOrRemoveLike} /> }{lenghtOfLikes}</span>
-                    <span onClick={() => setShow(!show)}>počet odpovědí {comment.children ? comment.children.length : "0"}</span>
+                    <span>{ifIsLiked ? <FcLike style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> }{lenghtOfLikes}</span>
+                    <span onClick={() => setShow(!show)} className="pointer" >počet odpovědí {comment.children ? comment.children.length : "0"}</span>
                 </div>
                 
                 
