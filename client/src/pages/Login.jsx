@@ -10,7 +10,7 @@ import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Login = () => {
-    const {setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const {setUser, setColors, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
 
     // promenna useState jesli se nacita stranka
     const [ifWaiting, setIfWaiting] = useState(false);
@@ -57,7 +57,15 @@ const Login = () => {
                     
                 // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
                 localStorage.setItem("user", JSON.stringify(newUserData));
-            
+
+                // zjisteni zda existuje UserColors
+                const ifExistUserColors = await axios.get(changePath(`userColors/ifUserColorsExist/${newUserData._id}`))
+                // jestli existuej tak ulozime do local storage a take do context api barvy uzivatele
+                if(ifExistUserColors.data) {
+                    localStorage.setItem("colors", JSON.stringify({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4}));
+                    setColors({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4});
+                } 
+                
                 // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
                 setUser(newUserData);
             

@@ -7,10 +7,10 @@ import { GlobalContext } from '../context/GlobalState';
 import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions';
 import UploadControl from './UploadControl';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { GoCheck } from 'react-icons/go';
 
 const CropperImage = ({ aspect, rect }) => { 
-    const { user, changeProfileImg, changeCoverImg, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
+    const { user, changeProfileImg, changeCoverImg, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
 
     const [crop, setCrop] = useState({ aspect });
 
@@ -19,6 +19,9 @@ const CropperImage = ({ aspect, rect }) => {
     const [image, setImage] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
+
+    // zda se nenastala zadna chyba
+    const [noError, setNoError] = useState(false);
 
     const getNewCroppedPicture = async (image) => {
         setIsLoading(true);
@@ -51,6 +54,7 @@ const CropperImage = ({ aspect, rect }) => {
                 userObject.idOrUrlOfCoverPicture = urlOfImg;
                 const newUserData = JSON.stringify(userObject);
                 localStorage.setItem("user", newUserData);
+                setNoError(true);
                 setIsLoading(false);
             } 
             else {
@@ -74,6 +78,7 @@ const CropperImage = ({ aspect, rect }) => {
                 const newUserData = JSON.stringify(userObject);
                 localStorage.setItem("user", newUserData);
                 setIsLoading(false);
+                setNoError(true);
             }
             
         })
@@ -118,8 +123,8 @@ const CropperImage = ({ aspect, rect }) => {
 
     return (
         <div className="CropperImage">
-            <UploadControl setUrlImage={setUrlImage} id={rect ? "addCoverPicture" : "addProfilePicture"}>
-                <span>vyber obrázek</span>
+            <UploadControl setUrlImage={setUrlImage} setNoError={setNoError} id={rect ? "addCoverPicture" : "addProfilePicture"}>
+                <span className="opacity" style={{color: backgroundColor4}}>vyber obrázek</span>
             </UploadControl>
             { 
                 urlImage && (
@@ -147,7 +152,7 @@ const CropperImage = ({ aspect, rect }) => {
                     </>
                 )       
             }
-            <button onClick={() => getCroppedImg()} className="inputImgAddPost opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, margin: "15px 0px 0px 0px"}} >{!isLoading ? (rect ? "změnit fotku na pozadí" : "změnit profilovou fotku") : <ClipLoader color={backgroundColor2} size={10}></ClipLoader>}</button>
+            <button onClick={() => getCroppedImg()} className="inputImgAddPost opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, margin: "15px 0px 0px 0px"}} >{!isLoading ? (noError ? <div className="correctAnimation"><GoCheck size={15} /></div> : (rect ? "změnit fotku na pozadí" : "změnit profilovou fotku") ) : <ClipLoader color={backgroundColor4} size={10}></ClipLoader>}</button>
         </div>
 
     )

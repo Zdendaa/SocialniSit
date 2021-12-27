@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const Comment = ({comment, addComment, commentMain}) => {
 
-    const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor2, backgroundColor3} = useContext(GlobalContext);
 
     // promenna ktera resi zda jsou komentare videt
     const [show, setShow] = useState(false);
@@ -64,16 +64,16 @@ const Comment = ({comment, addComment, commentMain}) => {
                 <div className="userCommentTop">
                     <Link to={`/profile/${userOfComment._id}`} style={{display: 'flex', alignItems: "center", textDecoration: "none", color: "black", marginRight: "8px"}}>
                         <img className="imgUserComment" src={userOfComment.idOrUrlOfProfilePicture ? userOfComment.idOrUrlOfProfilePicture : "img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
-                        <span>{userOfComment.username}</span>
+                        <span style={{color: backgroundColor3}}>{userOfComment.username}</span>
                     </Link>
-                    <span>{format(comment.createdAt, 'myLanguage')}</span>
+                    <span style={{color: backgroundColor3}}>{format(comment.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="userCommentMid">
-                    <span>{comment.value}</span>
+                    <span style={{color: backgroundColor3}}>{comment.value}</span>
                 </div>
                 <div className="userCommentBottom">
-                    <span>{ifIsLiked ? <FcLike style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> }{lenghtOfLikes}</span>
-                    <span onClick={() => setShow(!show)} className="pointer" >počet odpovědí {comment.children ? comment.children.length : "0"}</span>
+                    <span style={{color: backgroundColor3}}>{ifIsLiked ? <FcLike style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> : <FcLikePlaceholder style={{fontSize: "25px"}} className="scaled pointer" onClick={addOrRemoveLike} /> }{lenghtOfLikes}</span>
+                    <span onClick={() => setShow(!show)} className="pointer" style={{color: backgroundColor3}} >počet odpovědí {comment.children ? comment.children.length : "0"}</span>
                 </div>
                 
                 

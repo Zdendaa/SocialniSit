@@ -1,5 +1,6 @@
 
 import React from 'react'
+import ChangeColors from '../components/ChangeColors';
 import ChangeCoverImg from '../components/ChangeCoverImg';
 import ChangeProfileImg from '../components/ChangeProfileImg';
 import SetUserInfo from '../components/SetUserInfo';
@@ -13,6 +14,7 @@ const ProfileSettings = () => {
                 <ChangeProfileImg />
                 <ChangeCoverImg />   
                 <SetUserInfo /> 
+                <ChangeColors />
             </div>
         </div>
     )

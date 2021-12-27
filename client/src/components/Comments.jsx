@@ -7,7 +7,7 @@ import Comment from './Comment';
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Comments = ({post}) => {
-    const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4} = useContext(GlobalContext);
 
     // promenna pro vsechny komentare pro tenhle prispevek
     const [comments, setComments] = useState([]);
@@ -61,6 +61,9 @@ const Comments = ({post}) => {
     
     // prida komentar
     const addComment = async (valueOfInput, idOfparentComment, idOfUser, setifLoadingValue) => {
+        if(valueOfInput === "") {
+          return;
+        }
         try {
           setifLoadingValue(true);
           const newComment = {
@@ -85,13 +88,13 @@ const Comments = ({post}) => {
 
     return (
         <div>
-            <span onClick={() => setShow(!show)} className="pointer" >počet komentářů {comments.length} {show ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+            <span onClick={() => setShow(!show)} className="pointer" style={{color: backgroundColor3}} >počet komentářů {comments.length} {show ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
 
             {show && 
                 <div className="commentsContainer">
                     <div className="addComment">
                       <input className="addCommentInput" style={{backgroundColor: backgroundColor2}} type="text" value={valueOfInput} onChange={(e) => setValueOfInput(e.target.value)}placeholder="co máš na mysli..." />
-                      <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id, setifLoading)}>{!ifLoading ? "přidej komentář" : <ClipLoader color={backgroundColor2} size={10} />}</button>
+                      <button className="addCommentButton" style={{backgroundColor: backgroundColor1}} onClick={() => addComment(valueOfInput, null, user._id, setifLoading)}>{!ifLoading ? "přidej komentář" : <ClipLoader color={backgroundColor4} size={10} />}</button>
                     </div>
                         {   
                           allComments.map(comment => (

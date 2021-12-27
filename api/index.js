@@ -9,6 +9,8 @@ const post = require('./routes/post');
 const comment = require('./routes/comment');
 const sharedPost = require('./routes/sharedPost');
 const userInfo = require('./routes/userInfo');
+const userColors = require('./routes/userColors');
+
 
 dotenv.config();
 const app = express();
@@ -29,6 +31,7 @@ app.use("/api/posts", post);
 app.use("/api/comments", comment);
 app.use("/api/sharedPosts", sharedPost);
 app.use("/api/userInfos", userInfo);
+app.use("/api/userColors", userColors);
 
 /*
 app.get("/", (req, res) => {

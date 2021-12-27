@@ -14,7 +14,7 @@ import ImagesOfUser from '../components/ImagesOfUser';
 import UserInfo from '../components/UserInfo';
 
 const Profile = () => {
-    const { user, backgroundColor1 } = useContext(GlobalContext);
+    const { user, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
     // useState promenne
@@ -148,7 +148,7 @@ const Profile = () => {
                         idOfUser === user._id && 
                         <>
                             <div className="buttonSettingsContainer">
-                                    <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white", textDecoration: "none", fontSize: "13.33px", padding: "12px", borderRadius: "10px", margin: "0px 0px 15px 0px"}}>nasatvení profilu</Link>
+                                    <Link to="/settings" className="buttonLogOut opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px", padding: "12px", borderRadius: "10px", margin: "0px 0px 15px 0px"}}>nasatvení profilu</Link>
                             </div>
                             <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id}/>
                         </>

@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 
 const AddNewPost = () => {
-    const {user, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor2, backgroundColor4} = useContext(GlobalContext);
    
     // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
     const [image, setImage] = useState(null);
@@ -105,8 +105,8 @@ const AddNewPost = () => {
                 }
                 <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "100%"}}/>
                 <div className="middleAddNewPost">
-                    <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost" style={{backgroundColor: backgroundColor1, color: "white" }} >
-                        <span>obrázek</span>
+                    <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost opacity" style={{backgroundColor: backgroundColor1, color: "white" }} >
+                        <span style={{color: backgroundColor4}}>obrázek</span>
                     </label>
                     <input id="fileUpload" key={image || ''} type="file" accept="image/*" onChange={(e) => { setImage(e.target.files[0]); setValueUrlInput("") }} required/>
                     
@@ -115,7 +115,7 @@ const AddNewPost = () => {
                 </div>
                 <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "75%"}}/>
                 <div className="bottomAddNewPost">
-                    <button style={{backgroundColor: backgroundColor1, color: "white"}} className="inputImgAddPost opacity" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
+                    <button style={{backgroundColor: backgroundColor1, color: backgroundColor4}} className="inputImgAddPost opacity" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
                 </div>
             </div>
         </div>

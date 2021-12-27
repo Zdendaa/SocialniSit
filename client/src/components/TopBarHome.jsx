@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
 
 const TopBarHome = () => {
-const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
+const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useContext(GlobalContext);
     const history = useHistory();
 
     return (
@@ -21,14 +21,15 @@ const {user, deleteUser, backgroundColor1} = useContext(GlobalContext);
                 </Link>
 
                 <div className="containerLogOut">
-                    <button className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={ () => { 
+                    <button className="buttonLogOut opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} onClick={ () => { 
                         localStorage.removeItem("user");
+                        localStorage.removeItem("colors");
                         deleteUser();
+                        setColors({backgroundColor1: "#D88100", backgroundColor2: "#F4F4F4", backgroundColor3: "black", backgroundColor4: "#ffffff"});
                         history.push("/register");
-                        
                     } }>odhlásit se
                     </button>
-                    <Link to="/settings" className="buttonLogOut" style={{backgroundColor: backgroundColor1, color: "white", textDecoration: "none", fontSize: "13.33px"}}>nasatvení profilu</Link>
+                    <Link to="/settings" className="buttonLogOut opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px"}}>nasatvení profilu</Link>
                 </div>
             </div>
         </div>

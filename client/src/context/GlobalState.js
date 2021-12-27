@@ -4,10 +4,10 @@ import Reducer from "./Reducer"
 // initial state zde bude ulozeny uzivatel aby jsem mohl jeho data pouzivat ve vsech komponentach
 const initialState = {
     user: localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")), // do user se ulozi json promenna user z local storagu
-    backgroundColor1: "#D88100", // hlavni barva
-    backgroundColor2: "#F4F4F4", // sekundarni barva
-    backgroundColor3: "black", // barva cerny text
-    backgroundColor4: "white", // barva pro bily text
+    backgroundColor1: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor1 : "#D88100", // hlavni barva
+    backgroundColor2: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor2 : "#F4F4F4", // sekundarni barva
+    backgroundColor3: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor3 : "black", // barva pro cerny text
+    backgroundColor4: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor4 : "#ffffff", // barva pro bily text
 }
 
 export const GlobalContext = createContext(initialState);
@@ -48,6 +48,14 @@ export const GlobalProvider = ({children}) => {
         })
     }
 
+    // nastaveni barev
+    function setColors(data) {
+        dispatch({
+            type: 'SET_COLORS',
+            payload: data
+        })
+    }
+
 
     return (
         <GlobalContext.Provider value={{
@@ -59,7 +67,8 @@ export const GlobalProvider = ({children}) => {
             setUser, 
             deleteUser,
             changeProfileImg,
-            changeCoverImg
+            changeCoverImg,
+            setColors
         }}>
             {children}
         </GlobalContext.Provider>

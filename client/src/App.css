@@ -20,6 +20,23 @@ button {
   display: none;
 }
 
+.correctAnimation {
+  width: 100%;
+  overflow: hidden;
+  animation-name: check;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes check {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 /*hover effect*/
 .scaled,
 .opacity {
@@ -828,6 +845,23 @@ span {
 
 .buttonSetInfo:focus {
   outline: none;
+}
+
+/* ChangeColors */
+.ChangeColors {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+/* ColorsPicker */
+.ColorsPicker {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0px 5px 0px;
 }
 
 @media only screen and (min-width: 450px) {

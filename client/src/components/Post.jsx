@@ -16,7 +16,7 @@ const Post = ({post}) => {
     register('myLanguage', czDataFormat);
 
     // zavolani prihlaseneho usera
-    const {user, backgroundColor1} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor3} = useContext(GlobalContext);
     
     // Promenne UseState
 
@@ -56,7 +56,7 @@ const Post = ({post}) => {
             <> 
                 <div style={{padding: "15px 0px 0px 15px"}}>
                     <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
-                    <span>{post.sharedDesc}</span>
+                    <span style={{color: backgroundColor3}}>{post.sharedDesc}</span>
                    
                 </div> 
                 
@@ -67,19 +67,19 @@ const Post = ({post}) => {
                 <div className="userContainerPost">
                     <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
                         <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
-                        <span>{userOfPost?.username}</span>
+                        <span style={{color: backgroundColor3}}>{userOfPost?.username}</span>
                     </Link>    
-                    <span>{format(post.createdAt, 'myLanguage')}</span>
+                    <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="postContent">
-                    <span className="postDescContent">{post.desc}</span>
+                    <span className="postDescContent" style={{color: backgroundColor3}}>{post.desc}</span>
                     {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" referrerPolicy="no-referrer"/>}
                 </div>
                 <div className="postBottom">
                     <div className="acitonsForPosts">
                         <div>
                             {ifIsLiked ? <FcLike style={{fontSize: "35px", cursor: "pointer"}} className="scaled" onClick={addOrRemoveLike} /> : <FcLikePlaceholder className="scaled" style={{fontSize: "35px", cursor: "pointer"}} onClick={addOrRemoveLike} /> }
-                            <span>{lenghtOfLikes}</span>
+                            <span style={{color: backgroundColor3}}>{lenghtOfLikes}</span>
                         </div>
                         <FaShare style={{fontSize: "30px", cursor: "pointer", color: backgroundColor1}} className="scaled" onClick={() => setifSharing(!ifSharing)}/>
                     </div>

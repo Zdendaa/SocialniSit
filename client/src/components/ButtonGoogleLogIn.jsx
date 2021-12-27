@@ -7,7 +7,7 @@ import changePath from '../changePath';
 import { FcGoogle } from 'react-icons/fc';
 
 const ButtonGoogleLogIn = () => {
-    const {setUser} = useContext(GlobalContext);
+    const {setUser, setColors} = useContext(GlobalContext);
 
     // useHistory ( pouziva se k presmerovani stranky)
     const history = useHistory();
@@ -25,6 +25,15 @@ const ButtonGoogleLogIn = () => {
                         isGoogleAccount: true
                     }
                     const newUser = await axios.post(changePath("/users/login"), userData);
+
+                    // zjisteni zda existuje UserColors
+                    const ifExistUserColors = await axios.get(changePath(`userColors/ifUserColorsExist/${newUser.data._id}`))
+                    // jestli existuej tak ulozime do local storage a take do context api barvy uzivatele
+                    if(ifExistUserColors.data) {
+                        localStorage.setItem("colors", JSON.stringify({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4})); 
+                        setColors({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4});
+                    } 
+
                     saveUser(newUser);
                 } catch (err) {
                     // jestli uzivatel neexistuje registrujeme ho a vytvroime zaznam v tabulce images
@@ -49,9 +58,7 @@ const ButtonGoogleLogIn = () => {
     }
 
     const saveUser = (userData) => {
-        console.log(userData);
         const newUserData = userData.data;
-        console.log(userData);
         // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
         localStorage.setItem("user", JSON.stringify(newUserData));
 

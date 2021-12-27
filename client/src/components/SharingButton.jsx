@@ -5,7 +5,7 @@ import { GlobalContext } from '../context/GlobalState';
 import ClipLoader from "react-spinners/ClipLoader";
 
 const SharingButton = ({addSharedPost, idOfUser, idOfPost }) => {
-    const {backgroundColor2, backgroundColor1, user} = useContext(GlobalContext);
+    const {backgroundColor4, backgroundColor1, user} = useContext(GlobalContext);
 
     // promenna zda li uz uzivatel sdilel prispevek tomuto uzivateli
     const [ifIsShare, setIfIsShare] = useState(false);
@@ -45,7 +45,7 @@ const SharingButton = ({addSharedPost, idOfUser, idOfPost }) => {
     }
     return (
         <>
-            <button onClick={ async () => await addOrRemovePost()} className="shareButton opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor2}}>{ifLoading ? <ClipLoader color={backgroundColor2} size={10} ></ClipLoader> : ifIsShare ? "sdíleno" : "sdílej"}</button>
+            <button onClick={ async () => await addOrRemovePost()} className="shareButton opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}}>{ifLoading ? <ClipLoader color={backgroundColor4} size={10} ></ClipLoader> : ifIsShare ? "sdíleno" : "sdílej"}</button>
         </>
     )
 }

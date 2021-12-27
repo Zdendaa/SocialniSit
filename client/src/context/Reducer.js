@@ -26,6 +26,14 @@ const Reducer = (state, action) => {
                     idOrUrlOfCoverPicture: action.payload
                 }
             }
+        case "SET_COLORS":
+            return {
+                ...state,
+                backgroundColor1: action.payload.backgroundColor1,
+                backgroundColor2: action.payload.backgroundColor2,
+                backgroundColor3: action.payload.backgroundColor3,
+                backgroundColor4: action.payload.backgroundColor4
+            }
         default: 
             return state;
     }
