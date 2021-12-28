@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 /* import swiper*/ 
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper.min.css'
@@ -7,7 +7,7 @@ import UserProfile from './UserProfile';
 SwiperCore.use([Pagination]);
 
 
-const SwiperOnlineFriends = ({users, type, classBorderRadius}) => {
+const SwiperOnlineFriends = ({users, type, classBorderRadius, onlineUsers}) => {
     return (
         <>
             {
@@ -15,9 +15,9 @@ const SwiperOnlineFriends = ({users, type, classBorderRadius}) => {
             ?
                 <div className={`swiperOnline ${classBorderRadius ? classBorderRadius : "mobile"}`} >
                     <Swiper slidesPerView={6} spaceBetween={0} pagination={{"clickable": true}} className="mySwiper">
-                    {users.map((user, index) => (
-                            <SwiperSlide key={index} >
-                                <UserProfile key={user._id}  idOfUser={user._id} mobile={true} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}} />
+                    {users.map((user) => (
+                            <SwiperSlide key={user._id} >
+                                <UserProfile onlineUsers={onlineUsers} key={user._id} idOfUser={user._id} mobile={true} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}} />
                             </SwiperSlide>
                     ))}
                     </Swiper> 
@@ -26,7 +26,7 @@ const SwiperOnlineFriends = ({users, type, classBorderRadius}) => {
                 <div className="onlineListOfUsers">
                     {users.map((user) => (
                         <div className="pc" key={user._id} >
-                            <UserProfile key={user._id}  idOfUser={user._id} mobile={false} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}}/>
+                            <UserProfile onlineUsers={onlineUsers} key={user._id} idOfUser={user._id} mobile={false} style={{width: "42px", height: "42px", borderRadius: "50%", objectFit: "cover"}}/>
                         </div>
                     ))}
                 </div>
