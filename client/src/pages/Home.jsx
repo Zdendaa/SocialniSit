@@ -5,31 +5,13 @@ import SwiperOnlineFriends from '../components/SwiperOnlineFriends';
 import AddNewPost from '../components/AddNewPost';
 import axios from 'axios';
 import Post from '../components/Post';
-import { io } from "socket.io-client";
+import Notifications from '../components/Notifications';
 
-const Home = () => {
+const Home = ({ onlineUsers, socket }) => {
     const {user} = useContext(GlobalContext);
 
     const [posts, setPosts] = useState(null);
     const [users, setUsers] = useState([]);
-
-    const [onlineUsers, setOnlineUsers] = useState([]);
-
-    const socket = useRef();
-
-    useEffect(() => {
-        // pripojeni socket.io
-        socket.current = io("ws://localhost:8900");
-    }, [])
-    
-    useEffect(() => {
-        // zavolani socket.io addUser a poslani hodnoty user.id
-        socket.current.emit("addUser", user._id);
-        // dostani vsech online uzivatelu
-        socket.current.on("getUsers", users => {
-            setOnlineUsers(users.filter(onlineUser => onlineUser.userId !== user._id));
-        })
-    }, [user])
 
     useEffect(() => {
        const getPosts = async () => {
@@ -66,12 +48,13 @@ const Home = () => {
                     <AddNewPost />    
                     {
                         posts?.map((post, index) => (
-                            <Post post={post} key={index}/> 
+                            <Post post={post} key={index} socket={socket}/> 
                         ))
                     }
                 </div>
                 <SwiperOnlineFriends users={users} onlineUsers={onlineUsers} className="pc" type={2}/>
              </div>
+             <Notifications socket={socket}/>
         </div>
     )
 }

@@ -18,6 +18,10 @@ const removeUser = (socketId) => {
     users = users.filter((user) => user.socketId !== socketId);
 }
 
+const findUser = (userId) => {
+    return users.find((user) => user.userId === userId);
+}
+
 // pripojeni serveru
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -25,6 +29,11 @@ io.on('connection', (socket) => {
     socket.on("addUser", (userId) => {
         addUser(userId, socket.id);
         io.emit("getUsers", users);
+    })
+
+    socket.on("sendNotification", ({senderId, recieverId, type, url, idOfPost, readed, text}) => {
+        console.log("notification sended", recieverId);
+        findUser(recieverId)?.socketId && io.to(findUser(recieverId).socketId).emit("getNotification", {senderId, recieverId, type, url, idOfPost, readed, text});
     })
 
     socket.on("disconnect", () => {

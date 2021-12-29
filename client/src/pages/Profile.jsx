@@ -12,8 +12,9 @@ import Post from '../components/Post';
 import { Link } from 'react-router-dom';
 import ImagesOfUser from '../components/ImagesOfUser';
 import UserInfo from '../components/UserInfo';
+import Notifications from '../components/Notifications';
 
-const Profile = () => {
+const Profile = ({ socket }) => {
     const { user, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
@@ -116,6 +117,13 @@ const Profile = () => {
 
     // pridani nebo odebrani zadosti 
     const addOrRemoveRequestToUser = async () => {
+        if(ifSendRequest) {
+            sendNotification(idOfUser, 4, `/profile/${idOfUser}`, null, "odebral žádost o přátelství");
+        }else {
+            sendNotification(idOfUser, 4, `/profile/${idOfUser}`, null, "poslal žádost o prátelství"); 
+        }
+        
+
         setIfSendRequtest(!ifSendRequest);
         await axios.put(changePath(`/users/addOrRemoveRequest/${idOfUser}/${user._id}`));
     }
@@ -128,6 +136,7 @@ const Profile = () => {
         //console.log(allFriends);
         setIfAreFriends(true);
         await axios.put(changePath(`/users/addFriend/${id}/${user._id}`));
+        sendNotification(id, 4, `/profile/${id}`, null, "nyní jste přátelé");
     }
 
     // zruseni pratelstvi
@@ -135,6 +144,13 @@ const Profile = () => {
         setIfAreFriends(false);
         setAllFriends((allFriends.filter(friends => friends._id !== user._id)));
         await axios.put(changePath(`/users/removeFriend/${idOfUser}/${user._id}`));
+    }
+
+    const sendNotification = async (recieverId, type, url, idOfPost, text) => {
+        // pridani notifikace do db
+        await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        // pridani notifikace do socket.io serveru
+        socket.emit("sendNotification", {senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
     }
 
     return (
@@ -186,6 +202,7 @@ const Profile = () => {
                     }
                 </div>
             </div>
+            <Notifications socket={socket}/>
         </div>
     )
 }

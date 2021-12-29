@@ -6,7 +6,7 @@ import { GlobalContext } from '../context/GlobalState';
 import Comment from './Comment';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const Comments = ({post}) => {
+const Comments = ({post, sendNotification}) => {
     const {user, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4} = useContext(GlobalContext);
 
     // promenna pro vsechny komentare pro tenhle prispevek
@@ -77,6 +77,8 @@ const Comments = ({post}) => {
           // dostaneme vsechny komentare vztazene k prispevku
           const newComments = await axios.get(changePath(`/comments/getComments/${post._id}`));
           setComments(newComments.data);
+          // posleme notifikaci
+          sendNotification(post.userId, 2, "", post._id, "přidal komentář");
           setifLoadingValue(false);
           setValueOfInput("");
           return true

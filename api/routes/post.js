@@ -155,5 +155,15 @@ router.get("/getPosts/:userId", async (req, res) => {
     }
 })
 
+/* DOSTANI JEDNOHO POSTU PODLE JEHO ID*/
+router.get("/getPost/:idOfPost", async (req, res) => {
+    try {
+        const getPost = await Post.findById(req.params.idOfPost);
+        res.status(200).json(getPost); 
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 module.exports = router;

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import Share from './Share';
 import UserProfile from './UserProfile';
 
-const Post = ({post}) => {
+const Post = ({post, socket}) => {
     // registrovani cestiny do formatjs
     register('myLanguage', czDataFormat);
 
@@ -29,7 +29,7 @@ const Post = ({post}) => {
     // promenna pro ulozeni vlastnika prispevku
     const [userOfPost, setUserOfPost] = useState(null);
 
-    // promenna pro zjisteni zda je uzivatel sdilejici prispevek
+    // promenna pro zjisteni zda uzivatel jiz sdili prispevek
     const [ifSharing, setifSharing] = useState(false);
 
     useEffect(() => {
@@ -41,10 +41,23 @@ const Post = ({post}) => {
         getUser();
     }, [post.userId])
 
+    const sendNotification = async (recieverId, type, url, idOfPost, text) => {
+        // pridani notifikace do db
+        if(user._id === post.userId) return;
+        console.log(recieverId)
+        
+        await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        // pridani notifikace do socket.io serveru
+        socket.emit("sendNotification", {senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
+        
+    }
     // funkce 
 
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
+        var text = !ifIsLiked ? "přidal like" : "odebral like";
+        await sendNotification(post.userId, 1, null, post._id, text);
+
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
         await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id })
@@ -83,10 +96,10 @@ const Post = ({post}) => {
                         </div>
                         <FaShare style={{fontSize: "30px", cursor: "pointer", color: backgroundColor1}} className="scaled" onClick={() => setifSharing(!ifSharing)}/>
                     </div>
-                    <Comments post={post} key={post._id}/>
+                    <Comments post={post} key={post._id} sendNotification={sendNotification}/>
                 </div>
             </div>
-            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing} idOfPost={post._id}/> </> }
+            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing} sendNotification={sendNotification} idOfPost={post._id}/> </> }
         </div>
     )
 }

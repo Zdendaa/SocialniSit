@@ -5,7 +5,7 @@ import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import SharingButton from './SharingButton';
 
-const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost}) => {
+const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, noLink}) => {
     const {backgroundColor3, backgroundColor1} = useContext(GlobalContext);
 
     const [currentUser, setCurrentUser] = useState([]);
@@ -26,14 +26,24 @@ const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPo
 
     return (  
         <div style={sharing && {display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "5px"}}>
-            <Link to={`/profile/${idOfUser}`} className="userProfile">
-                <div className="mainImg">
-                    <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
-                    {console.log(isOnline)}
-                    {isOnline && <div className="online"></div>}
+            {
+                noLink ?
+                <div className="userProfile">
+                    <div className="mainImg">
+                        <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
+                        {isOnline && <div className="online"></div>}
+                    </div>
+                    {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
                 </div>
-                {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
-            </Link>
+                :
+                <Link to={`/profile/${idOfUser}`} className="userProfile">
+                    <div className="mainImg">
+                        <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
+                        {isOnline && <div className="online"></div>}
+                    </div>
+                    {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
+                </Link>
+            }
             
             {sharing && <SharingButton addSharedPost={addSharedPost} idOfUser={idOfUser} idOfPost={idOfPost}/>}
         </div>

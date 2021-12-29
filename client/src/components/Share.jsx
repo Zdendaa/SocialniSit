@@ -6,7 +6,7 @@ import axios from 'axios';
 import changePath from '../changePath';
 import SharingButton from './SharingButton';
 
-const Share = ({ setifSharing, idOfPost }) => {
+const Share = ({ setifSharing, idOfPost, sendNotification }) => {
     // zavolani prihlaseneho usera
     const {user, backgroundColor1} = useContext(GlobalContext);
 
@@ -30,7 +30,18 @@ const Share = ({ setifSharing, idOfPost }) => {
 
     const addSharedPost = async (id, ifIsShare, idOfPost, idOfSharedPost) => {
         if(ifIsShare) {
-           await axios.post(changePath("/sharedPosts/removeSharedPost"), {idOfSharedPost:idOfSharedPost});
+            await axios.post(changePath("/sharedPosts/removeSharedPost"), {idOfSharedPost:idOfSharedPost});
+            if(id) {
+                console.log("zrusil sdileni s id")
+                sendNotification(id, 3, null, idOfPost, "odebral sdílení");
+            } else {
+                
+                allFriends.forEach(friend => {
+                    sendNotification(friend._id, 3, null, idOfPost, "odebral sdílení");
+                })
+                
+                console.log("zrusil sdileni bez id")
+            }
         } else {
             const postData = {
                 userId: user._id,
@@ -39,6 +50,18 @@ const Share = ({ setifSharing, idOfPost }) => {
                 idOfMainPost: idOfPost
             }
             await axios.post(changePath("/sharedPosts/addSharedPost"), postData);
+
+            if(id) {
+                console.log("sdili s id")
+                sendNotification(id, 3, null, idOfPost, "sdílí");
+            } else {
+                console.log("sdili bez id")
+                
+                allFriends.forEach(friend => {
+                    sendNotification(friend._id, 3, null, idOfPost, "sdílí");
+                })
+                
+            }
         }
         
     }
