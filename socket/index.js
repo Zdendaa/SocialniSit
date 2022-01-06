@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
     socket.on("sendNotification", ({senderId, recieverId, type, url, idOfPost, readed, text}) => {
         console.log("notification sended", recieverId);
-        findUser(recieverId)?.socketId && io.to(findUser(recieverId).socketId).emit("getNotification", {senderId, recieverId, type, url, idOfPost, readed, text});
+        findUser(recieverId)?.socketId !== [] && io.to(findUser(recieverId).socketId).emit("getNotification", {senderId, recieverId, type, url, idOfPost, readed, text, date: Date.now() });
     })
 
     socket.on("disconnect", () => {

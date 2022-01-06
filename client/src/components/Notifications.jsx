@@ -18,11 +18,16 @@ const Notifications = ({ socket }) => {
     const [showPost, setShowPost] = useState(false);
     const [dataOfPost, setDataOfPost] = useState([]);
 
+    const arrayOfNotifications = [];
+
+
     useEffect(() => {
         const setAllNotifications = async () => {
             const allNotifications = await axios.get(changePath(`/notifications/getAllNotifications/${user._id}`)); 
             console.log(allNotifications.data)
             setNotifications(allNotifications.data);
+            arrayOfNotifications.push(allNotifications.data);
+            sortNotificationsByDate(allNotifications.data);
         }
         setAllNotifications();
     }, [user._id])
@@ -30,14 +35,27 @@ const Notifications = ({ socket }) => {
     useEffect(() => {
         socket?.on("getNotification", (data) => {
             console.log("new notification", data.type);
-            setNotifications(prev => [...prev, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text}]);
+
+            setNotificationsNewData(data);
         })
     }, [socket])
 
+    const setNotificationsNewData = (data) => {
+       // sortNotificationsByDate();
+        
+       arrayOfNotifications.push([arrayOfNotifications, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
+       console.log(arrayOfNotifications);
+    }
+
+    const sortNotificationsByDate = (data) => {
+        console.log(notifications)
+        var sortNotifications = data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
+        setNotifications(sortNotifications);
+    }
+
     const getAndShowPost = async (idOfPost) => {
-        console.log("ahoj")
         const currentPost = await axios.get(changePath(`/posts/getPost/${idOfPost}`));
-       
+        
         setDataOfPost(currentPost.data);
         setShowPost(true);
         setShowNotifications(false);
@@ -54,9 +72,9 @@ const Notifications = ({ socket }) => {
                             notifications.map(( notification ) => (
                                 notification.type === 4 
                                 ? 
-                                <Link className="notificationMessagge linkNotificationToProfile opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} to={`/profile/${notification.senderId}`}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> {notification.text}</Link>
+                                <Link className="notificationMessagge linkNotificationToProfile opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} to={`/profile/${notification.senderId}`}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></Link>
                                 :
-                                <button className="notificationMessagge opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} onClick={() => getAndShowPost(notification.idOfPost)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> {notification.text}</button>
+                                <button className="notificationMessagge opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} onClick={() => getAndShowPost(notification.idOfPost)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
                             ))
                         }
                     </div>

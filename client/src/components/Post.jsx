@@ -56,11 +56,10 @@ const Post = ({post, socket}) => {
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
         var text = !ifIsLiked ? "přidal like" : "odebral like";
-        await sendNotification(post.userId, 1, null, post._id, text);
-
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
-        await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id })
+        await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id });
+        await sendNotification(post.userId, 1, null, post._id, text);
     }
     
     return (
