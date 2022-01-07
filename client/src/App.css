@@ -912,6 +912,19 @@ span {
   right: 10px;
 }
 
+.notificationNubmer {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  min-width: 13px;
+  min-height: 13px;
+  padding: 2px;
+  text-align: center;
+  color: white;
+  background-color: blue;
+  border-radius: 50%;
+}
+
 .notificationMessagge {
   border: none;
   padding: 8px 0px 8px 0px;

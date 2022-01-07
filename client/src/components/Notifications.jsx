@@ -1,33 +1,34 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import {HiOutlineBell} from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import Post from './Post';
 import { TiDelete } from 'react-icons/ti';
 import UserProfile from './UserProfile';
+import {} from 'react-router-dom';
 
 const Notifications = ({ socket }) => {
-    const { user, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
+    const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     const [notifications, setNotifications] = useState([]);
+
+    const [numberOfNewNotifications, setNumberOfNewNotifications] = useState();
 
     const [showNotifications, setShowNotifications] = useState(false);
 
     const [showPost, setShowPost] = useState(false);
     const [dataOfPost, setDataOfPost] = useState([]);
 
-    const arrayOfNotifications = [];
-
+    const history = useHistory();
 
     useEffect(() => {
         const setAllNotifications = async () => {
             const allNotifications = await axios.get(changePath(`/notifications/getAllNotifications/${user._id}`)); 
-            console.log(allNotifications.data)
             setNotifications(allNotifications.data);
-            arrayOfNotifications.push(allNotifications.data);
-            sortNotificationsByDate(allNotifications.data);
+            setNumberOfNewNotifications(allNotifications.data.filter(notification => notification.readed === false).length);
+            sortNotificationsByDate();
         }
         setAllNotifications();
     }, [user._id])
@@ -35,32 +36,42 @@ const Notifications = ({ socket }) => {
     useEffect(() => {
         socket?.on("getNotification", (data) => {
             console.log("new notification", data.type);
-
             setNotificationsNewData(data);
         })
     }, [socket])
 
     const setNotificationsNewData = (data) => {
-       // sortNotificationsByDate();
+        setNumberOfNewNotifications(prev => prev + 1);
+        setNotifications((notifications) => [...notifications, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
+        sortNotificationsByDate();
+    }
+
+    const sortNotificationsByDate = () => {
+        setNotifications((prev) => [...prev.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)}) ]);
+    }
+
+    const getAndShowPost = async (idOfPost, idOfNotification) => {
         
-       arrayOfNotifications.push([arrayOfNotifications, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
-       console.log(arrayOfNotifications);
-    }
-
-    const sortNotificationsByDate = (data) => {
-        console.log(notifications)
-        var sortNotifications = data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
-        setNotifications(sortNotifications);
-    }
-
-    const getAndShowPost = async (idOfPost) => {
         const currentPost = await axios.get(changePath(`/posts/getPost/${idOfPost}`));
-        
         setDataOfPost(currentPost.data);
         setShowPost(true);
         setShowNotifications(false);
-        console.log(currentPost.data);
+        await setReadedToTrue(idOfNotification, false);
     }
+
+    const setReadedToTrue = async (idOfNotification, link, senderId) => {
+        
+        var currentNotification = notifications.filter((notification) => notification._id === idOfNotification);
+        currentNotification[0].readed = true;
+        setNotifications((prev) => [...prev.filter((notification) => notification._id !== idOfNotification)]);
+        setNotifications((notification) => [...notification, currentNotification[0]]);
+        setNumberOfNewNotifications(prev => prev - 1);
+        sortNotificationsByDate();
+        await axios.put(changePath(`/notifications/changeReadedToTrue/`), {id: idOfNotification}).then(() => {
+            link && history.push(`/profile/${senderId}`);
+        });
+    }
+    
 
     return (
         <>
@@ -72,15 +83,17 @@ const Notifications = ({ socket }) => {
                             notifications.map(( notification ) => (
                                 notification.type === 4 
                                 ? 
-                                <Link className="notificationMessagge linkNotificationToProfile opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} to={`/profile/${notification.senderId}`}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></Link>
+                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor4, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></div>
                                 :
-                                <button className="notificationMessagge opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4}} onClick={() => getAndShowPost(notification.idOfPost)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
+                                <button className="notificationMessagge opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor4, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => getAndShowPost(notification.idOfPost, notification._id)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
                             ))
                         }
                     </div>
                 }
-            
-                <HiOutlineBell className="notificationBell scaled pointer" style={{ color: backgroundColor1, width: "30px", height: "30px"}} onClick={() => setShowNotifications(prev => !prev)}/>
+                <div className="notificationBell scaled pointer" onClick={() => setShowNotifications(prev => !prev)}>
+                    <span className="notificationNubmer">{numberOfNewNotifications}</span>
+                    <HiOutlineBell  style={{ color: backgroundColor1, width: "30px", height: "30px"}} />
+                </div>
             </div>
             {
                 showPost &&
@@ -89,7 +102,7 @@ const Notifications = ({ socket }) => {
                         <Post post={dataOfPost} />
                         <TiDelete className="removeImgShow scaled" onClick={() => setShowPost(false)} />
                     </div>
-                    <div class="wallPaperNotWorking"></div>
+                    <div className="wallPaperNotWorking"></div>
                 </div>
             }
         </>

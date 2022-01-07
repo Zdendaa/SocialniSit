@@ -27,4 +27,15 @@ router.get("/getAllNotifications/:id", async (req, res) => {
     }
 })
 
+router.put("/changeReadedToTrue", async (req, res) => {
+    try {
+        const currentNotification = await Notification.findById(req.body.id);
+        await currentNotification.updateOne({ $set: {readed: true}});
+
+        res.status(200).send("Notifikace znemena na prectenou");
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
 module.exports = router;
