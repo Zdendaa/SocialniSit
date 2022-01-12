@@ -7,7 +7,7 @@ const ChangeProfileImg = () => {
 
     return (
         <div className="settingsChangeProfilePicture">
-            <h3 style={{color: backgroundColor1}}>přidej novou profilovou fotku</h3>
+            <h3 style={{color: backgroundColor1}}>Přidej novou profilovou fotku</h3>
             <img src={user.idOrUrlOfProfilePicture} alt="" referrerPolicy="no-referrer" style={{width: "120px", height: "120px"}}/>
             <CropperImage aspect={5/5} rect={false} />
         </div>

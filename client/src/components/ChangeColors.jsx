@@ -66,6 +66,7 @@ const ChangeColors = () => {
     return (
         <div className="ChangeColors">
             <hr className="lineNewPost" style={{backgroundColor: backgroundColor1, width: "100%"}}/>
+            <h3 style={{color: backgroundColor1}}>Uprav barvy tvé sociální sítě</h3>
             <ColorsPicker setNoError={setNoError} setNoErrorDefaultButton={setNoErrorDefaultButton} text="Hlavní barva" color={color1} setColor={setColor1} />
             <ColorsPicker setNoError={setNoError} setNoErrorDefaultButton={setNoErrorDefaultButton} text="Sekundární barva" color={color2} setColor={setColor2} />
             <ColorsPicker setNoError={setNoError} setNoErrorDefaultButton={setNoErrorDefaultButton} text="barva pro halvní text" color={color3} setColor={setColor3} />

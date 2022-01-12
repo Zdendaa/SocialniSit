@@ -865,7 +865,7 @@ span {
 /* ChangeColors */
 .ChangeColors {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   margin-bottom: 30px;
 }
@@ -1031,6 +1031,10 @@ span {
   }
 
   .SetUserInfo {
+    align-items: flex-start;
+  }
+  /* ChangeColors */
+  .ChangeColors {
     align-items: flex-start;
   }
 }
