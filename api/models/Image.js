@@ -13,6 +13,9 @@ const image = new mongoose.Schema({
     idOfComments: {
         type: Array,
         default: []
+    },
+    idOfPost: {
+        type: String,
     }
 },
 { timestamps: true } // kazdy post bude mit datum vytvoreni

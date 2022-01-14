@@ -78,10 +78,10 @@ const AddNewPost = ({ socket, friends }) => {
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
             const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);
-            console.log("pohoda");
             
+            // vsem nasim pratelum posleme notifikaci
             friends.forEach(async(friend, index) => {
-                await sendNotification(friend._id, 5, null, dataOfNewPost.data._id, "přidal nový příspěvek");
+                await sendNotification(friend._id, 5, null, dataOfNewPost.data._id, "přidal/a nový příspěvek");
                 if(friends.length - 1 === index) window.location.reload();
             })
         } catch (err) {

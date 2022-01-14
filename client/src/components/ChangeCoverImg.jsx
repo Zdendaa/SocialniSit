@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import CropperImage from './CropperImage';
 import { GlobalContext } from '../context/GlobalState';
 
-const ChangeCoverImg = () => {
+const ChangeCoverImg = ({ socket }) => {
     const { user, backgroundColor1} = useContext(GlobalContext);
 
     return (
@@ -11,7 +11,7 @@ const ChangeCoverImg = () => {
             <div className="settingsChangeCoverPicture">
                 <h3 style={{color: backgroundColor1}}>Přidej novou fotku na pozadí</h3>
                 <img src={user.idOrUrlOfCoverPicture} alt="" referrerPolicy="no-referrer" style={{width: "80%", height: "auto"}}/>
-                <CropperImage aspect={15/2} rect={true} />
+                <CropperImage aspect={15/2} rect={true} socket={socket} />
             </div>
         </>
     )

@@ -55,7 +55,7 @@ const Post = ({post, socket}) => {
 
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
-        var text = !ifIsLiked ? "přidal like" : "odebral like";
+        var text = !ifIsLiked ? "přidal/a like" : "odebral/a like";
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
         await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id });
@@ -80,7 +80,8 @@ const Post = ({post, socket}) => {
                     <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
                         <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                         <span style={{color: backgroundColor3}}>{userOfPost?.username}</span>
-                    </Link>    
+                        {post?.newPicture && <span style={{color: backgroundColor1}}>přidal/a novou fotku</span>}
+                    </Link>
                     <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
                 </div>
                 <div className="postContent">

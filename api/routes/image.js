@@ -5,14 +5,13 @@ const Image = require('../models/Image');
 router.post("/createNew", async (req, res) => {
     try {
         // vytvoreni obrazku
-        
         const newImage = new Image({
-            url: req.body.url
+            url: req.body.url,
+            idOfPost: req.body.idOfPost
         })
 
         // ulozeni noveho obrazku do databaze
         const image = await newImage.save();
-
 
         res.status(200).json(image);
     } catch (err) {

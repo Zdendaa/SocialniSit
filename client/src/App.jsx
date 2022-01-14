@@ -57,7 +57,7 @@ function App() {
             { user ? <Profile socket={socket.current} /> : <Redirect to="/register" /> }
           </Route>
           <Route path="/settings">
-            { user ? <ProfileSettings /> : <Redirect to="/register" /> }
+            { user ? <ProfileSettings socket={socket.current}/> : <Redirect to="/register" /> }
           </Route>
         </Switch>
       </Router>

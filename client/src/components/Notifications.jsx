@@ -100,7 +100,7 @@ const Notifications = ({ socket }) => {
                 showPost &&
                 <div className="mainContainerForPost">
                     <div className="containerForPost">   
-                        <Post post={dataOfPost} />
+                        <Post post={dataOfPost} socket={socket}/>
                         <TiDelete className="removeImgShow scaled" onClick={() => setShowPost(false)} />
                     </div>
                     <div className="wallPaperNotWorking"></div>

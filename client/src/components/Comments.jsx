@@ -78,7 +78,7 @@ const Comments = ({post, sendNotification}) => {
           const newComments = await axios.get(changePath(`/comments/getComments/${post._id}`));
           setComments(newComments.data);
           // posleme notifikaci
-          sendNotification(post.userId, 2, "", post._id, "přidal komentář");
+          sendNotification(post.userId, 2, "", post._id, "přidal/a komentář");
           setifLoadingValue(false);
           setValueOfInput("");
           return true
