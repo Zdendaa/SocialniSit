@@ -8,7 +8,7 @@ import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 
-const AddNewPost = () => {
+const AddNewPost = ({ socket, friends }) => {
     const {user, backgroundColor1, backgroundColor2, backgroundColor4} = useContext(GlobalContext);
    
     // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
@@ -77,12 +77,23 @@ const AddNewPost = () => {
                 urlOfImg: validator.isURL(valueUrlInput) ? image : (img ? img : null)
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
-            axios.post(changePath("/posts/addPost"), newPost);
+            const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);
             console.log("pohoda");
-            window.location.reload();
+            
+            friends.forEach(async(friend, index) => {
+                await sendNotification(friend._id, 5, null, dataOfNewPost.data._id, "přidal nový příspěvek");
+                if(friends.length - 1 === index) window.location.reload();
+            })
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const sendNotification = async (recieverId, type, url, idOfPost, text) => {
+        // pridani notifikace do db
+        const newNotificatons = await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        // pridani notifikace do socket.io serveru
+        socket.emit("sendNotification", {id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
     }
     
     return (

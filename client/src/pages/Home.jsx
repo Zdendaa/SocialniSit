@@ -45,7 +45,7 @@ const Home = ({ onlineUsers, socket }) => {
 
              <div className="homeContainerPostsMain">
                 <div className="homeContainerPosts">
-                    <AddNewPost />    
+                    <AddNewPost socket={socket} friends={users}/>
                     {
                         posts?.map((post, index) => (
                             <Post post={post} key={index} socket={socket}/> 

@@ -35,14 +35,14 @@ const Notifications = ({ socket }) => {
 
     useEffect(() => {
         socket?.on("getNotification", (data) => {
-            console.log("new notification", data.type);
+            console.log("new notification", data);
             setNotificationsNewData(data);
         })
     }, [socket])
 
     const setNotificationsNewData = (data) => {
         setNumberOfNewNotifications(prev => prev + 1);
-        setNotifications((notifications) => [...notifications, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
+        setNotifications((notifications) => [...notifications, {_id: data.id, senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
         sortNotificationsByDate();
     }
 
@@ -67,6 +67,7 @@ const Notifications = ({ socket }) => {
         setNotifications((notification) => [...notification, currentNotification[0]]);
         setNumberOfNewNotifications(prev => prev - 1);
         sortNotificationsByDate();
+        console.log(senderId);
         await axios.put(changePath(`/notifications/changeReadedToTrue/`), {id: idOfNotification}).then(() => {
             link && history.push(`/profile/${senderId}`);
         });
@@ -91,7 +92,7 @@ const Notifications = ({ socket }) => {
                     </div>
                 }
                 <div className="notificationBell scaled pointer" onClick={() => setShowNotifications(prev => !prev)}>
-                    <span className="notificationNubmer">{numberOfNewNotifications}</span>
+                    {numberOfNewNotifications > 0 && <span className="notificationNubmer">{numberOfNewNotifications}</span>}
                     <HiOutlineBell  style={{ color: backgroundColor1, width: "30px", height: "30px"}} />
                 </div>
             </div>

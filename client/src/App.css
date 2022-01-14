@@ -892,7 +892,7 @@ span {
 .allNotificationsContainer {
   position: absolute;
   height: 350px;
-  min-width: 300px;
+  min-width: 350px;
   overflow: auto;
   bottom: 50px;
   right: 10px;

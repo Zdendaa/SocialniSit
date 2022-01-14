@@ -31,9 +31,9 @@ io.on('connection', (socket) => {
         io.emit("getUsers", users);
     })
 
-    socket.on("sendNotification", ({senderId, recieverId, type, url, idOfPost, readed, text}) => {
+    socket.on("sendNotification", ({id, senderId, recieverId, type, url, idOfPost, readed, text}) => {
         console.log("notification sended", recieverId);
-        findUser(recieverId) && io.to(findUser(recieverId).socketId).emit("getNotification", {senderId, recieverId, type, url, idOfPost, readed, text, date: Date.now() });
+        findUser(recieverId) && io.to(findUser(recieverId).socketId).emit("getNotification", {id, senderId, recieverId, type, url, idOfPost, readed, text, date: Date.now() });
     })
 
     socket.on("disconnect", () => {
