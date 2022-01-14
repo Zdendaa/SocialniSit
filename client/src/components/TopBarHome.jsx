@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
 
-const TopBarHome = () => {
+const TopBarHome = ({ socket }) => {
 const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useContext(GlobalContext);
     const history = useHistory();
 
@@ -26,6 +26,7 @@ const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useCon
                         localStorage.removeItem("colors");
                         deleteUser();
                         setColors({backgroundColor1: "#D88100", backgroundColor2: "#F4F4F4", backgroundColor3: "black", backgroundColor4: "#ffffff"});
+                        socket.disconnect();
                         history.push("/register");
                     } }>odhlásit se
                     </button>

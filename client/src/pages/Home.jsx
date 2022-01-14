@@ -39,7 +39,7 @@ const Home = ({ onlineUsers, socket }) => {
     
     return (
         <div className="homeContainer">           
-             <TopBarHome />
+             <TopBarHome socket={socket}/>
 
              <SwiperOnlineFriends users={users} onlineUsers={onlineUsers} type={1}/>
 

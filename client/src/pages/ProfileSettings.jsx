@@ -10,7 +10,7 @@ import TopBarHome from '../components/TopBarHome'
 const ProfileSettings = ({socket}) => { 
     return (
         <div className="ProfileSettings">
-            <TopBarHome />
+            <TopBarHome socket={socket}/>
             <div className="ProfileSettingsContainer">
                 <ChangeProfileImg socket={socket} />
                 <ChangeCoverImg socket={socket}/>   

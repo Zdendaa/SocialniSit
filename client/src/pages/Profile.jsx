@@ -155,7 +155,7 @@ const Profile = ({ socket }) => {
 
     return (
         <div className="Profile">
-            <TopBarHome />
+            <TopBarHome socket={socket}/>
             <TopProfile urlOfProfileImg={urlOfProfileImg} urlOfCoverImg={urlOfCoverImg} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
             
             <div className="profileContainer">
