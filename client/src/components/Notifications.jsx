@@ -10,7 +10,7 @@ import UserProfile from './UserProfile';
 import {} from 'react-router-dom';
 
 const Notifications = ({ socket }) => {
-    const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
+    const { user, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
 
     const [notifications, setNotifications] = useState([]);
 
@@ -84,9 +84,9 @@ const Notifications = ({ socket }) => {
                             notifications.map(( notification ) => (
                                 notification.type === 4 
                                 ? 
-                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor4, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></div>
+                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></div>
                                 :
-                                <button className="notificationMessagge opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor4, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => getAndShowPost(notification.idOfPost, notification._id)}> <UserProfile noLink={true} idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
+                                <button className="notificationMessagge opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => getAndShowPost(notification.idOfPost, notification._id)}> <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
                             ))
                         }
                     </div>

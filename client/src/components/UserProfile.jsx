@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import SharingButton from './SharingButton';
+import { format } from 'timeago.js';
 
-const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, noLink}) => {
+const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, createdAt}) => {
     const {backgroundColor3, backgroundColor1} = useContext(GlobalContext);
 
     const [currentUser, setCurrentUser] = useState([]);
@@ -26,16 +27,7 @@ const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPo
 
     return (  
         <div style={sharing && {display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "5px"}}>
-            {
-                noLink ?
-                <div className="userProfile">
-                    <div className="mainImg">
-                        <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
-                        {isOnline && <div className="online"></div>}
-                    </div>
-                    {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
-                </div>
-                :
+            <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                 <Link to={`/profile/${idOfUser}`} className="userProfile">
                     <div className="mainImg">
                         <img src={currentUser.idOrUrlOfProfilePicture ? currentUser.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" style={style} referrerPolicy="no-referrer"/>
@@ -43,8 +35,8 @@ const UserProfile = ({onlineUsers, idOfUser, style, mobile, sharing, addSharedPo
                     </div>
                     {!mobile && <span style={{color: backgroundColor3}}>{currentUser?.username} {sharingPost && <span style={{color: backgroundColor1}}>sdílí</span>}</span>}
                 </Link>
-            }
-            
+                {createdAt && <span style={{color: backgroundColor3}}>{format(createdAt, 'myLanguage')}</span>}
+            </div>
             {sharing && <SharingButton addSharedPost={addSharedPost} idOfUser={idOfUser} idOfPost={idOfPost}/>}
         </div>
     )

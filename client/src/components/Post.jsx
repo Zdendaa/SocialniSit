@@ -64,25 +64,25 @@ const Post = ({post, socket}) => {
     
     return (
         <div className="post">
-            {post?.sharedUserId && 
-            <> 
-                <div style={{padding: "15px 0px 0px 15px"}}>
-                    <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
-                    <span style={{color: backgroundColor3}}>{post.sharedDesc}</span>
-                   
-                </div> 
-                
-                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/> 
-            </>
-            }
             <div className="postContainer">
+                {post?.sharedUserId && 
+                <> 
+                    <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} createdAt={post.createdAt} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
+                    <span style={{color: backgroundColor3}}>{post.sharedDesc}</span>
+                    <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/> 
+                </>
+                }
                 <div className="userContainerPost">
                     <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
                         <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                         <span style={{color: backgroundColor3}}>{userOfPost?.username}</span>
                         {post?.newPicture && <span style={{color: backgroundColor1}}>přidal/a novou fotku</span>}
                     </Link>
-                    <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
+                    {post?.sharedPostCreatedAt ? 
+                        <span style={{color: backgroundColor3}}>{format(post.sharedPostCreatedAt, 'myLanguage')}</span> 
+                        : 
+                        <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
+                    }
                 </div>
                 <div className="postContent">
                     <span className="postDescContent" style={{color: backgroundColor3}}>{post.desc}</span>

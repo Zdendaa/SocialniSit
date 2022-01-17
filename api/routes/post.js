@@ -46,6 +46,7 @@ router.get("/getAllPosts/:userId", async (req, res) => {
                     idOfLikes: dataOfSharedPost.idOfLikes,
                     idOfComment: dataOfSharedPost.idOfComment,
                     createdAt: sharedPost.createdAt,
+                    sharedPostCreatedAt: dataOfSharedPost.createdAt,
                     sharedUserId: sharedPost.userId,
                     sharedDesc: sharedPost.desc
                 }

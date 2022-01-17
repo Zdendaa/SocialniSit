@@ -8,7 +8,7 @@ const ChangeProfileImg = ({ socket }) => {
     return (
         <div className="settingsChangeProfilePicture">
             <h3 style={{color: backgroundColor1}}>Přidej novou profilovou fotku</h3>
-            <img src={user.idOrUrlOfProfilePicture} alt="" referrerPolicy="no-referrer" style={{width: "120px", height: "120px"}}/>
+            <img src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer" style={{width: "120px", height: "120px", borderRadius: "50%"}}/>
             <CropperImage aspect={5/5} rect={false} socket={socket}/>
         </div>
     )
