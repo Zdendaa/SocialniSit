@@ -10,7 +10,7 @@ import UserProfile from './UserProfile';
 import {} from 'react-router-dom';
 
 const Notifications = ({ socket }) => {
-    const { user, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
+    const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     const [notifications, setNotifications] = useState([]);
 

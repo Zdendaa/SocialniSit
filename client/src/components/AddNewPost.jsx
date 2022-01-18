@@ -64,7 +64,6 @@ const AddNewPost = ({ socket, friends }) => {
             // jestli obrzek neexistuje tak posilame do funkce null
             await setDataOfPost(null);
         }
-        // jeslit uzivatel zadal jenom url nebo jenom text v co se vam honi hlavou
     }
 
     // funkce pro vytvoeni ulozeni prispevku do databaze
@@ -81,7 +80,13 @@ const AddNewPost = ({ socket, friends }) => {
             
             // vsem nasim pratelum posleme notifikaci
             friends.forEach(async(friend, index) => {
-                await sendNotification(friend._id, 5, null, dataOfNewPost.data._id, "přidal/a nový příspěvek");
+                await sendNotification(
+                            friend._id, 
+                            5, 
+                            null, 
+                            dataOfNewPost.data._id, 
+                            "přidal/a nový příspěvek"
+                        );
                 if(friends.length - 1 === index) window.location.reload();
             })
         } catch (err) {
