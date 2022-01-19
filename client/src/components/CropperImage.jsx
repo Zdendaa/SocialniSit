@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import changePath from '../changePath';
@@ -9,7 +9,7 @@ import UploadControl from './UploadControl';
 import ClipLoader from "react-spinners/ClipLoader";
 import { GoCheck } from 'react-icons/go';
 
-const CropperImage = ({ aspect, rect }) => { 
+const CropperImage = ({ aspect, rect, socket }) => { 
     const { user, changeProfileImg, changeCoverImg, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
 
     const [crop, setCrop] = useState({ aspect });
@@ -23,6 +23,17 @@ const CropperImage = ({ aspect, rect }) => {
     // zda se nenastala zadna chyba
     const [noError, setNoError] = useState(false);
 
+    const [friends, setFriends] = useState([]);
+    
+    useEffect(() => {
+        const getFrinends = async () => {
+            // nacteni pratel
+            const users = await axios.get(`/users/getAllFriends/${user._id}`);
+            setFriends(users.data);
+        }
+        getFrinends();
+     }, [user._id])
+
     const getNewCroppedPicture = async (image) => {
         setIsLoading(true);
         const newImgName = "users/" + user.username + "/" + image.name + "" + Math.floor( Date.now() / 1000 );
@@ -31,8 +42,8 @@ const CropperImage = ({ aspect, rect }) => {
             console.log('upload img succesfully');
             // stahnuti url obrazku
             const urlOfImg = await downloadUrlImg(newImgName);
-            // vytvoreni noveho zaznamu v tabulce images
-            await axios.post(changePath('/images/createNew'), {url: urlOfImg});
+
+            await addNewPhoto(urlOfImg);
             
             if(rect) {
                 // jestlize pridavame fotku na pozadi
@@ -82,6 +93,37 @@ const CropperImage = ({ aspect, rect }) => {
             }
             
         })
+    }
+
+    // funkce pro vytvoeni ulozeni prispevku do databaze
+    const addNewPhoto = async (img) => {
+        try {
+            // vytvoreni promenne ve ktere budou data prispevku
+            const newPost = { 
+                userId: user._id, 
+                urlOfImg: img,
+                newPicture: true,
+            }
+            // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
+            const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);
+            
+            // vytvoreni noveho zaznamu v tabulce images
+            await axios.post(changePath('/images/createNew'), {url: img, idOfPost: dataOfNewPost.data._id});
+            
+            // vsem nasim pratelum posleme notifikaci
+            friends.forEach(async(friend, index) => {
+                await sendNotification(friend._id, 6, null, dataOfNewPost.data._id, "přidal/a novou fotku");
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const sendNotification = async (recieverId, type, url, idOfPost, text) => {
+        // pridani notifikace do db
+        const newNotificatons = await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        // pridani notifikace do socket.io serveru
+        socket.emit("sendNotification", {id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
     }
 
     const getCroppedImg = async () => {    

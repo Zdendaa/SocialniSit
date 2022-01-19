@@ -148,14 +148,14 @@ const Profile = ({ socket }) => {
 
     const sendNotification = async (recieverId, type, url, idOfPost, text) => {
         // pridani notifikace do db
-        await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        const newNotificatons = await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
         // pridani notifikace do socket.io serveru
-        socket.emit("sendNotification", {senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
+        socket.emit("sendNotification", {id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
     }
 
     return (
         <div className="Profile">
-            <TopBarHome />
+            <TopBarHome socket={socket}/>
             <TopProfile urlOfProfileImg={urlOfProfileImg} urlOfCoverImg={urlOfCoverImg} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
             
             <div className="profileContainer">
@@ -194,10 +194,10 @@ const Profile = ({ socket }) => {
                     </div>
                 </div>
                 <div className="postsActionsContainerProfile">
-                    {idOfUser === user._id && <AddNewPost />}
+                    {idOfUser === user._id && <AddNewPost socket={socket} friends={allFriends}/>}
                     {
                         allPosts?.map((post, index) => (
-                            <Post post={post} key={index} />
+                            <Post post={post} key={index} socket={socket}/>
                         ))
                     }
                 </div>

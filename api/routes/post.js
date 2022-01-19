@@ -10,7 +10,8 @@ router.post("/addPost", async (req, res) => {
         const post = new Post({
             userId: req.body.userId,
             desc: req.body.desc,
-            urlOfImg: req.body.urlOfImg
+            urlOfImg: req.body.urlOfImg,
+            newPicture: req.body.newPicture
         })
         // ulozeni postu do db
         const newPost = await post.save();
@@ -45,6 +46,7 @@ router.get("/getAllPosts/:userId", async (req, res) => {
                     idOfLikes: dataOfSharedPost.idOfLikes,
                     idOfComment: dataOfSharedPost.idOfComment,
                     createdAt: sharedPost.createdAt,
+                    sharedPostCreatedAt: dataOfSharedPost.createdAt,
                     sharedUserId: sharedPost.userId,
                     sharedDesc: sharedPost.desc
                 }

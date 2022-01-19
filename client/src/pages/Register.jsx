@@ -9,7 +9,6 @@ import changePath from '../changePath';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
-import { TiDelete } from 'react-icons/ti'
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
@@ -72,9 +71,9 @@ const Register = () => {
                 // uzivatel jiz existuje 
                 setUserExist("uživatel již existuje s tímto jménem nebo emailem");
                 setIfWaiting(false);
-            } else {
-                try {
-                     setAndSaveUser();               
+            } else {          
+                try {      
+                    await setAndSaveUser();             
                 } catch (err) {
                     // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
                     setIfWaiting(false);
@@ -87,7 +86,6 @@ const Register = () => {
             errPasswordConfirm === "" && checkInput(3, "");
             errEmail === "" && checkInput(4, "");
         }
-        
     }
 
     const setAndSaveUser = async () => {
@@ -95,7 +93,6 @@ const Register = () => {
             username: name.current.value,
             email: email.current.value,
             password: password.current.value,
-            idOrUrlOfProfilePicture: null,
             isGoogleAccount: false,
         }
 

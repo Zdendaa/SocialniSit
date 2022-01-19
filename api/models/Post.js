@@ -21,6 +21,10 @@ const post = new mongoose.Schema({
     idOfComment: {
         type: Array,
         default: null
+    },
+    newPicture: {
+        type: Boolean,
+        default: false
     }
 },
 { timestamps: true } // kazdy post bude mit datum vytvoreni

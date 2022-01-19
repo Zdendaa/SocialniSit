@@ -32,7 +32,7 @@ const Share = ({ setifSharing, idOfPost, sendNotification }) => {
         if(ifIsShare) {
             await axios.post(changePath("/sharedPosts/removeSharedPost"), {idOfSharedPost:idOfSharedPost});
             if(id) {
-                console.log("zrusil sdileni s id")
+                console.log("zrusil sdileni s id" + id)
                 sendNotification(id, 3, null, idOfPost, "odebral sdílení");
             } else {
                 

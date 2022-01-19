@@ -55,7 +55,7 @@ const Post = ({post, socket}) => {
 
     // pridani nebo odebrani likeu
     const addOrRemoveLike = async () => {
-        var text = !ifIsLiked ? "přidal like" : "odebral like";
+        var text = !ifIsLiked ? "přidal/a like" : "odebral/a like";
         ifIsLiked ? setLenghtOfLikes(lenght => lenght - 1) : setLenghtOfLikes(lenght => lenght + 1);
         setIfIsLiked(!ifIsLiked);
         await axios.put(changePath(`/posts/addOrRemoveLike/${post._id}`), { userId: user._id });
@@ -64,24 +64,25 @@ const Post = ({post, socket}) => {
     
     return (
         <div className="post">
-            {post?.sharedUserId && 
-            <> 
-                <div style={{padding: "15px 0px 0px 15px"}}>
-                    <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
-                    <span style={{color: backgroundColor3}}>{post.sharedDesc}</span>
-                   
-                </div> 
-                
-                <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/> 
-            </>
-            }
             <div className="postContainer">
+                {post?.sharedUserId && 
+                <> 
+                    <div style={{marginBottom: "15px"}}><UserProfile idOfUser={post?.sharedUserId} sharingPost={true} createdAt={post.createdAt} style={{width: "42px", height: "42px", objectFit: "cover", borderRadius: "50%"}}/> </div>
+                    <span style={{color: backgroundColor3}}>{post.sharedDesc}</span>
+                    <hr className="lineNewPost" style={{backgroundColor: backgroundColor1}}/> 
+                </>
+                }
                 <div className="userContainerPost">
                     <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
                         <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
                         <span style={{color: backgroundColor3}}>{userOfPost?.username}</span>
-                    </Link>    
-                    <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
+                        {post?.newPicture && <span style={{color: backgroundColor1}}>přidal/a novou fotku</span>}
+                    </Link>
+                    {post?.sharedPostCreatedAt ? 
+                        <span style={{color: backgroundColor3}}>{format(post.sharedPostCreatedAt, 'myLanguage')}</span> 
+                        : 
+                        <span style={{color: backgroundColor3}}>{format(post.createdAt, 'myLanguage')}</span>
+                    }
                 </div>
                 <div className="postContent">
                     <span className="postDescContent" style={{color: backgroundColor3}}>{post.desc}</span>

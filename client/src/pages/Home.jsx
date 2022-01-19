@@ -39,13 +39,13 @@ const Home = ({ onlineUsers, socket }) => {
     
     return (
         <div className="homeContainer">           
-             <TopBarHome />
+             <TopBarHome socket={socket}/>
 
              <SwiperOnlineFriends users={users} onlineUsers={onlineUsers} type={1}/>
 
              <div className="homeContainerPostsMain">
                 <div className="homeContainerPosts">
-                    <AddNewPost />    
+                    <AddNewPost socket={socket} friends={users}/>
                     {
                         posts?.map((post, index) => (
                             <Post post={post} key={index} socket={socket}/> 
