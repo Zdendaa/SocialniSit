@@ -29,15 +29,17 @@ const Share = ({ setifSharing, idOfPost, sendNotification }) => {
     // funkce
 
     const addSharedPost = async (id, ifIsShare, idOfPost, idOfSharedPost) => {
+
+        
         if(ifIsShare) {
             await axios.post(changePath("/sharedPosts/removeSharedPost"), {idOfSharedPost:idOfSharedPost});
             if(id) {
                 console.log("zrusil sdileni s id" + id)
-                sendNotification(id, 3, null, idOfPost, "odebral sdílení");
+                await sendNotification(id, 3, null, idOfPost, "odebral sdílení", true);
             } else {
                 
-                allFriends.forEach(friend => {
-                    sendNotification(friend._id, 3, null, idOfPost, "odebral sdílení");
+                allFriends.forEach(async(friend) => {
+                    await sendNotification(friend._id, 3, null, idOfPost, "odebral sdílení", true);
                 })
                 
                 console.log("zrusil sdileni bez id")
@@ -53,12 +55,12 @@ const Share = ({ setifSharing, idOfPost, sendNotification }) => {
 
             if(id) {
                 console.log("sdili s id")
-                sendNotification(id, 3, null, idOfPost, "sdílí");
+                await sendNotification(id, 3, null, idOfPost, "sdílí", true);
             } else {
                 console.log("sdili bez id")
                 
-                allFriends.forEach(friend => {
-                    sendNotification(friend._id, 3, null, idOfPost, "sdílí");
+                allFriends.forEach(async(friend) => {
+                    await sendNotification(friend._id, 3, null, idOfPost, "sdílí", true);
                 })
                 
             }

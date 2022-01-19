@@ -41,9 +41,10 @@ const Post = ({post, socket}) => {
         getUser();
     }, [post.userId])
 
-    const sendNotification = async (recieverId, type, url, idOfPost, text) => {
+    const sendNotification = async (recieverId, type, url, idOfPost, text, share) => {
         // pridani notifikace do db
-        if(user._id === post.userId) return;
+        
+        if(user._id === post.userId && !share) return;
         console.log(recieverId)
         
         await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
