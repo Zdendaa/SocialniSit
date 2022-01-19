@@ -12,6 +12,8 @@ import {} from 'react-router-dom';
 const Notifications = ({ socket }) => {
     const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
+    // useState promenne
+
     const [notifications, setNotifications] = useState([]);
 
     const [numberOfNewNotifications, setNumberOfNewNotifications] = useState();
@@ -23,8 +25,11 @@ const Notifications = ({ socket }) => {
 
     const history = useHistory();
 
+    // useEffect
+
     useEffect(() => {
         const setAllNotifications = async () => {
+            // nacteni vsech notifikaci daneho uzivatele
             const allNotifications = await axios.get(changePath(`/notifications/getAllNotifications/${user._id}`)); 
             setNotifications(allNotifications.data);
             setNumberOfNewNotifications(allNotifications.data.filter(notification => notification.readed === false).length);
@@ -40,6 +45,8 @@ const Notifications = ({ socket }) => {
         })
     }, [socket])
 
+    // funkce
+
     const setNotificationsNewData = (data) => {
         setNumberOfNewNotifications(prev => prev + 1);
         setNotifications((notifications) => [...notifications, {senderId: data.senderId, recieverId: data.recieverId, type: data.type, url: data.url, idOfPost: data.idOfPost, text: data.text, createdAt: data.date}]);
@@ -52,6 +59,7 @@ const Notifications = ({ socket }) => {
 
     const getAndShowPost = async (idOfPost, idOfNotification) => {
         
+        // nacteni prispevku ktery chceme (podle id uzivatele ifOfPost)
         const currentPost = await axios.get(changePath(`/posts/getPost/${idOfPost}`));
         setDataOfPost(currentPost.data);
         setShowPost(true);
@@ -91,8 +99,8 @@ const Notifications = ({ socket }) => {
                     </div>
                 }
                 <div className="notificationBell scaled pointer" onClick={() => setShowNotifications(prev => !prev)}>
-                    <span className="notificationNubmer">{numberOfNewNotifications}</span>
-                    <HiOutlineBell  style={{ color: backgroundColor1, width: "30px", height: "30px"}} />
+                    {numberOfNewNotifications > 0 && <span className="notificationNubmer">{numberOfNewNotifications}</span>}
+                    <HiOutlineBell style={{ color: backgroundColor1, width: "30px", height: "30px"}} />
                 </div>
             </div>
             {

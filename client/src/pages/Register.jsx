@@ -30,9 +30,6 @@ const Register = () => {
     const [passwordValue, setpasswordValue] = useState("");
     const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
 
-    // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
-    const [image, setImage] = useState(null);
-
     // useRef promenne
     const name = useRef(null);
     const password = useRef(null);
@@ -77,23 +74,7 @@ const Register = () => {
                 setIfWaiting(false);
             } else {
                 try {
-                    // jestli uzivatel vybral obrazek
-                    const img = image ? image : null;
-                    
-                    // jestli existuje img ulozi se img do storage
-                    if(img) {
-                        
-                        const newImgName = "users/" + name.current.value + "/" + img.name + "" + Math.floor( Date.now() / 1000 );
-                        await uploadImg(img, newImgName).then(async() => {
-                            const urlOfImg = await downloadUrlImg(newImgName);
-                            // vytvroime zaznam v tabulce images
-                            await axios.post(changePath("/images/createNew"), {url: urlOfImg});
-                            await setAndSaveUser(urlOfImg);
-                        });
-                    } else {
-                        await setAndSaveUser(img);
-                    }
-                                    
+                     setAndSaveUser();               
                 } catch (err) {
                     // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
                     setIfWaiting(false);
@@ -109,12 +90,12 @@ const Register = () => {
         
     }
 
-    const setAndSaveUser = async (url) => {
+    const setAndSaveUser = async () => {
         const newUser = {
             username: name.current.value,
             email: email.current.value,
             password: password.current.value,
-            idOrUrlOfProfilePicture: url, // url obrazku ktery jsme uz ulozili
+            idOrUrlOfProfilePicture: null,
             isGoogleAccount: false,
         }
 
@@ -148,17 +129,6 @@ const Register = () => {
                     <input className="inputRegister" onChange={(e) => {checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
                     {(errPasswordConfirm !== "" && errPasswordConfirm) && <span className="errorMessage">{errPasswordConfirm}</span>}
                     {(userExist !== "" && userExist) && <span className="errorMessage">{userExist}</span>}
-                    <label htmlFor="fileUpload" id="inputfileRegister" className="inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} >
-                        <span>vybrat profilovou fotku</span>
-                    </label>
-                    <input id="fileUpload" key={image || ''} type="file" accept="image/*"  onChange={(e) => setImage(e.target.files[0])} required/>
-                    {image && 
-                        <div className="imgShowContainer">
-                            <img src={URL.createObjectURL(image)} alt="img" className="imgShow"/>
-                            <TiDelete className="removeImgShow" onClick={(e) => {setImage(null)}} />
-                        </div>
-                    }
-                    
                     <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}>{!ifWaiting ? <span>Registrovat</span> : <ClipLoader color={backgroundColor2} size={10} />}</button>    
                     <span>nebo</span>        
                         <ButtonGoogleLogIn />
