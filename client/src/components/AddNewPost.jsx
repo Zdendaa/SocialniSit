@@ -58,7 +58,6 @@ const AddNewPost = ({ socket, friends }) => {
                 console.log('upload img succesfully');
                 const urlOfImg = await downloadUrlImg(newImgName);
                 await setDataOfPost(urlOfImg);
-                
             });
         } else {
             // jestli obrzek neexistuje tak posilame do funkce null
@@ -77,18 +76,23 @@ const AddNewPost = ({ socket, friends }) => {
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
             const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);
-            
+            console.log(friends);
             // vsem nasim pratelum posleme notifikaci
-            friends.forEach(async(friend, index) => {
-                await sendNotification(
-                            friend._id, 
-                            5, 
-                            null, 
-                            dataOfNewPost.data._id, 
-                            "přidal/a nový příspěvek"
-                        );
-                if(friends.length - 1 === index) window.location.reload();
-            })
+            if(friends.length === 0) {
+                window.location.reload();
+            } else {
+                friends.forEach(async(friend, index) => {
+                    await sendNotification(
+                                friend._id, 
+                                5, 
+                                null, 
+                                dataOfNewPost.data._id, 
+                                "přidal/a nový příspěvek"
+                            );
+                    console.log(index);
+                    if(friends.length - 1 === index) window.location.reload();
+                })
+            }
         } catch (err) {
             console.log(err);
         }

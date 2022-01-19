@@ -11,7 +11,7 @@ const TopProfile = ({urlOfProfileImg, urlOfCoverImg, user, removeFriend, ifAreFr
             idOfUser === user._id &&
             (
                 <div className="bottomProfile">
-                    <span>{user.username}</span>
+                    <span style={{marginRight: "10px"}}>{user.username}</span>
                     <ButtonForActionsFriend removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />                 
                 </div>
             )

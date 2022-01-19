@@ -7,9 +7,14 @@ import { GlobalContext } from '../context/GlobalState';
 import Post from './Post';
 import { TiDelete } from 'react-icons/ti';
 import UserProfile from './UserProfile';
-import {} from 'react-router-dom';
+import { format, register } from 'timeago.js';
+import czDataFormat from '../format.jsCZ/CzFormat';
 
 const Notifications = ({ socket }) => {
+    // registrovani cestiny do formatjs
+    register('myLanguage', czDataFormat);
+   
+    
     const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     // useState promenne
@@ -92,9 +97,17 @@ const Notifications = ({ socket }) => {
                             notifications.map(( notification ) => (
                                 notification.type === 4 
                                 ? 
-                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></div>
+                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> 
+                                    <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> 
+                                    <span>{notification.text}</span>
+                                    <span className="timeOfCreatedAtNotification">{format(notification.createdAt, 'myLanguage')}</span>
+                                </div>
                                 :
-                                <button className="notificationMessagge opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => getAndShowPost(notification.idOfPost, notification._id)}> <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> <span>{notification.text}</span></button>
+                                <button className="notificationMessagge opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1, } : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => getAndShowPost(notification.idOfPost, notification._id)}> 
+                                    <UserProfile idOfUser={notification.senderId} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> 
+                                    <span>{notification.text}</span>
+                                    <span className="timeOfCreatedAtNotification">{format(notification.createdAt, 'myLanguage')}</span>
+                                </button>
                             ))
                         }
                     </div>

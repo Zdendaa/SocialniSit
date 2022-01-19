@@ -887,6 +887,7 @@ span {
   right: 10px;
   bottom: 10px;
   padding: 10px;
+  z-index: 100000000000000000;
 }
 
 .allNotificationsContainer {
@@ -926,6 +927,7 @@ span {
 }
 
 .notificationMessagge {
+  position: relative;
   border: none;
   padding: 8px 0px 8px 0px;
   margin-bottom: 10px;
@@ -952,6 +954,12 @@ span {
   align-items: center;
   justify-content: center;
   z-index: 10000000000000;
+}
+
+.timeOfCreatedAtNotification {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
 }
 
 .containerForPost {
