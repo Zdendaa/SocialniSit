@@ -11,7 +11,7 @@ const sharedPost = require('./routes/sharedPost');
 const userInfo = require('./routes/userInfo');
 const userColors = require('./routes/userColors');
 const notification = require('./routes/notification');
-
+const story = require('./routes/story');
 
 dotenv.config();
 const app = express();
@@ -34,12 +34,8 @@ app.use("/api/sharedPosts", sharedPost);
 app.use("/api/userInfos", userInfo);
 app.use("/api/userColors", userColors);
 app.use("/api/notifications", notification);
+app.use("/api/stories", story);
 
-/*
-app.get("/", (req, res) => {
-    res.send("<p>ahoj</p>")
-})
-*/
 
 // zpusteni serveru
 app.listen(PORT, () => {
