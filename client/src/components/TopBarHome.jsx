@@ -3,6 +3,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
+import { FiMessageCircle } from "react-icons/fi";
 
 const TopBarHome = ({ socket }) => {
 const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useContext(GlobalContext);
@@ -13,7 +14,10 @@ const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useCon
             <Link to="/" style={{textDecoration: "none", color: backgroundColor1}}>
                 <p className="weight800" style={{cursor: "pointer"}}>Sociální síť</p>
             </Link>
-            <SearchBar />
+            <div className="iconsSearchAndMessenger" style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+                <SearchBar />
+                <Link to="/messenger" style={{textDecoration: "none"}}><FiMessageCircle className="searchIcon scaled pointer" style={{color: backgroundColor1}}/></Link>
+            </div>
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
                     <p className="weight800">{user.username}</p>

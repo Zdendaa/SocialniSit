@@ -34,6 +34,11 @@ const Reducer = (state, action) => {
                 backgroundColor3: action.payload.backgroundColor3,
                 backgroundColor4: action.payload.backgroundColor4
             }
+        case "SET_ONLINE_FRIENDS":
+            return {
+                ...state,
+                onlineFriends: action.payload
+            }
         default: 
             return state;
     }

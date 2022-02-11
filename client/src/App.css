@@ -363,6 +363,9 @@ span {
   border-radius: 50%;
   object-fit: cover;
 }
+.iconsSearchAndMessenger * {
+  padding: 5px;
+}
 
 /* Post */
 
@@ -798,7 +801,6 @@ span {
   bottom: 1px;
   border-radius: 50%;
   background-color: green;
-  border: 2px solid white;
 }
 
 /*SetUserInfo*/
@@ -969,6 +971,15 @@ span {
   z-index: 10000000000;
   display: flex;
   align-items: center;
+}
+
+/*Messenger*/
+.messengerContainer {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 @media only screen and (min-width: 450px) {

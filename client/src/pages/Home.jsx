@@ -7,7 +7,7 @@ import axios from 'axios';
 import Post from '../components/Post';
 import Notifications from '../components/Notifications';
 
-const Home = ({ onlineUsers, socket }) => {
+const Home = ({ socket }) => {
     const {user} = useContext(GlobalContext);
 
     const [posts, setPosts] = useState(null);
@@ -41,7 +41,7 @@ const Home = ({ onlineUsers, socket }) => {
         <div className="homeContainer">           
              <TopBarHome socket={socket}/>
 
-             <SwiperOnlineFriends users={users} onlineUsers={onlineUsers} type={1}/>
+             <SwiperOnlineFriends users={users} type={1}/>
 
              <div className="homeContainerPostsMain">
                 <div className="homeContainerPosts">
@@ -52,7 +52,7 @@ const Home = ({ onlineUsers, socket }) => {
                         ))
                     }
                 </div>
-                <SwiperOnlineFriends users={users} onlineUsers={onlineUsers} className="pc" type={2}/>
+                <SwiperOnlineFriends users={users} className="pc" type={2}/>
              </div>
              <Notifications socket={socket}/>
         </div>

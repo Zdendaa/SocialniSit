@@ -8,6 +8,7 @@ const initialState = {
     backgroundColor2: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor2 : "#F4F4F4", // sekundarni barva
     backgroundColor3: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor3 : "black", // barva pro cerny text
     backgroundColor4: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor4 : "#ffffff", // barva pro bily text
+    onlineFriends: null, 
 }
 
 export const GlobalContext = createContext(initialState);
@@ -56,6 +57,14 @@ export const GlobalProvider = ({children}) => {
         })
     }
 
+    // nastaveni online pratel
+    function setOnlineFriends(data) {
+        dispatch({
+            type: 'SET_ONLINE_FRIENDS',
+            payload: data
+        })
+    }
+
 
     return (
         <GlobalContext.Provider value={{
@@ -64,11 +73,13 @@ export const GlobalProvider = ({children}) => {
             backgroundColor2: state.backgroundColor2, 
             backgroundColor3: state.backgroundColor3, 
             backgroundColor4: state.backgroundColor4,
+            onlineFriends: state.onlineFriends,
             setUser, 
             deleteUser,
             changeProfileImg,
             changeCoverImg,
-            setColors
+            setColors,
+            setOnlineFriends
         }}>
             {children}
         </GlobalContext.Provider>

@@ -16,7 +16,7 @@ const Post = ({post, socket}) => {
     register('myLanguage', czDataFormat);
 
     // zavolani prihlaseneho usera
-    const {user, backgroundColor1, backgroundColor3} = useContext(GlobalContext);
+    const {user, backgroundColor1, backgroundColor3, onlineFriends} = useContext(GlobalContext);
     
     // Promenne UseState
 
@@ -74,8 +74,11 @@ const Post = ({post, socket}) => {
                 </>
                 }
                 <div className="userContainerPost">
-                    <Link to={`/profile/${userOfPost?._id}`} className="userDivPost">
-                        <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
+                    <Link to={`/profile/${userOfPost?._id}`} className="userProfile">
+                        <div className="mainImg">
+                            <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer"/>
+                            {onlineFriends?.some(onlineUser => onlineUser.userId === userOfPost?._id) && <div className="online" style={{border: "2px solid white"}}></div>}
+                        </div>
                         <span style={{color: backgroundColor3}}>{userOfPost?.username}</span>
                         {post?.newPicture && <span style={{color: backgroundColor1}}>přidal/a novou fotku</span>}
                     </Link>
