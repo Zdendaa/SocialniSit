@@ -6,6 +6,7 @@ import AddNewPost from '../components/AddNewPost';
 import axios from 'axios';
 import Post from '../components/Post';
 import Notifications from '../components/Notifications';
+import StoriesMain from '../components/StoriesMain';
 
 const Home = ({ socket }) => {
     const {user} = useContext(GlobalContext);
@@ -21,7 +22,6 @@ const Home = ({ socket }) => {
            // serazeni od nejnovejsich postu po ty uplne posledni 
            const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt)});
            setPosts(sortPosts);
-           console.log(sortPosts)
        }
        getPosts();
     }, [user._id])
@@ -30,7 +30,6 @@ const Home = ({ socket }) => {
         const getFrinends = async () => {
             // nacteni pratel
             const users = await axios.get(`/users/getAllFriends/${user._id}`);
-            console.log(users.data);
             setUsers(users.data);
         }
         getFrinends();
@@ -40,11 +39,11 @@ const Home = ({ socket }) => {
     return (
         <div className="homeContainer">           
              <TopBarHome socket={socket}/>
-
              <SwiperOnlineFriends users={users} type={1}/>
 
              <div className="homeContainerPostsMain">
                 <div className="homeContainerPosts">
+                    <StoriesMain />
                     <AddNewPost socket={socket} friends={users}/>
                     {
                         posts?.map((post, index) => (
