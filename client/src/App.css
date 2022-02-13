@@ -317,7 +317,7 @@ span {
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px 0px 15px;
-  z-index: 1000;
+  z-index: 100000000000000000001000000000000000000010000000000000000000;
 }
 .topBarProfile {
   position: relative;
@@ -955,7 +955,7 @@ span {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000000000000;
+  z-index: 1000000000;
 }
 
 .timeOfCreatedAtNotification {
@@ -1075,6 +1075,18 @@ span {
 .iconAddStory {
   font-size: 50px;
   margin-bottom: 7px;
+}
+
+.AddStory {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000000;
 }
 
 @media only screen and (min-width: 450px) {

@@ -4,11 +4,11 @@ import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import { MdAddCircleOutline } from 'react-icons/md';
 
-const Story = ({ story, type }) => {
+const Story = ({ story, type, setIsOpenAddStory }) => {
     const { onlineFriends, user} = useContext(GlobalContext);
 
     const [userOfStory, setUserOfStory] = useState();
-
+    
     useEffect(() => {
         const fetchDataOfUser = async () => {
             if(story) {
@@ -22,7 +22,7 @@ const Story = ({ story, type }) => {
         <div className="Story storyWidthAndHeight">
             {
                 type === 1 ? (
-                    <div onClick={() => console.log("klikk")} >
+                    <div onClick={() => setIsOpenAddStory(true) } >
                         <img src={user.idOrUrlOfProfilePicture} alt="storyImg" className="storyImg storyWidthAndHeight" />
                             <div className="profileContainerAddStory">
                                 <MdAddCircleOutline className="iconAddStory" style={{color: "black"}}/>

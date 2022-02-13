@@ -9,6 +9,8 @@ import { TiDelete } from 'react-icons/ti';
 import UserProfile from './UserProfile';
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
+import PopupWindown from './global/PopupWindown';
+import { AnimatePresence } from 'framer-motion';
 
 const Notifications = ({ socket }) => {
     // registrovani cestiny do formatjs
@@ -117,16 +119,18 @@ const Notifications = ({ socket }) => {
                     <HiOutlineBell  style={{ color: backgroundColor1, width: "30px", height: "30px"}} />
                 </div>
             </div>
-            {
-                showPost &&
-                <div className="mainContainerForPost">
-                    <div className="containerForPost">   
-                        <Post post={dataOfPost} socket={socket}/>
-                        <TiDelete className="removeImgShow scaled" onClick={() => setShowPost(false)} />
-                    </div>
-                    <div className="wallPaperNotWorking"></div>
-                </div>
-            }
+            <AnimatePresence 
+            initial={false}
+            exitBeforeEnter={true}  
+            onExitComplete={() => null}
+            >
+                {
+                    showPost &&
+                    <PopupWindown classNameMain="mainContainerForPost" classNameContainer="containerForPost" setVisible={setShowPost}>
+                            <Post post={dataOfPost} socket={socket}/>
+                    </PopupWindown>
+                }
+            </AnimatePresence>
         </>
     )
 }

@@ -10,6 +10,7 @@ import changePath from '../changePath';
 import { Link } from "react-router-dom";
 import Share from './Share';
 import UserProfile from './UserProfile';
+import { AnimatePresence  } from 'framer-motion';
 
 const Post = ({post, socket}) => {
     // registrovani cestiny do formatjs
@@ -103,7 +104,13 @@ const Post = ({post, socket}) => {
                     <Comments post={post} key={post._id} sendNotification={sendNotification}/>
                 </div>
             </div>
-            {ifSharing && <> <div className="wallPaperNotWorking"></div> <Share setifSharing={setifSharing} sendNotification={sendNotification} idOfPost={post._id}/> </> }
+            <AnimatePresence 
+            initial={false}
+            exitBeforeEnter={true}  
+            onExitComplete={() => null}
+            >
+                {ifSharing && <Share setifSharing={setifSharing} sendNotification={sendNotification} idOfPost={post._id}/> }
+            </AnimatePresence>
         </div>
     )
 }

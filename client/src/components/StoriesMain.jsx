@@ -3,13 +3,15 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import Story from './Story';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import AddStory from './AddStory';
 
 const StoriesMain = () => {
     const {user} = useContext(GlobalContext);
     const [allStories, setAllStories] = useState([]);
     const [width, setWidth] = useState(0);
     const carouselMain = useRef();
+    const [isOpenAddStory, setIsOpenAddStory] = useState(false);
 
     useEffect(() => {
         const fetchAllStories = async () => {
@@ -26,18 +28,28 @@ const StoriesMain = () => {
 
     return (
       <div className="StoriesMain" ref={carouselMain} whiletap={{cursor: "grabbing"}}>
-          <motion.div 
-            drag="x"
-            dragConstraints={{right: 0, left: -width}}
-            className="stories"
-          >
-              <Story type={1}/>
+        <motion.div 
+          drag="x"
+          dragConstraints={{right: 0, left: -width}}
+          className="stories"
+        >
+            <Story type={1} setIsOpenAddStory={setIsOpenAddStory}/>
             {
-                allStories.map((story) => (
-                        <Story story={story} key={story._id}/>
+                allStories?.map((story) => (
+                    <Story story={story} key={story._id}/>
                 ))
             }
-          </motion.div>
+        </motion.div>  
+        <AnimatePresence 
+        initial={false}
+        exitBeforeEnter={true}  
+        onExitComplete={() => null}
+        >
+            {
+            isOpenAddStory && 
+                <AddStory setIsOpenAddStory={setIsOpenAddStory}/>
+            }
+        </AnimatePresence>   
       </div>
     )
 }
