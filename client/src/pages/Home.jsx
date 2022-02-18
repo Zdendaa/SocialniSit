@@ -8,9 +8,8 @@ import Post from '../components/Post';
 import Notifications from '../components/Notifications';
 import StoriesMain from '../components/StoriesMain';
 
-const Home = ({ socket }) => {
-    const {user} = useContext(GlobalContext);
-
+const Home = () => {
+    const {user, socket} = useContext(GlobalContext);
     const [posts, setPosts] = useState(null);
     const [users, setUsers] = useState([]);
 
@@ -38,22 +37,22 @@ const Home = ({ socket }) => {
     
     return (
         <div className="homeContainer">           
-             <TopBarHome socket={socket}/>
+             <TopBarHome />
              <SwiperOnlineFriends users={users} type={1}/>
 
              <div className="homeContainerPostsMain">
                 <div className="homeContainerPosts">
                     <StoriesMain />
-                    <AddNewPost socket={socket} friends={users}/>
+                    <AddNewPost friends={users}/>
                     {
                         posts?.map((post, index) => (
-                            <Post post={post} key={index} socket={socket}/> 
+                            <Post post={post} key={index} /> 
                         ))
                     }
                 </div>
                 <SwiperOnlineFriends users={users} className="pc" type={2}/>
              </div>
-             <Notifications socket={socket}/>
+             <Notifications />
         </div>
     )
 }

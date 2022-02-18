@@ -39,6 +39,11 @@ const Reducer = (state, action) => {
                 ...state,
                 onlineFriends: action.payload
             }
+        case "SET_SOCKET":
+            return {
+                ...state,
+                socket: action.payload
+            }
         default: 
             return state;
     }

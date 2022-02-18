@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const PopupWindown = ({ classNameMain, classNameContainer, children, setVisible }) => {
   return (
     <>
-        <motion.div 
+        <motion.div
             className={classNameMain} 
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -16,7 +16,6 @@ const PopupWindown = ({ classNameMain, classNameContainer, children, setVisible 
                 {children}
                 <TiDelete className="scaled removeImgShow" onClick={() => setVisible(false)} />
             </div>
-            
         </motion.div>
         <div className="wallPaperNotWorking"></div>
     </>

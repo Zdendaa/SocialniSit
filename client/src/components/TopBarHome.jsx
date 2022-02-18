@@ -5,8 +5,8 @@ import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
 import { FiMessageCircle } from "react-icons/fi";
 
-const TopBarHome = ({ socket }) => {
-const {user, setColors, deleteUser, backgroundColor1, backgroundColor4} = useContext(GlobalContext);
+const TopBarHome = () => {
+const {user, socket, setColors, deleteUser, backgroundColor1, backgroundColor4} = useContext(GlobalContext);
     const history = useHistory();
 
     return (

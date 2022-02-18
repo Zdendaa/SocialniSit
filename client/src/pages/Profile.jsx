@@ -14,8 +14,8 @@ import ImagesOfUser from '../components/ImagesOfUser';
 import UserInfo from '../components/UserInfo';
 import Notifications from '../components/Notifications';
 
-const Profile = ({ socket }) => {
-    const { user, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
+const Profile = () => {
+    const { user, socket, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
     // useState promenne
@@ -155,7 +155,7 @@ const Profile = ({ socket }) => {
 
     return (
         <div className="Profile">
-            <TopBarHome socket={socket}/>
+            <TopBarHome />
             <TopProfile urlOfProfileImg={urlOfProfileImg} urlOfCoverImg={urlOfCoverImg} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
             
             <div className="profileContainer">
@@ -194,15 +194,15 @@ const Profile = ({ socket }) => {
                     </div>
                 </div>
                 <div className="postsActionsContainerProfile">
-                    {idOfUser === user._id && <AddNewPost socket={socket} friends={allFriends}/>}
+                    {idOfUser === user._id && <AddNewPost friends={allFriends}/>}
                     {
                         allPosts?.map((post, index) => (
-                            <Post post={post} key={index} socket={socket}/>
+                            <Post post={post} key={index} />
                         ))
                     }
                 </div>
             </div>
-            <Notifications socket={socket}/>
+            <Notifications />
         </div>
     )
 }

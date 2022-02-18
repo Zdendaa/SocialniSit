@@ -12,12 +12,12 @@ import czDataFormat from '../format.jsCZ/CzFormat';
 import PopupWindown from './global/PopupWindown';
 import { AnimatePresence } from 'framer-motion';
 
-const Notifications = ({ socket }) => {
+const Notifications = () => {
     // registrovani cestiny do formatjs
     register('myLanguage', czDataFormat);
    
     
-    const { user, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
+    const { user, socket, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     // useState promenne
 

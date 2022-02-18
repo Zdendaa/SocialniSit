@@ -4,7 +4,7 @@ import SwiperOnlineFriends from "../components/SwiperOnlineFriends";
 import TopBarHome from "../components/TopBarHome";
 import { GlobalContext } from "../context/GlobalState";
 
-const Messenger = ({ socket }) => {
+const Messenger = () => {
     const { user } = useContext(GlobalContext);
 
     const [nuberOfChat, setNuberOfChat] = useState(null);
@@ -23,7 +23,7 @@ const Messenger = ({ socket }) => {
 
     return (
         <div className="messengerContainer">
-            <TopBarHome socket={socket}/>
+            <TopBarHome />
 
             <div className="messengerMain">
                 <div className="messengerFriends">

@@ -7,17 +7,17 @@ import Notifications from '../components/Notifications';
 import SetUserInfo from '../components/SetUserInfo';
 import TopBarHome from '../components/TopBarHome'
 
-const ProfileSettings = ({socket}) => { 
+const ProfileSettings = () => { 
     return (
         <div className="ProfileSettings">
-            <TopBarHome socket={socket}/>
+            <TopBarHome />
             <div className="ProfileSettingsContainer">
-                <ChangeProfileImg socket={socket} />
-                <ChangeCoverImg socket={socket}/>   
+                <ChangeProfileImg />
+                <ChangeCoverImg />   
                 <SetUserInfo /> 
                 <ChangeColors />
             </div>
-            <Notifications socket={socket}/>
+            <Notifications />
         </div>
     )
 }

@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import CropperImage from './CropperImage';
 import { GlobalContext } from '../context/GlobalState';
 
-const ChangeCoverImg = ({ socket }) => {
-    const { user, backgroundColor1} = useContext(GlobalContext);
+const ChangeCoverImg = () => {
+    const { user, socket, backgroundColor1} = useContext(GlobalContext);
 
     return (
         <>

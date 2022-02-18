@@ -12,12 +12,12 @@ import Share from './Share';
 import UserProfile from './UserProfile';
 import { AnimatePresence  } from 'framer-motion';
 
-const Post = ({post, socket}) => {
+const Post = ({ post }) => {
     // registrovani cestiny do formatjs
     register('myLanguage', czDataFormat);
 
     // zavolani prihlaseneho usera
-    const {user, backgroundColor1, backgroundColor3, onlineFriends} = useContext(GlobalContext);
+    const {user, socket, backgroundColor1, backgroundColor3, onlineFriends} = useContext(GlobalContext);
     
     // Promenne UseState
 

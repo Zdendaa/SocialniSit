@@ -8,8 +8,8 @@ import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 
-const AddNewPost = ({ socket, friends }) => {
-    const {user, backgroundColor1, backgroundColor2, backgroundColor4} = useContext(GlobalContext);
+const AddNewPost = ({ friends }) => {
+    const {user, socket, backgroundColor1, backgroundColor2, backgroundColor4} = useContext(GlobalContext);
    
     // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
     const [image, setImage] = useState(null);

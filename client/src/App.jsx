@@ -16,27 +16,27 @@ import { io } from 'socket.io-client';
 import Messenger from './pages/Messenger';
 
 function App() {
-  const {user, setOnlineFriends} = useContext(GlobalContext);
-
-  const socket = useRef();
+  const {user, setOnlineFriends, setSocket, socket} = useContext(GlobalContext);
 
   useEffect(() => {
       // pripojeni socket.io
       if(user) {
-         socket.current = io("ws://localhost:8900");
+         setSocket(io("ws://localhost:8900"));
       }
   }, [user])
   
   useEffect(() => {
       if(user) {
         // zavolani socket.io addUser a poslani hodnoty user.id
-        socket.current.emit("addUser", user._id);
+      
+        socket?.emit("addUser", user._id);
         // dostani vsech online uzivatelu
-        socket.current.on("getUsers", users => {
+        socket?.on("getUsers", users => {
+          console.log(users);
           setOnlineFriends(users.filter(onlineUser => onlineUser.userId !== user._id));
         })
       }
-  }, [user])
+  }, [user, socket]);
 
 
   return (
@@ -44,7 +44,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            { user ? <Home socket={socket.current}/> : <Redirect to="/register" /> }
+            { user ? <Home /> : <Redirect to="/register" /> }
           </Route>
           <Route path="/register">
             { !user ? <Register /> : <Redirect to="/" /> }
@@ -53,13 +53,13 @@ function App() {
             { !user ? <Login /> : <Redirect to="/" /> }
           </Route>
           <Route path="/profile/:idOfUser">
-            { user ? <Profile socket={socket.current} /> : <Redirect to="/register" /> }
+            { user ? <Profile /> : <Redirect to="/register" /> }
           </Route>
           <Route path="/settings">
-            { user ? <ProfileSettings socket={socket.current}/> : <Redirect to="/register" /> }
+            { user ? <ProfileSettings /> : <Redirect to="/register" /> }
           </Route>
           <Route path="/messenger">
-            { user ? <Messenger socket={socket.current}/> : <Redirect to="/register" /> }
+            { user ? <Messenger /> : <Redirect to="/register" /> }
           </Route>
         </Switch>
       </Router>
