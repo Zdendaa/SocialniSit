@@ -5,7 +5,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { MdAddCircleOutline } from 'react-icons/md';
 
 const Story = ({ story, type, setIsOpenAddStory }) => {
-    const { onlineFriends, user} = useContext(GlobalContext);
+    const { onlineFriends, user } = useContext(GlobalContext);
 
     const [userOfStory, setUserOfStory] = useState();
     
@@ -17,13 +17,13 @@ const Story = ({ story, type, setIsOpenAddStory }) => {
             }    
         }
         fetchDataOfUser();
-    }, [])
+    }, [story])
     return (
         <div className="Story storyWidthAndHeight">
             {
                 type === 1 ? (
                     <div onClick={() => setIsOpenAddStory(true) } >
-                        <img src={user.idOrUrlOfProfilePicture} alt="storyImg" className="storyImg storyWidthAndHeight" />
+                        <img src={user.idOrUrlOfProfilePicture ? user.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="storyImg" className="storyImg storyWidthAndHeight" />
                             <div className="profileContainerAddStory">
                                 <MdAddCircleOutline className="iconAddStory" style={{color: "black"}}/>
                                 <span>Vytvořte příběh</span>
@@ -31,10 +31,10 @@ const Story = ({ story, type, setIsOpenAddStory }) => {
                     </div>
                 ) : (
                     <>
-                        <img src="https://cdn.britannica.com/82/195482-050-2373E635/Amalfi-Italy.jpg" alt="storyImg" className="storyImg storyWidthAndHeight" />
+                        <img src={story.urlOfImg} alt="storyImg" className="storyImg storyWidthAndHeight" />
                         <div className="profileContainerStory">
                             <div className="profileImgMain">
-                                <img src="http://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg" alt="profileImg" className="profileImgStory"/>
+                                <img src={userOfStory?.idOrUrlOfProfilePicture ? userOfStory?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="profileImg" className="profileImgStory"/>
                                 {onlineFriends.onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory._id) && <div className="onlineUserStory"></div>}
                             </div>
                             <span>{userOfStory?.username}</span>

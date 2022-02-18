@@ -10,6 +10,7 @@ const UploadControl = ({children, setUrlImage, id, setNoError}) => {
                 id={id}
                 type="file"
                 onChange={ (e) => { e.target.files[0] && setUrlImage(URL.createObjectURL(e.target.files[0])); setNoError(false) } } 
+                accept="image/*"
             />
             {children}
         </label>

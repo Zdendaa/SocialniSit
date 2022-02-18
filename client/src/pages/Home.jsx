@@ -9,7 +9,7 @@ import Notifications from '../components/Notifications';
 import StoriesMain from '../components/StoriesMain';
 
 const Home = () => {
-    const {user, socket} = useContext(GlobalContext);
+    const {user} = useContext(GlobalContext);
     const [posts, setPosts] = useState(null);
     const [users, setUsers] = useState([]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 /* import swiper*/ 
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper.min.css'

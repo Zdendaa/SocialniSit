@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import {HiOutlineBell} from 'react-icons/hi';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import Post from './Post';
-import { TiDelete } from 'react-icons/ti';
 import UserProfile from './UserProfile';
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
@@ -84,7 +83,7 @@ const Notifications = () => {
         sortNotificationsByDate();
         console.log(senderId);
         await axios.put(changePath(`/notifications/changeReadedToTrue/`), {id: idOfNotification}).then(() => {
-            link && history.push(`/profile/${senderId}`);
+            link == 1 ? history.push(`/profile/${senderId}`) : link === 2 && history.push(`/`);
         });
     }
     
@@ -99,7 +98,15 @@ const Notifications = () => {
                             notifications.map(( notification ) => (
                                 notification.type === 4 
                                 ? 
-                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, true, notification.senderId)}> 
+                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, 1, notification.senderId)}> 
+                                    <UserProfile idOfUser={notification.senderId} unReaded={!notification.readed} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> 
+                                    <span>{notification.text}</span>
+                                    <span className="timeOfCreatedAtNotification">{format(notification.createdAt, 'myLanguage')}</span>
+                                </div>
+                                : 
+                                notification.type === 7 
+                                ?
+                                <div className="notificationMessagge linkNotificationToProfile opacity" style={notification.readed ? {backgroundColor: backgroundColor2, border: "1px solid" + backgroundColor1, color: backgroundColor1} : {backgroundColor: backgroundColor1, color: backgroundColor4} } onClick={() => setReadedToTrue(notification._id, 2, notification.senderId)}> 
                                     <UserProfile idOfUser={notification.senderId} unReaded={!notification.readed} style={{width: "40px", height: "40px", borderRadius: "50%"}}/> 
                                     <span>{notification.text}</span>
                                     <span className="timeOfCreatedAtNotification">{format(notification.createdAt, 'myLanguage')}</span>

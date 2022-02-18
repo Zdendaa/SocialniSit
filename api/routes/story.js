@@ -19,7 +19,6 @@ router.post("/addStory", async (req, res) => {
 router.get("/getAllStories/:idOfUser", async (req, res) => {
     try {
         const user = await User.findById(req.params.idOfUser);
-        console.log(user.idOfFriends[0]);
         const allFriends = await Promise.all(
             user.idOfFriends.map(async (friend) => {
                 const story = await Story.find({idOfUser: friend});
