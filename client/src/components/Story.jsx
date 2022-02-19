@@ -40,7 +40,7 @@ const Story = ({ story, type, setIsOpenAddStory, setIdOfCurrentOpenStory, setIsV
                         <Link to={`/profile/${userOfStory?._id}`} className="profileContainerStory">
                             <div className="profileImgMain">
                                 <img src={userOfStory?.idOrUrlOfProfilePicture ? userOfStory?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="profileImg" className="profileImgStory"/>
-                                {onlineFriends.onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory._id) && <div className="onlineUserStory"></div>}
+                                {onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory?._id) && <div className="onlineUserStory"></div>}
                             </div>
                             <span>{userOfStory?.username}</span>  
                         </Link>

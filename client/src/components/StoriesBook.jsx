@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const StoriesBook = ({ idOfCurrentOpenStory, setIsVisibleStoriesBook, allStories }) => {
     const { onlineFriends } = useContext(GlobalContext);
-
+console.log(onlineFriends);
     const [indexOfStory, setIndexOfStory] = useState(allStories.findIndex((storie) => storie._id === idOfCurrentOpenStory))
     const [userOfStory, setUserOfStory] = useState(null);
 
@@ -49,7 +49,7 @@ const StoriesBook = ({ idOfCurrentOpenStory, setIsVisibleStoriesBook, allStories
             <Link to={`/profile/${userOfStory?._id}`} className="profileContainerStory">
                 <div className="profileImgMain">
                     <img src={userOfStory?.idOrUrlOfProfilePicture ? userOfStory?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="profileImg" className="profileImgStory"/>
-                    {onlineFriends.onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory._id) && <div className="onlineUserStory"></div>}
+                    {onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory?._id) && <div className="onlineUserStory"></div>}
                 </div>
                 <span>{userOfStory?.username}</span>  
             </Link>
