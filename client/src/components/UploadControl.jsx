@@ -4,7 +4,7 @@ import { GlobalContext } from '../context/GlobalState';
 const UploadControl = ({children, setUrlImage, id, setNoError}) => {
     const { backgroundColor1 } = useContext(GlobalContext);
     return (
-        <label htmlFor={id} id="inputfileRegister" className="inputImgAddPost opacity" style={{ backgroundColor: backgroundColor1, color: "white", margin: "15px 0px 15px 0px" }} >
+        <label htmlFor={id} id="inputfileRegister" className="inputImgAddPost opacity" style={{ backgroundColor: backgroundColor1, color: "white", margin: "10px 0px 10px 0px" }} >
             <input
                 style={{ display: 'none' }}
                 id={id}

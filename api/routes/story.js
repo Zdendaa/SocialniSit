@@ -24,7 +24,6 @@ router.get("/getAllStories/:idOfUser", async (req, res) => {
         user.idOfFriends.push(req.params.idOfUser);
         const allFriends = await Promise.all(
             user.idOfFriends.map(async (friend) => {
-                console.log(friend)
                 const story = await Story.find({idOfUser: friend});
                 return story.length === 0 ? null : story;
             })

@@ -8,7 +8,7 @@ import PopupWindown from './global/PopupWindown'
 
 const AddStory = ({ setIsOpenAddStory }) => {
 
-  const { user, backgroundColor1 } = useContext(GlobalContext);
+  const { user, backgroundColor1, backgroundColor2 } = useContext(GlobalContext);
 
   const [cropImg, setCropImg] = useState(null);
 
@@ -62,8 +62,8 @@ const AddStory = ({ setIsOpenAddStory }) => {
     <PopupWindown classNameMain="AddStory" classNameContainer="shareContainer" setVisible={setIsOpenAddStory}>
       <div className="mainContainerSettingsStory">
         <div className="settingsStory">
-          <input type="text" placeholder="něco k příběhu..." value={valueOfInput} onChange={ (e) => {setValueOfInput(e.target.value)} }/>
-          <select onChange={ (e) => { setValueOfPlace(e.target.value) } } >
+          <input type="text" className="inputInfo" style={{backgroundColor: backgroundColor2, color: backgroundColor1}}  placeholder="něco k příběhu..." value={valueOfInput} onChange={ (e) => {setValueOfInput(e.target.value)} }/>
+          <select onChange={ (e) => { setValueOfPlace(e.target.value) } } className="inputInfo" style={{backgroundColor: backgroundColor2, color: backgroundColor1}} >
             <option value="top" >nahoře</option>
             <option value="mid" selected >upřostřed</option>
             <option value="bot" >dole</option>

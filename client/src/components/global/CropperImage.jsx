@@ -121,7 +121,7 @@ const CropperImage = ({ aspect, rect, saveImg, addStory, children, setCropImg })
                     </>
                 )       
             }
-            <button onClick={() => getCroppedImg()} className="inputImgAddPost opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, margin: "15px 0px 0px 0px"}} >{!isLoading ? (noError ? <div className="correctAnimation"><GoCheck size={15} /></div> : (addStory ? "přidat příběh" : rect ? "změnit fotku na pozadí" : "změnit profilovou fotku") ) : <ClipLoader color={backgroundColor4} size={10}></ClipLoader>}</button>
+            <button onClick={() => getCroppedImg()} className="inputImgAddPost opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, margin: "10px 0px 0px 0px"}} >{!isLoading ? (noError ? <div className="correctAnimation"><GoCheck size={15} /></div> : (addStory ? "přidat příběh" : rect ? "změnit fotku na pozadí" : "změnit profilovou fotku") ) : <ClipLoader color={backgroundColor4} size={10}></ClipLoader>}</button>
         </div>
 
     )

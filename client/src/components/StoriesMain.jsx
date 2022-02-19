@@ -5,6 +5,7 @@ import { GlobalContext } from '../context/GlobalState';
 import Story from './Story';
 import { AnimatePresence, motion } from 'framer-motion';
 import AddStory from './AddStory';
+import StoriesBook from './StoriesBook';
 
 const StoriesMain = () => {
     const {user} = useContext(GlobalContext);
@@ -12,6 +13,8 @@ const StoriesMain = () => {
     const [width, setWidth] = useState(0);
     const carouselMain = useRef();
     const [isOpenAddStory, setIsOpenAddStory] = useState(false);
+    const [idOfCurrentOpenStory, setIdOfCurrentOpenStory] = useState(null);
+    const [isVisibleStoriesBook, setIsVisibleStoriesBook] = useState(false);
 
     useEffect(() => {
         const fetchAllStories = async () => {
@@ -36,7 +39,7 @@ const StoriesMain = () => {
             <Story type={1} setIsOpenAddStory={setIsOpenAddStory}/>
             {
                 allStories?.map((story) => (
-                    <Story story={story} key={story._id}/>
+                    <Story story={story} key={story._id} setIdOfCurrentOpenStory={setIdOfCurrentOpenStory} setIsVisibleStoriesBook={setIsVisibleStoriesBook}/>
                 ))
             }
         </motion.div>  
@@ -48,6 +51,10 @@ const StoriesMain = () => {
             {
             isOpenAddStory && 
                 <AddStory setIsOpenAddStory={setIsOpenAddStory}/>
+            } 
+            {
+            isVisibleStoriesBook && 
+                <StoriesBook idOfCurrentOpenStory={idOfCurrentOpenStory} setIsVisibleStoriesBook={setIsVisibleStoriesBook} allStories={allStories} />
             }
         </AnimatePresence>   
       </div>
