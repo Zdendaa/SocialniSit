@@ -8,7 +8,7 @@ import UploadControl from '../UploadControl';
 import ClipLoader from "react-spinners/ClipLoader";
 import { GoCheck } from 'react-icons/go';
 
-const CropperImage = ({ aspect, rect, saveImg, addStory }) => { 
+const CropperImage = ({ aspect, rect, saveImg, addStory, children, setCropImg }) => { 
     const { user, backgroundColor1, backgroundColor4, socket } = useContext(GlobalContext);
 
     const [crop, setCrop] = useState({ aspect });
@@ -41,7 +41,7 @@ const CropperImage = ({ aspect, rect, saveImg, addStory }) => {
         socket.emit("sendNotification", {id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
     }
 
-    const getCroppedImg = async () => {    
+    const getCroppedImg = async (onlyCrop) => {    
         if (!image || (crop.width === 0 && crop.height === 0)) return;
         // vytvoreni canvasu
         const canvas = document.createElement("canvas");
@@ -66,12 +66,18 @@ const CropperImage = ({ aspect, rect, saveImg, addStory }) => {
             crop.width,
             crop.height
         );
- 
-        canvas.toBlob(async (blob) => {
-            blob.name = Math.floor( Date.now() / 1000 );
-            setUrlImage(null);
-            await saveImg(blob, setNoError, setIsLoading, friends, sendNotification);
-        });
+        
+        if(onlyCrop) {
+            const base64Image = canvas.toDataURL("image/jpeg");
+            setCropImg(base64Image);
+        }
+        else {
+            canvas.toBlob(async (blob) => {
+                blob.name = Math.floor( Date.now() / 1000 );
+                setUrlImage(null);
+                await saveImg(blob, setNoError, setIsLoading, friends, sendNotification);
+            });
+        }
     }
 
     return (
@@ -83,6 +89,16 @@ const CropperImage = ({ aspect, rect, saveImg, addStory }) => {
                 urlImage && (
                     <>
                         {
+                            addStory ?
+                                <ReactCrop src={urlImage}
+                                    onImageLoaded={setImage}
+                                    crop={crop}
+                                    onChange={newCrop => {setCrop(newCrop); getCroppedImg(true)}}
+                                    style={{minWidth: "120px", maxWidth: "240px",minHeight: "150px", maxHeight: "300px", objectFit: "cover"}}
+                                >
+                                    {children}
+                                </ReactCrop>
+                            :
                             rect ? (
                                 <ReactCrop src={urlImage}
                                     onImageLoaded={setImage}

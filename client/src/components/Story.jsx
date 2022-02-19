@@ -31,14 +31,17 @@ const Story = ({ story, type, setIsOpenAddStory }) => {
                     </div>
                 ) : (
                     <>
-                        <img src={story.urlOfImg} alt="storyImg" className="storyImg storyWidthAndHeight" />
+                        <div style={{position: "relative"}}>
+                            <img src={story.urlOfImg} alt="storyImg" className="storyImg storyWidthAndHeight" />
+                            <span className={story.position}><span style={{padding: "5px"}}>{story.text}</span></span>
+                        </div>
+                        
                         <div className="profileContainerStory">
                             <div className="profileImgMain">
                                 <img src={userOfStory?.idOrUrlOfProfilePicture ? userOfStory?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="profileImg" className="profileImgStory"/>
                                 {onlineFriends.onlineFriends?.some(onlineUser => onlineUser.userId === userOfStory._id) && <div className="onlineUserStory"></div>}
                             </div>
-                            <span>{userOfStory?.username}</span>
-                            
+                            <span>{userOfStory?.username}</span>  
                         </div>
                     </>
                 )

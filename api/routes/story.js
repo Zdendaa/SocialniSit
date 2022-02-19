@@ -6,7 +6,9 @@ router.post("/addStory", async (req, res) => {
     try {
         const data = new Story({
             idOfUser: req.body.idOfUser,
-            urlOfImg: req.body.urlOfImg
+            urlOfImg: req.body.urlOfImg,
+            text: req.body.text,
+            position: req.body.position
         })
         const newStory = await data.save();
 
@@ -19,8 +21,10 @@ router.post("/addStory", async (req, res) => {
 router.get("/getAllStories/:idOfUser", async (req, res) => {
     try {
         const user = await User.findById(req.params.idOfUser);
+        user.idOfFriends.push(req.params.idOfUser);
         const allFriends = await Promise.all(
             user.idOfFriends.map(async (friend) => {
+                console.log(friend)
                 const story = await Story.find({idOfUser: friend});
                 return story.length === 0 ? null : story;
             })
