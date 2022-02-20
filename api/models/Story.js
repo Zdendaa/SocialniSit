@@ -15,7 +15,7 @@ const stories = new mongoose.Schema({
     position: {
         type: String,
     },
-    expire_at: {type: Date, default: Date.now, expires: 50000} // za expires dosazujeme sekundy, toto nasatvi auto delete za nejakou dobu
+    expire_at: {type: Date, default: Date.now, expires: 86400} // za expires dosazujeme sekundy, toto nasatvi auto delete za nejakou dobu
 },
 {timestamps: true} // kazdy zaznam stories bude mit svuj cas kdy byl zverejnen
 )

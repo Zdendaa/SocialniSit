@@ -22,14 +22,18 @@ router.get("/getAllStories/:idOfUser", async (req, res) => {
     try {
         const user = await User.findById(req.params.idOfUser);
         user.idOfFriends.push(req.params.idOfUser);
-        const allFriends = await Promise.all(
-            user.idOfFriends.map(async (friend) => {
+        const allFriends = await Promise.all(user.idOfFriends.map(async (friend) => {
                 const story = await Story.find({idOfUser: friend});
                 return story.length === 0 ? null : story;
             })
         );
+        // predelani nekolika polich objektu do jednoho pole objektu
+        const singleArrayallFriends = allFriends.filter(x => x).reduce((prevValue, currentValue) => {
+            currentValue.forEach(item => prevValue.push(item))
+            return prevValue;
+        }, []);
 
-        res.status(200).json(allFriends.filter(x => x)); // fitler vyfiltruje hodnoty null
+        res.status(200).json(singleArrayallFriends); // fitler vyfiltruje hodnoty null
     } catch (err) {
         res.status(500).json(err);
     }

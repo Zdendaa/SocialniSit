@@ -19,7 +19,8 @@ const StoriesMain = () => {
     useEffect(() => {
         const fetchAllStories = async () => {
             const stories = await axios.get(changePath(`/stories/getAllStories/${user._id}`));
-            setAllStories(stories.data[0]);
+            setAllStories(stories.data);
+            console.log(stories.data)
         }
         fetchAllStories();
     }, [user._id])
