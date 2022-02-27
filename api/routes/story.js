@@ -23,9 +23,9 @@ router.get("/getAllStories/:idOfUser", async (req, res) => {
         const user = await User.findById(req.params.idOfUser);
         user.idOfFriends.push(req.params.idOfUser);
         const allFriends = await Promise.all(user.idOfFriends.map(async (friend) => {
-                const story = await Story.find({idOfUser: friend});
-                return story.length === 0 ? null : story;
-            })
+            const story = await Story.find({ idOfUser: friend });
+            return story.length === 0 ? null : story;
+        })
         );
         // predelani nekolika polich objektu do jednoho pole objektu
         const singleArrayallFriends = allFriends.filter(x => x).reduce((prevValue, currentValue) => {
