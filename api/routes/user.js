@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt'); // knihovna na zahesovani hesla
 router.post("/register", async (req, res) => {
     try {
         // zaheshovani hesla pomoci bcrypt
-        const salt = await  bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(10);
 
         const hashedPassword = !req.body.isGoogleAccount ? await bcrypt.hash(req.body.password, salt) : null;
 
@@ -33,11 +33,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         // vyhledani uzivatele pomoci emailu ktery jsme zadali 
-        const user = await User.findOne({email: req.body.email});
+        const user = await User.findOne({ email: req.body.email });
         // jeslize se uzivatele nepovedlo najit posleme chybu
         !user && res.status(404).send("user not found");
 
-        if(req.body.isGoogleAccount) {
+        if (req.body.isGoogleAccount) {
             console.log("google")
         } else {
             console.log("normal")
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
             // jeslize se hesla neshoduji posleme chybu
             !validPassword && res.status(400).send("wrong password");
         }
-        
+
         // posleme data uzivatele ve tvaru json
         res.status(200).json(user);
     } catch (err) {
@@ -61,7 +61,7 @@ router.get("/getUser/:userId", async (req, res) => {
         const user = await User.findById(req.params.userId);
         // jeslize se uzivatele nepovedlo najit posleme chybu
         !user && res.status(404).send("user not found");
-        
+
         // posleme data uzivatele ve tvaru json
         res.status(200).json(user);
     } catch (err) {
@@ -80,9 +80,26 @@ router.get("/getAllFriends/:userId", async (req, res) => {
                 return User.findById(idOfFriend);
             })
         );
-        
+
         // posleme data uzivatele ve tvaru json
         res.status(200).json(allOurFriends);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+/** DOSTAT DATA VSECH UZIVATELU PODLE JSON PROMENNE */
+router.post("/getAllUsersData/", async (req, res) => {
+    try {
+        // vyhledani dat vsech id v json promenne
+        const usersData = await Promise.all(
+            req.body.users.map(async (userId) => {
+                const dataOfUser = await User.findById(userId);
+                return dataOfUser;
+            })
+        )
+        // posleme data uzivatelu ve tvaru json
+        res.status(200).json(usersData);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -92,9 +109,9 @@ router.get("/getAllFriends/:userId", async (req, res) => {
 router.post("/ifUserExist", async (req, res) => {
     try {
         // kontrolovani zda li uzivatel nahodou jiz existuje se stejnym jmenem nebo emailem
-        const userUsername = await User.find({username: req.body.username});
-        const userEmail = await User.find({email: req.body.email});
-        if (userUsername.length === 0 && userEmail.length === 0) {    
+        const userUsername = await User.find({ username: req.body.username });
+        const userEmail = await User.find({ email: req.body.email });
+        if (userUsername.length === 0 && userEmail.length === 0) {
             res.status(200).json(false); // vse v poradku uzivatel muze pokracovat v registraci
         } else {
             res.status(200).json(true); // error uzivatel jiz existuje se stejmym emailem nebo jmenem
@@ -129,7 +146,7 @@ router.put("/addFriend/:idOfUser/:myId", async (req, res) => {
         // najdeme oba uzivatele
         const user1 = await User.findById(req.params.idOfUser);
         const user2 = await User.findById(req.params.myId);
-        
+
         // zjistime jestli nejsou pratele a pote jim pridame do pole idOfFriends id toho druheho a odebereme request
         if (!user1.idOfFriends.includes(req.params.myId) && !user2.idOfFriends.includes(req.params.idOfUser)) {
             await user1.updateOne({ $push: { idOfFriends: req.params.myId } });
@@ -168,7 +185,7 @@ router.get("/getSearchPeople/:username", async (req, res) => {
         // vyhledani vsechny uzivatele ktere maji podobne jmeno jako to co jsme napsali
         const value = req.params.username;
         // vyhledani uzivatele podle value
-        const currentUser = await User.find( {username: new RegExp(value.toLowerCase(), "i")} );
+        const currentUser = await User.find({ username: new RegExp(value.toLowerCase(), "i") });
         // posleme data uzivatele ve tvaru json
         res.status(200).json(currentUser);
     } catch (err) {
@@ -180,8 +197,8 @@ router.get("/getSearchPeople/:username", async (req, res) => {
 router.put("/setNewProfilePicture", async (req, res) => {
     try {
         // vyhledani naseho uzivatele a pridani url nove fotky
-        await User.findByIdAndUpdate(req.body.id, {$set: {idOrUrlOfProfilePicture: req.body.imgUrl}});
-        
+        await User.findByIdAndUpdate(req.body.id, { $set: { idOrUrlOfProfilePicture: req.body.imgUrl } });
+
         res.status(200).json('profilová fotka byla úspěšně změněna');
     } catch (err) {
         res.status(500).json(err);
@@ -192,7 +209,7 @@ router.put("/setNewProfilePicture", async (req, res) => {
 router.put("/setNewCoverPicture", async (req, res) => {
     try {
         // vyhledani naseho uzivatele a pridani url nove fotky
-        await User.findByIdAndUpdate(req.body.id, {$set: {idOrUrlOfCoverPicture: req.body.imgUrl}});
+        await User.findByIdAndUpdate(req.body.id, { $set: { idOrUrlOfCoverPicture: req.body.imgUrl } });
 
         res.status(200).json('fotka na pozadi byla úspěšně změněna');
     } catch (err) {
@@ -204,7 +221,7 @@ router.put("/setNewCoverPicture", async (req, res) => {
 router.put("/addPhoto", async (req, res) => {
     try {
         // vyhledani naseho uzivatele a pridani url stare fotky do pole fotek
-        await User.findByIdAndUpdate(req.body.id, {$push: {idOfAllPicture: req.body.idOfImg}});
+        await User.findByIdAndUpdate(req.body.id, { $push: { idOfAllPicture: req.body.idOfImg } });
 
         res.status(200).json('Fotka byla pridana do db');
     } catch (err) {

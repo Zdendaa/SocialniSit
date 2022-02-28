@@ -19,19 +19,19 @@ const Profile = () => {
     // promenna useParams, z url adresy jsme dostali promennou idOfUser
     const { idOfUser } = useParams();
     // useState promenne
-    
+
     // prihlaseny uzivatel
     const [myUser, setMyUser] = useState([]);
-    
+
     // promenna pro url profiloveho obrazku
     const [urlOfProfileImg, setUrlOfProfileImg] = useState("");
 
     // promenna pro url obrazku na pozadi
     const [urlOfCoverImg, setUrlOfCoverImg] = useState("");
-    
+
     // zda jsou v pratelstvi
     const [ifAreFriends, setIfAreFriends] = useState(null);
-    
+
     // zda uz uzivatel poslal zadost o pratelstvi
     const [ifSendRequest, setIfSendRequtest] = useState(null);
 
@@ -47,8 +47,10 @@ const Profile = () => {
     // vlastnik profilu na ktery koukame
     const [currentUser, setCurrentUser] = useState([]);
 
+    const [usersIdOfPost, setUsersIdOfPost] = useState([]);
+
     useEffect(() => {
-        const downloadUrl = async () => { 
+        const downloadUrl = async () => {
             // jestli uzivatel kouka ne jaho profil
             if (idOfUser === user._id) {
                 // ziskame nase url profiloveho obrazku
@@ -58,7 +60,7 @@ const Profile = () => {
             } else {
                 // ziskame data profilu na ktery prave koukame
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
-                
+
                 // ulozime vlastnika profilu
                 setCurrentUser(currentUser.data);
                 // ziskame jeho url profiloveho obrazku
@@ -98,6 +100,15 @@ const Profile = () => {
     useEffect(() => {
         const getAllPosts = async () => {
             const posts = await axios.get(changePath(`/posts/getPosts/${idOfUser}`));
+
+            const usersIdData = [];
+            posts.data.forEach(post => {
+                usersIdData.push(post.userId);
+            });
+            const uniqueUsersIdData = [...new Set(usersIdData)]; // odstraneni duplicitnich hodnot (id uzivatelu)
+            const usersIdPostData = await axios.post(changePath(`/users/getAllUsersData`), { users: uniqueUsersIdData }); // nacteni dat vsech vlastniku postu
+            setUsersIdOfPost(usersIdPostData.data);
+
             // serazeni od nejnovejsich postu po ty uplne posledni
             const sortPosts = posts.data.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt) });
             setAllPosts(sortPosts);
@@ -117,12 +128,12 @@ const Profile = () => {
 
     // pridani nebo odebrani zadosti 
     const addOrRemoveRequestToUser = async () => {
-        if(ifSendRequest) {
+        if (ifSendRequest) {
             sendNotification(idOfUser, 4, `/profile/${idOfUser}`, null, "odebral žádost o přátelství");
-        }else {
-            sendNotification(idOfUser, 4, `/profile/${idOfUser}`, null, "poslal žádost o prátelství"); 
+        } else {
+            sendNotification(idOfUser, 4, `/profile/${idOfUser}`, null, "poslal žádost o prátelství");
         }
-        
+
 
         setIfSendRequtest(!ifSendRequest);
         await axios.put(changePath(`/users/addOrRemoveRequest/${idOfUser}/${user._id}`));
@@ -148,44 +159,44 @@ const Profile = () => {
 
     const sendNotification = async (recieverId, type, url, idOfPost, text) => {
         // pridani notifikace do db
-        const newNotificatons = await axios.post(changePath(`/notifications/addNotification`), {senderId: user._id, recieverId, type, url, idOfPost, text});
+        const newNotificatons = await axios.post(changePath(`/notifications/addNotification`), { senderId: user._id, recieverId, type, url, idOfPost, text });
         // pridani notifikace do socket.io serveru
-        socket.emit("sendNotification", {id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text});
+        socket.emit("sendNotification", { id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text });
     }
 
     return (
         <div className="Profile">
             <TopBarHome />
             <TopProfile urlOfProfileImg={urlOfProfileImg} urlOfCoverImg={urlOfCoverImg} user={currentUser} removeFriend={removeFriend} ifAreFriends={ifAreFriends} myUser={myUser} idOfUser={idOfUser} addOrRemoveRequestToUser={addOrRemoveRequestToUser} ifSendRequest={ifSendRequest} confirmRequest={confirmRequest} />
-            
+
             <div className="profileContainer">
                 <div className="profileAllAboutContainer">
                     {
-                        idOfUser === user._id && 
+                        idOfUser === user._id &&
                         <>
                             <div className="buttonSettingsContainer">
-                                    <Link to="/settings" className="buttonLogOut opacity" style={{backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px", padding: "12px", borderRadius: "10px", margin: "0px 0px 15px 0px"}}>nasatvení profilu</Link>
+                                <Link to="/settings" className="buttonLogOut opacity" style={{ backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px", padding: "12px", borderRadius: "10px", margin: "0px 0px 15px 0px" }}>nasatvení profilu</Link>
                             </div>
-                            <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id}/>
+                            <ProfileRequests confirmRequest={confirmRequest} idOfRequests={arrayIdOfFriends} myId={user._id} />
                         </>
                     }
                     <div className="profileAllAbout">
                         {
-                            idOfUser === user._id 
-                            ? 
-                            <ImagesOfUser user={myUser}/>
-                            :
-                            <ImagesOfUser user={currentUser}/>
+                            idOfUser === user._id
+                                ?
+                                <ImagesOfUser user={myUser} />
+                                :
+                                <ImagesOfUser user={currentUser} />
                         }
-                        
+
                         <div className="profileInfo">
-                        {
-                            idOfUser === user._id 
-                            ? 
-                            <UserInfo user={myUser}/>
-                            :
-                            <UserInfo user={currentUser}/>
-                        } 
+                            {
+                                idOfUser === user._id
+                                    ?
+                                    <UserInfo user={myUser} />
+                                    :
+                                    <UserInfo user={currentUser} />
+                            }
                         </div>
                     </div>
                     <div className="friendsContainer">
@@ -194,10 +205,10 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="postsActionsContainerProfile">
-                    {idOfUser === user._id && <AddNewPost friends={allFriends}/>}
+                    {idOfUser === user._id && <AddNewPost friends={allFriends} />}
                     {
                         allPosts?.map((post, index) => (
-                            <Post post={post} key={index} />
+                            <Post post={post} key={index} userOfPost={usersIdOfPost.filter(user => user._id === post.userId)[0]} />
                         ))
                     }
                 </div>

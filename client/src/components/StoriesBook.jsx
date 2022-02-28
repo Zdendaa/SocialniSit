@@ -7,16 +7,18 @@ import { GlobalContext } from '../context/GlobalState';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 
-const StoriesBook = ({ idOfCurrentOpenStory, setIsVisibleStoriesBook, allStories }) => {
+const StoriesBook = ({ users, idOfCurrentOpenStory, setIsVisibleStoriesBook, allStories }) => {
     const { onlineFriends } = useContext(GlobalContext);
-    console.log(onlineFriends);
+
     const [indexOfStory, setIndexOfStory] = useState(allStories.findIndex((storie) => storie._id === idOfCurrentOpenStory))
     const [userOfStory, setUserOfStory] = useState(null);
 
     useEffect(() => {
         const fetchDataOfUser = async () => {
-            const dataOfUser = await axios.get(changePath(`/users/getUser/${allStories[indexOfStory].idOfUser}`));
-            setUserOfStory(dataOfUser.data);
+
+            const dataOfUser = users.filter(user => user._id === allStories[indexOfStory].idOfUser)[0];
+            console.log(dataOfUser);
+            setUserOfStory(dataOfUser);
         }
         fetchDataOfUser();
     }, [indexOfStory, allStories])
