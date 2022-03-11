@@ -45,7 +45,6 @@ const StoriesBook = ({ users, idOfCurrentOpenStory, setIsVisibleStoriesBook, all
                 animate={{ rotate: 0 }}
                 exit={{ rotate: -45 }}
             >
-
                 <img src={allStories[indexOfStory].urlOfImg} alt="storyImg" className="storyImg storyBookImgWidthAndHeight" />
                 <span className={allStories[indexOfStory].position}><h2 style={{ padding: "5px" }}>{allStories[indexOfStory].text}</h2></span>
                 <Link to={`/profile/${userOfStory?._id}`} className="profileContainerStory">
