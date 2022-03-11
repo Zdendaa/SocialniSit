@@ -26,7 +26,7 @@ router.post("/addPost", async (req, res) => {
 /* DOSTANI VSECH TVYCH POSTU A VSECH OD TVOJICH PRATEL (TIMELINE)*/
 router.get("/getAllPosts/:userId", async (req, res) => {
     try {
-        // vyhledani naseho uzivatele pomoci userId 
+        // vyhledani naseho uzivatele pomoci userId
         const currentUser = await User.findById(req.params.userId);
         // vyhledani vsech postu naseho uzivatele pomoci userId
         const userPosts = await Post.find({userId: req.params.userId});

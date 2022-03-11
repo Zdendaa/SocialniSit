@@ -16,7 +16,7 @@ const {user, socket, setColors, deleteUser, backgroundColor1, backgroundColor4} 
             </Link>
             <div className="iconsSearchAndMessenger" style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
                 <SearchBar />
-                <Link to="/messenger" style={{textDecoration: "none"}}><FiMessageCircle className="searchIcon scaled pointer" style={{color: backgroundColor1}}/></Link>
+                <Link to="/messenger" style={{textDecoration: "none", marginLeft: "10px"}}><FiMessageCircle className="searchIcon scaled pointer" style={{color: backgroundColor1}}/></Link>
             </div>
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{color: backgroundColor1}}>
