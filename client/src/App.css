@@ -982,6 +982,74 @@ span {
   display: flex;
   flex-wrap: wrap;
 }
+.messengerMain {
+  width: 100%;
+  height: auto;
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+.messengerFriends {
+  position: relative;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.searchChat {
+  width: 95%;
+  padding: 10px 2.5% 10px 2.5%;
+  border-radius: 15px;
+  border: none;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+}
+.searchChat::placeholder {
+  color: #C4C4C4;
+}
+.userChatMain {
+  width: 95%;
+  margin-top: 18px;
+  border-radius: 13px;
+  padding: 10px 2.5% 10px 2.5%;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.userChatContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.imgOfUserChat, .mainDivImgChat {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.mainDivImgChat {
+  position: relative;
+}
+.InfoAboutChat {
+  position: relative;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.InfoAboutChat * {
+  margin: 2px;
+}
+.numberOfNewMessages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 7px 4px 7px;
+  border-radius: 7px;
+  color: white;
+}
+
 
 /*StoryMain*/
 .StoriesMain {

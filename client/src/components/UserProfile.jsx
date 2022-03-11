@@ -16,16 +16,16 @@ const UserProfile = ({ friends, unReaded, idOfUser, style, mobile, sharing, addS
     useEffect(() => {
         const getUrlAndCurrentUser = async () => {
             if (friends?.some(friend => friend._id === idOfUser)) {
-                setCurrentUser(friends?.filter(friend => friend._id === idOfUser)[0]);
+                const currentUserData = friends?.filter(friend => friend._id === idOfUser)[0]
+                setCurrentUser(currentUserData);
+                setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUserData._id));
             } else {
                 // ziskame data uzivatele podle idOfUser
                 const currentUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
                 // ulozime uzivatele do promenne currentUser
                 setCurrentUser(currentUser.data);
+                setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser.data._id));
             }
-
-
-            setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser.data._id));
         }
         getUrlAndCurrentUser();
     }, [idOfUser, onlineFriends])
