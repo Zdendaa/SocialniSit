@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";

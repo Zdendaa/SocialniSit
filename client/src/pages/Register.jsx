@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useHistory } from 'react-router';
 import { GlobalContext } from '../context/GlobalState'
-import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions'
 import axios from 'axios'
 import ButtonGoogleLogIn from '../components/ButtonGoogleLogIn';
 import { Link } from 'react-router-dom'
@@ -12,7 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const Register = () => {
     // vypujceni promenne user a funkce setUser z context api
-    const {setUser, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const { setUser, backgroundColor1, backgroundColor2 } = useContext(GlobalContext);
 
     // useState promenne
     // promenna useState jesli se nacita stranka
@@ -45,12 +44,12 @@ const Register = () => {
         // what 1 name   2 password    3 passwordConfirm    4 email
         what === 1 && (value !== "" ? setErrName(null) : setErrName("Jméno je povinné"));
         what === 2 && (value !== "" ? (value === passwordConfirmValue ? setRight(true, true) : setRight(true, false)) : setErrPassword("Heslo je povinné"));
-        what === 3 && (value !== "" ? (value === passwordValue ? setErrPasswordConfirm(null): setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
-        what === 4 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));       
+        what === 3 && (value !== "" ? (value === passwordValue ? setErrPasswordConfirm(null) : setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo")) : setErrPasswordConfirm("Potvrzení hesla je povinné"));
+        what === 4 && (value !== "" ? (validator.isEmail(value) ? setErrEmail(null) : setErrEmail("neplatný email")) : setErrEmail("email je povinný"));
     }
 
     const setRight = (password, passwordConfirm) => {
-        password && setErrPassword(null); 
+        password && setErrPassword(null);
         passwordConfirm ? setErrPasswordConfirm(null) : setErrPasswordConfirm("Potvrzení hesla musí být stejné jako heslo");
     }
 
@@ -60,20 +59,20 @@ const Register = () => {
         const isItRight = ((!errEmail && !errPassword && !errPasswordConfirm && !errName) && (errEmail !== "" && errPassword !== "" && !errPasswordConfirm !== "" && !errName !== "")) ? true : false;
 
         // jeslit jsou data spravna pokracujeme v prihlaseni
-        if(isItRight) {
+        if (isItRight) {
             // nacitani nastavime na true
             setIfWaiting(true);
 
             // zjisitme zda li uzivatel jiz neexistuje se stejnym jmenem nebo emailem
-            const ifUserExist = await axios.post(changePath("/users/ifUserExist"), {username: name.current.value, email: email.current.value})
-            
-            if (ifUserExist.data) {    
+            const ifUserExist = await axios.post(changePath("/users/ifUserExist"), { username: name.current.value, email: email.current.value })
+
+            if (ifUserExist.data) {
                 // uzivatel jiz existuje 
                 setUserExist("uživatel již existuje s tímto jménem nebo emailem");
                 setIfWaiting(false);
-            } else {          
-                try {      
-                    await setAndSaveUser();             
+            } else {
+                try {
+                    await setAndSaveUser();
                 } catch (err) {
                     // jestli se nepodari prihlasit uzivatele nastavime nacitani na false 
                     setIfWaiting(false);
@@ -113,23 +112,23 @@ const Register = () => {
     return (
         <div className="Register">
             <div className="registerContainer">
-                <div className="rotateDiv1" style={{backgroundColor: backgroundColor1}}></div>
-                <div className="rotateDiv2" style={{backgroundColor: backgroundColor1}}></div>
+                <div className="rotateDiv1" style={{ backgroundColor: backgroundColor1 }}></div>
+                <div className="rotateDiv2" style={{ backgroundColor: backgroundColor1 }}></div>
                 <div className="registerForm">
-                    <h2 style={{color: backgroundColor1}}>Registrace</h2>
-                    <input className="inputRegister" onChange={(e) => checkInput(1, e.target.value)} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="name" ref={name} placeholder="jméno" required/>
+                    <h2 style={{ color: backgroundColor1 }}>Registrace</h2>
+                    <input className="inputRegister" onChange={(e) => checkInput(1, e.target.value)} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="name" ref={name} placeholder="jméno" required />
                     {(errName !== "" && errName) && <span className="errorMessage">{errName}</span>}
-                    <input className="inputRegister" onChange={(e) => checkInput(4, e.target.value)} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" ref={email} placeholder="email" required/>
+                    <input className="inputRegister" onChange={(e) => checkInput(4, e.target.value)} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="email" ref={email} placeholder="email" required />
                     {(errEmail !== "" && errEmail) && <span className="errorMessage">{errEmail}</span>}
-                    <input className="inputRegister" onChange={(e) => {checkInput(2, e.target.value); setpasswordValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" ref={password} placeholder="heslo" required/>
+                    <input className="inputRegister" onChange={(e) => { checkInput(2, e.target.value); setpasswordValue(e.target.value); }} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="password" ref={password} placeholder="heslo" required />
                     {(errPassword !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
-                    <input className="inputRegister" onChange={(e) => {checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="potrvdit heslo" required/>
+                    <input className="inputRegister" onChange={(e) => { checkInput(3, e.target.value); setPasswordConfirmValue(e.target.value); }} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="password" placeholder="potrvdit heslo" required />
                     {(errPasswordConfirm !== "" && errPasswordConfirm) && <span className="errorMessage">{errPasswordConfirm}</span>}
                     {(userExist !== "" && userExist) && <span className="errorMessage">{userExist}</span>}
-                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}>{!ifWaiting ? <span>Registrovat</span> : <ClipLoader color={backgroundColor2} size={10} />}</button>    
-                    <span>nebo</span>        
-                        <ButtonGoogleLogIn />
-                        <Link to="/login" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}>{!ifWaiting ? <><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg"/></> : <ClipLoader color={backgroundColor2} size={10} />}</Link>
+                    <button className="buttonRegister inputRegister" style={{ backgroundColor: backgroundColor1, color: "white" }} onClick={createUser}>{!ifWaiting ? <span>Registrovat</span> : <ClipLoader color={backgroundColor2} size={10} />}</button>
+                    <span>nebo</span>
+                    <ButtonGoogleLogIn />
+                    <Link to="/login" className="goToLogInButton inputRegister" style={{ backgroundColor: backgroundColor1 }}>{!ifWaiting ? <><span>Příhlásit se</span> <AiOutlineArrowRight className="ArrowImg" /></> : <ClipLoader color={backgroundColor2} size={10} />}</Link>
                 </div>
             </div>
         </div>

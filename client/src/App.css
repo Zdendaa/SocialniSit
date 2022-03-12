@@ -107,7 +107,7 @@ button {
 
 /*App*/
 span {
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Roboto", sans-serif;
 }
 .weight500 {
@@ -1071,6 +1071,7 @@ span {
   top: 0;
   display: flex;
   flex-direction: column-reverse;
+  overflow: auto;
 }
 .addMessageContainer {
   position: absolute;
@@ -1102,7 +1103,7 @@ span {
   position: absolute;
   width: auto;
   height: auto;
-  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1112,6 +1113,35 @@ span {
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
   z-index: 100;
 }
+.backChatArrow{
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 0;
+  font-size: 25px;
+  margin-top: 5px;
+  z-index: 1000;
+}
+
+.myMessage, .yourMessage {
+  margin: 15px 0px;
+}
+.myMessage span {
+  border-radius: 15px 15px 0px 15px;
+}
+.yourMessage span {
+  border-radius: 15px 15px 15px 0px;
+}
+.myMessage span, .yourMessage span{
+  padding: 10px;
+  color: white;
+}
+
+.myMessage {
+  margin-left: auto;
+  
+}
+
 
 /*StoryMain*/
 .StoriesMain {
@@ -1289,6 +1319,9 @@ span {
 
 @media only screen and (min-width: 450px) {
   /*TABLET SMALL*/
+  span {
+    font-size: 12px;
+  }
   .mobile {
     display: none;
   }

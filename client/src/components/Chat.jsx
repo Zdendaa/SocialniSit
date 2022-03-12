@@ -1,37 +1,39 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
+import { MdArrowBack } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 
-const Chat = ({ userId, idOfChat }) => {
-    const { user, onlineFriends, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
+const Chat = ({ userOfChat, idOfChat }) => {
+    const { user, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
 
-    const [userOfChat, setUserOfChat] = useState(null);
     const [isOnline, setIsOnline] = useState();
     const [messages, setMessages] = useState([]);
 
     const [valOfText, setValOfText] = useState("");
 
     useEffect(() => {
-        const getUser = async () => {
-            const currentUser = await axios.get(changePath(`/users/getUser/${userId}`));
-            setUserOfChat(currentUser.data);
-            setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser.data._id));
-        }
         const getMessages = async () => {
             const messages = await axios.get(changePath(`/messages/getAllMessages/${idOfChat}`));
-            console.log(messages.data);
             setMessages(messages.data);
+            sortMessagesByDate();
         }
-        getUser();
+        setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
         getMessages();
-    }, [userId])
+    }, [userOfChat]);
 
     const addMessage = async () => {
-        const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userId, idOfChat: idOfChat, text: valOfText });
-        console.log(newMessage)
+        const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+        setMessages((prev) => [...prev, newMessage.data]);
+        sortMessagesByDate();
         setValOfText("");
     }
+
+    const sortMessagesByDate = () => {
+        setMessages((prev) => [...prev.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt) })]);
+    }
+
     return (
         <div className='Chat'>
             <div className="userChat" style={{ backgroundColor: backgroundColor4 }}>
@@ -41,10 +43,13 @@ const Chat = ({ userId, idOfChat }) => {
                 </div>
                 <span>{userOfChat?.username}</span>
             </div>
+            <Link to={`/messenger/${user._id}/0`} className='backChatArrow'><MdArrowBack style={{ color: backgroundColor1 }} /></Link>
             <div className='messagesContainer'>
                 {
                     messages.map((message) => (
-                        <span>{message.text}</span>
+                        <div className={message.idOfSender === user._id ? "myMessage" : "yourMessage"}>
+                            <span style={message.idOfSender === user._id ? { backgroundColor: backgroundColor1 } : { backgroundColor: backgroundColor2, color: backgroundColor3 }} >{message.text}</span>
+                        </div>
                     ))
                 }
             </div>
@@ -52,7 +57,7 @@ const Chat = ({ userId, idOfChat }) => {
                 <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} />
                 <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} >sd</button>
             </div>
-        </div>
+        </div >
     )
 }
 

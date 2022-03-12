@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PopupWindown from './global/PopupWindown';
 import { motion } from 'framer-motion';
-import axios from 'axios';
-import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';

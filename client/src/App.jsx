@@ -9,7 +9,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { GlobalContext } from './context/GlobalState';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import Profile from './pages/Profile';
 import ProfileSettings from './pages/ProfileSettings';
 import { io } from 'socket.io-client';
