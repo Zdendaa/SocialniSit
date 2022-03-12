@@ -16,26 +16,26 @@ import { io } from 'socket.io-client';
 import Messenger from './pages/Messenger';
 
 function App() {
-  const {user, setOnlineFriends, setSocket, socket} = useContext(GlobalContext);
+  const { user, setOnlineFriends, setSocket, socket } = useContext(GlobalContext);
 
   useEffect(() => {
-      // pripojeni socket.io
-      if(user) {
-         setSocket(io("ws://localhost:8900"));
-      }
+    // pripojeni socket.io
+    if (user) {
+      setSocket(io("ws://localhost:8900"));
+    }
   }, [user])
-  
+
   useEffect(() => {
-      if(user) {
-        // zavolani socket.io addUser a poslani hodnoty user.id
-      
-        socket?.emit("addUser", user._id);
-        // dostani vsech online uzivatelu
-        socket?.on("getUsers", users => {
-          console.log(users);
-          setOnlineFriends(users.filter(onlineUser => onlineUser.userId !== user._id));
-        })
-      }
+    if (user) {
+      // zavolani socket.io addUser a poslani hodnoty user.id
+
+      socket?.emit("addUser", user._id);
+      // dostani vsech online uzivatelu
+      socket?.on("getUsers", users => {
+        console.log(users);
+        setOnlineFriends(users.filter(onlineUser => onlineUser.userId !== user._id));
+      })
+    }
   }, [user, socket]);
 
 
@@ -44,22 +44,22 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            { user ? <Home /> : <Redirect to="/register" /> }
+            {user ? <Home /> : <Redirect to="/register" />}
           </Route>
           <Route path="/register">
-            { !user ? <Register /> : <Redirect to="/" /> }
+            {!user ? <Register /> : <Redirect to="/" />}
           </Route>
           <Route path="/login">
-            { !user ? <Login /> : <Redirect to="/" /> }
+            {!user ? <Login /> : <Redirect to="/" />}
           </Route>
           <Route path="/profile/:idOfUser">
-            { user ? <Profile /> : <Redirect to="/register" /> }
+            {user ? <Profile /> : <Redirect to="/register" />}
           </Route>
           <Route path="/settings">
-            { user ? <ProfileSettings /> : <Redirect to="/register" /> }
+            {user ? <ProfileSettings /> : <Redirect to="/register" />}
           </Route>
-          <Route path="/messenger">
-            { user ? <Messenger /> : <Redirect to="/register" /> }
+          <Route path="/messenger/:idOfUser/:idOfChat" >
+            {user ? <Messenger /> : <Redirect to="/register" />}
           </Route>
         </Switch>
       </Router>

@@ -13,6 +13,7 @@ const userColors = require('./routes/userColors');
 const notification = require('./routes/notification');
 const story = require('./routes/story');
 const chat = require('./routes/chat');
+const message = require('./routes/message')
 
 dotenv.config();
 const app = express();
@@ -37,6 +38,7 @@ app.use("/api/userColors", userColors);
 app.use("/api/notifications", notification);
 app.use("/api/stories", story);
 app.use("/api/chats", chat);
+app.use("/api/messages", message);
 
 // zpusteni serveru
 app.listen(PORT, () => {

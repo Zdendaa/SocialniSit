@@ -123,9 +123,9 @@ span {
 }
 
 .App {
-  position: relative;
+  position: absolute;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 }
 
 /* Register a Login */
@@ -975,14 +975,15 @@ span {
 .messengerContainer {
   position: absolute;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 .messengerMain {
+  position: absolute;
   width: 100%;
-  height: auto;
-  margin-top: 18px;
+  height: calc(100% - 75px);
+  margin-top: 70px;
   display: flex;
   justify-content: center;
 }
@@ -996,6 +997,7 @@ span {
 .searchChat {
   width: 95%;
   padding: 10px 2.5% 10px 2.5%;
+  margin-top: 5px;
   border-radius: 15px;
   border: none;
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
@@ -1014,6 +1016,8 @@ span {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-decoration: none;
+  color: black;
 }
 .userChatContainer {
   display: flex;
@@ -1021,9 +1025,10 @@ span {
   align-items: center;
 }
 .imgOfUserChat, .mainDivImgChat {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  margin-right: 5px;
 }
 .mainDivImgChat {
   position: relative;
@@ -1046,7 +1051,67 @@ span {
   border-radius: 7px;
   color: white;
 }
+.mobileDiplayNone {
+  display: none;
+}
 
+/*Chat*/
+.Chat {
+  position: relative;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.messagesContainer {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 45px);
+  top: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.addMessageContainer {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.addMessageContainer input {
+  width: 70%;
+  padding: 12px 10px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+.addMessageContainer input:focus {
+  outline: none;
+}
+.addMessageContainer button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+}
+.userChat{
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px 5px 8px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
 
 /*StoryMain*/
 .StoriesMain {
@@ -1308,6 +1373,11 @@ span {
     max-height: 80%;
     z-index: 10000000000;
   }
+  /*Messenger*/
+  .messengerMain {
+    height: calc(100% - 120px);
+    margin-top: 90px;
+  }
 }
 
 @media only screen and (min-width: 750px) {
@@ -1392,6 +1462,14 @@ span {
   .storyBookContainer {
     width: 360px;
     height: 540px;
+  }
+  /*Messenger*/
+  .messengerFriends {
+    position: relative;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
 }
 
