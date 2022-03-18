@@ -6,7 +6,7 @@ import { MdArrowBack } from 'react-icons/md'
 import { Link } from 'react-router-dom';
 
 const Chat = ({ userOfChat, idOfChat }) => {
-    const { user, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
+    const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
 
     const [isOnline, setIsOnline] = useState();
     const [messages, setMessages] = useState([]);
@@ -23,11 +23,26 @@ const Chat = ({ userOfChat, idOfChat }) => {
         getMessages();
     }, [userOfChat]);
 
+    useEffect(() => {
+        socket?.on("getMessage", (data) => {
+            if (data.idOfChat === idOfChat) {
+                console.log(messages.filter(message => message._id === data._id));
+                if (messages.filter(message => message._id === data._id).length === 0) {
+                    setMessages((prev) => [...prev, data]);
+                    sortMessagesByDate();
+                }
+            }
+        })
+    }, [socket])
+
+
     const addMessage = async () => {
         const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
         setMessages((prev) => [...prev, newMessage.data]);
         sortMessagesByDate();
         setValOfText("");
+        // zavolani socketu
+        socket?.emit("sendMessage", { idOfMessage: newMessage.data._id, idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
     }
 
     const sortMessagesByDate = () => {

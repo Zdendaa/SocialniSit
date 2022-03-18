@@ -31,10 +31,16 @@ io.on('connection', (socket) => {
         io.emit("getUsers", users);
     })
 
-    socket.on("sendNotification", ({id, senderId, recieverId, type, url, idOfPost, readed, text}) => {
+    socket.on("sendNotification", ({ id, senderId, recieverId, type, url, idOfPost, readed, text }) => {
         console.log("notification sended", recieverId);
         console.log(findUser(recieverId));
-        findUser(recieverId) && io.to(findUser(recieverId).socketId).emit("getNotification", {id, senderId, recieverId, type, url, idOfPost, readed, text, date: Date.now() });
+        findUser(recieverId) && io.to(findUser(recieverId).socketId).emit("getNotification", { id, senderId, recieverId, type, url, idOfPost, readed, text, date: Date.now() });
+    })
+
+    socket.on("sendMessage", ({ idOfMessage, idOfSender, idOfReciever, idOfChat, text, type, urlOfImg, urlOfVideo, urlOfVoice }) => {
+        console.log("message sended", idOfReciever);
+        console.log(findUser(idOfReciever));
+        findUser(idOfReciever) && io.to(findUser(idOfReciever).socketId).emit("getMessage", { _id: idOfMessage, idOfSender, idOfReciever, idOfChat, text, type, urlOfImg, urlOfVideo, urlOfVoice, createdAt: Date.now() });
     })
 
     socket.on("disconnect", () => {
