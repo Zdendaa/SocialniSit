@@ -64,6 +64,16 @@ button {
   border: none;
 }
 
+.mainDivSearch {
+  position: absolute;
+  width: 250px;
+  max-height: 500px;
+  top: 50px;
+  padding: 5px;
+  background-color: white; 
+  overflow: auto;
+}
+
 .searchBarInput:focus {
   outline: none;
 }
@@ -1410,6 +1420,15 @@ span {
   .messengerMain {
     height: calc(100% - 120px);
     margin-top: 90px;
+    justify-content: space-around;
+  }
+  /*Chat*/
+  .Chat {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
 }
 

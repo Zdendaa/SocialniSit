@@ -6,7 +6,7 @@ import { GlobalContext } from '../context/GlobalState';
 import SharingButton from './SharingButton';
 import { format } from 'timeago.js';
 
-const UserProfile = ({ friends, unReaded, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, createdAt }) => {
+const UserProfile = ({ friends, unReaded, idOfUser, style, mobile, sharing, addSharedPost, idOfPost, sharingPost, createdAt, children }) => {
     const { backgroundColor3, backgroundColor1, onlineFriends } = useContext(GlobalContext);
 
     const [currentUser, setCurrentUser] = useState([]);
@@ -40,6 +40,7 @@ const UserProfile = ({ friends, unReaded, idOfUser, style, mobile, sharing, addS
                     </div>
                     {!mobile && <span style={{ color: backgroundColor3 }}>{currentUser?.username} {sharingPost && <span style={{ color: backgroundColor1 }}>sdílí</span>}</span>}
                 </Link>
+                {children}
                 {createdAt && <span style={{ color: backgroundColor3 }}>{format(createdAt, 'myLanguage')}</span>}
             </div>
             {sharing && <SharingButton addSharedPost={addSharedPost} idOfUser={idOfUser} idOfPost={idOfPost} />}

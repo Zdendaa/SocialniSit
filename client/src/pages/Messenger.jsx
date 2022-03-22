@@ -37,19 +37,21 @@ const Messenger = () => {
             setsearchChats(chatsData);
         }
         getFrinends();
-    }, [user._id])
+    }, [])
 
     useEffect(() => {
         const getCurrentUser = async () => {
             // nacteni uzivatele vlastnika chatu jestli ho uz nemame nacteneho 
-            if (idOfUser !== user?._id && !users?.filter(user => user?._id === idOfUser)) {
+            if (idOfUser !== user?._id && !users?.filter(user => user?._id === idOfUser)[0]) {
                 const newUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
                 setUsers(() => [users, newUser.data]);
-            }
-            setCurrentUser(users?.filter(user => user?._id === idOfUser)[0]);
+                setCurrentUser(newUser.data)
+            } else {
+                setCurrentUser(users?.filter(user => user?._id === idOfUser)[0]);
+            }   
         }
         getCurrentUser();
-    }, [idOfUser, users])
+    }, [idOfUser])
 
 
 
