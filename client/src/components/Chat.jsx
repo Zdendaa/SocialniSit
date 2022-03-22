@@ -14,6 +14,7 @@ const Chat = ({ userOfChat, idOfChat }) => {
     const [valOfText, setValOfText] = useState("");
 
     useEffect(() => {
+        setMessages([]);
         const getMessages = async () => {
             const messages = await axios.get(changePath(`/messages/getAllMessages/${idOfChat}`));
             setMessages(messages.data);
