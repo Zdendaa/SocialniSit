@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { BiSearchAlt, BiMessageRoundedDots } from 'react-icons/bi';
+import { BiSearchAlt } from 'react-icons/bi';
+import { AiOutlineSend } from 'react-icons/ai';
 import changePath from '../changePath';
 import axios from 'axios';
 import UserProfile from '../components/UserProfile';
@@ -34,7 +35,7 @@ const SearchBar = () => {
                     users?.map(user => (
                         <div style={{margin: "6px"}}>
                             <UserProfile idOfUser={user._id} key={user._id} style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}}>
-                                <Link to={`/messenger/${user._id}/0`}><BiMessageRoundedDots className="searchIcon" style={{color: backgroundColor1}}/></Link>
+                                <Link to={`/messenger/${user._id}/0`}><AiOutlineSend className="searchIcon scaled" style={{color: backgroundColor1}}/></Link>
                             </UserProfile>
                         </div>
                     ))

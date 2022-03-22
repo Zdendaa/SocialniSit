@@ -21,7 +21,7 @@ const Chat = ({ userOfChat, idOfChat }) => {
         }
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
         getMessages();
-    }, [userOfChat]);
+    }, [userOfChat, idOfChat]);
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
