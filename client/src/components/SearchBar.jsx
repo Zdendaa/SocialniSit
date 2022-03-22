@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { BiSearchAlt } from 'react-icons/bi';
+import { AiOutlineSend } from 'react-icons/ai';
 import changePath from '../changePath';
 import axios from 'axios';
 import UserProfile from '../components/UserProfile';
 import { FiX } from 'react-icons/fi';
 import { GlobalContext } from '../context/GlobalState';
+import { Link } from 'react-router-dom';
 
 const SearchBar = () => {
     const { backgroundColor1 } = useContext(GlobalContext);
@@ -28,11 +30,13 @@ const SearchBar = () => {
                 <input onChange={(e) => searchUsers(e.target.value)} type="text" className="searchBarInput" placeholder="vyhledejte uživatelé..." style={isTyping ? {width: "250px"} : {width: "0px"}}/>
                 <FiX onClick={() => setIsTyping(!isTyping)} className="stopSearchPeople scaled pointer" style={{color: backgroundColor1}}/>
                 
-                <div style={{position: "absolute", width: "250px", top: "50px", padding: "5px", backgroundColor: "white"}}>
+                <div className="mainDivSearch" >
                 {
                     users?.map(user => (
                         <div style={{margin: "6px"}}>
-                            <UserProfile idOfUser={user._id} key={user._id} style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}}/>
+                            <UserProfile idOfUser={user._id} key={user._id} style={{width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover"}}>
+                                <Link to={`/messenger/${user._id}/0`}><AiOutlineSend className="searchIcon scaled" style={{color: backgroundColor1}}/></Link>
+                            </UserProfile>
                         </div>
                     ))
                 }

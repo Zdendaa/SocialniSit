@@ -14,7 +14,9 @@ const Messenger = () => {
     const [searchChats, setsearchChats] = useState([]);
 
     const [users, setUsers] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState(null);
+
+    const [idOfChat2, setIdOfChat2] = useState();
 
     useEffect(() => {
         const getFrinends = async () => {
@@ -37,21 +39,31 @@ const Messenger = () => {
             setsearchChats(chatsData);
         }
         getFrinends();
-    }, [user._id])
+    }, [])
 
     useEffect(() => {
         const getCurrentUser = async () => {
             // nacteni uzivatele vlastnika chatu jestli ho uz nemame nacteneho 
-            if (idOfUser !== user?._id && !users?.filter(user => user?._id === idOfUser)) {
+            if (idOfUser !== user?._id && !users?.filter(user => user?._id === idOfUser)[0]) {
                 const newUser = await axios.get(changePath(`/users/getUser/${idOfUser}`));
                 setUsers(() => [users, newUser.data]);
-            }
-            setCurrentUser(users?.filter(user => user?._id === idOfUser)[0]);
+                setCurrentUser(newUser.data)
+            } else {
+                setCurrentUser(users?.filter(user => user?._id === idOfUser)[0]);
+            }   
         }
         getCurrentUser();
-    }, [idOfUser, users])
+    }, [idOfUser])
 
-
+    useEffect(() => {
+      if(idOfChat === '0' && idOfChat === user._id) {
+        chats?.forEach(chat => {
+            if(chat.usersId.some(id => id === idOfUser)) {
+                setIdOfChat2(chat._id);
+            }
+        })
+      }
+    }, [idOfChat, chats])
 
     const searchChat = (val) => {
         const findUsers = users.filter(user => user.username.toLowerCase().includes(val.toLowerCase()));
@@ -75,11 +87,11 @@ const Messenger = () => {
                     <input type="text" className="searchChat" placeholder="hledej chaty..." onChange={(e) => { searchChat(e.target.value) }} />
                     {
                         searchChats?.map(chat => (
-                            <UserChat users={users} chat={chat} key={chat._id} />
+                            <UserChat users={users} chat={chat} key={chat._id} idOfActiveChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />
                         ))
                     }
                 </div>
-                {idOfUser !== user._id && < Chat userOfChat={currentUser} idOfChat={idOfChat} />}
+                {idOfUser !== user._id && < Chat userOfChat={currentUser} idOfChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />}
             </div>
         </div>
     );
