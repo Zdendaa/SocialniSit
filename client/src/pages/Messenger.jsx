@@ -39,7 +39,7 @@ const Messenger = () => {
             setsearchChats(chatsData);
         }
         getFrinends();
-    }, [])
+    }, [idOfChat])
 
     useEffect(() => {
         const getCurrentUser = async () => {

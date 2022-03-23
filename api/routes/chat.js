@@ -11,7 +11,7 @@ router.post("/createChat", async (req, res) => {
         // ulozeni postu do db
         const newChat = await chat.save();
 
-        // jesli se nenaskytla zadna chyba posleme data noveho chatu
+        // jesli se nenaskytla zadna chyba posleme data noveho chatu    
         res.status(200).json(newChat);
     } catch (err) {
         res.status(500).json(err);

@@ -176,6 +176,10 @@ span {
   color: red;
 }
 
+.error::placeholder {
+  color: red;
+}
+
 .registerContainer,
 .loginContainer {
   position: relative;
@@ -1083,6 +1087,18 @@ span {
   flex-direction: column-reverse;
   overflow: auto;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.messagesContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.messagesContainer {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
 .addMessageContainer {
   position: absolute;
   width: 100%;
@@ -1108,6 +1124,9 @@ span {
   border-radius: 50%;
   border: none;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .userChat{
   position: absolute;

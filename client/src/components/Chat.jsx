@@ -3,10 +3,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 import { MdArrowBack } from 'react-icons/md'
-import { Link } from 'react-router-dom';
+import { AiOutlineSend } from 'react-icons/ai';
+import { Link, useHistory } from 'react-router-dom';
 
 const Chat = ({ userOfChat, idOfChat }) => {
     const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
+
+    const history = useHistory();
+    
+    const [error, setError] = useState(false);
 
     const [isOnline, setIsOnline] = useState();
     const [messages, setMessages] = useState([]);
@@ -22,6 +27,7 @@ const Chat = ({ userOfChat, idOfChat }) => {
         }
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
         getMessages();
+        console.log(idOfChat);
     }, [userOfChat, idOfChat]);
 
     useEffect(() => {
@@ -38,12 +44,22 @@ const Chat = ({ userOfChat, idOfChat }) => {
 
 
     const addMessage = async () => {
-        const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+        if(valOfText == "") {
+            setError(true);
+            return;
+        }
+        setError(false);
+        var newChat = [];
+        if(idOfChat == '0') {
+            newChat = await axios.post(changePath('/chats/createChat'), {usersId: [userOfChat._id, user._id]});
+        }
+        const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat == "0" ? newChat.data._id : idOfChat, text: valOfText });
         setMessages((prev) => [...prev, newMessage.data]);
         sortMessagesByDate();
         setValOfText("");
         // zavolani socketu
         socket?.emit("sendMessage", { idOfMessage: newMessage.data._id, idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+        idOfChat == '0' && history.push(`/messenger/${userOfChat._id}/${newChat.data._id}`);
     }
 
     const sortMessagesByDate = () => {
@@ -69,9 +85,9 @@ const Chat = ({ userOfChat, idOfChat }) => {
                     ))
                 }
             </div>
-            <div className='addMessageContainer'>
-                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} />
-                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} >sd</button>
+            <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage()}>
+                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error && "error"} />
+                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} ><AiOutlineSend style={{fontSize: "19px"}}/></button>
             </div>
         </div >
     )
