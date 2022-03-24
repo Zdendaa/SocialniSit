@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { format, register } from 'timeago.js';
 import czDataFormat from '../format.jsCZ/CzFormat';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
@@ -30,20 +30,20 @@ const Post = ({ post, userOfPost }) => {
     // promenna pro zjisteni zda uzivatel jiz sdili prispevek
     const [ifSharing, setifSharing] = useState(false);
 
-    /*
-    // promenna pro ulozeni vlastnika prispevku
-    const [userOfPost, setUserOfPost] = useState(null);
+    
+    // promenna pro ulozeni vlastnika prispevku v notifikacich
+    const [mainUserOfPost, setMainUserOfPost] = useState(userOfPost);
 
     useEffect(() => {
         // funkce pro ziskani dat vlastnika prispevku
         const getUser = async () => {
 
             const userOfPost = await axios.get(changePath(`/users/getUser/${post.userId}`));
-            setUserOfPost(userOfPost.data)
+            setMainUserOfPost(userOfPost.data)
         }
-        getUser();
+        !userOfPost && getUser();
     }, [post.userId])
-    */
+    
 
     const sendNotification = async (recieverId, type, url, idOfPost, text, share) => {
         // pridani notifikace do db
@@ -78,12 +78,12 @@ const Post = ({ post, userOfPost }) => {
                     </>
                 }
                 <div className="userContainerPost">
-                    <Link to={`/profile/${userOfPost?._id}`} className="userProfile">
+                    <Link to={`/profile/${mainUserOfPost?._id}`} className="userProfile">
                         <div className="mainImg">
-                            <img className="profilePicture" src={userOfPost?.idOrUrlOfProfilePicture ? userOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer" />
-                            {onlineFriends?.some(onlineUser => onlineUser.userId === userOfPost?._id) && <div className="online" style={{ border: "2px solid white" }}></div>}
+                            <img className="profilePicture" src={mainUserOfPost?.idOrUrlOfProfilePicture ? mainUserOfPost?.idOrUrlOfProfilePicture : "/img/anonymous.png"} alt="" referrerPolicy="no-referrer" />
+                            {onlineFriends?.some(onlineUser => onlineUser.userId === mainUserOfPost?._id) && <div className="online" style={{ border: "2px solid white" }}></div>}
                         </div>
-                        <span style={{ color: backgroundColor3 }}>{userOfPost?.username}</span>
+                        <span style={{ color: backgroundColor3 }}>{mainUserOfPost?.username}</span>
                         {post?.newPicture && <span style={{ color: backgroundColor1 }}>přidal/a novou fotku</span>}
                     </Link>
                     {post?.sharedPostCreatedAt ?

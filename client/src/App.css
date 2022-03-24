@@ -1441,14 +1441,7 @@ scrollbar-width: none;  /* Firefox */
     margin-top: 90px;
     justify-content: space-around;
   }
-  /*Chat*/
-  .Chat {
-    width: 70%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
+
 }
 
 @media only screen and (min-width: 750px) {
@@ -1541,6 +1534,21 @@ scrollbar-width: none;  /* Firefox */
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+
+  /*Chat*/
+  .chatNone {
+    justify-content: center;
+  }
+  .Chat, .chatNone {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position:-webkit-sticky;
+    position: sticky;
+    top: 0px;
   }
 }
 

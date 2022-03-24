@@ -9,7 +9,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { Link } from 'react-router-dom';
 
 const SearchBar = () => {
-    const { backgroundColor1 } = useContext(GlobalContext);
+    const { user, backgroundColor1 } = useContext(GlobalContext);
 
     const [isTyping, setIsTyping] = useState(false);
 
@@ -20,7 +20,7 @@ const SearchBar = () => {
             setUsers([])
         } else {
             const newUsers = await axios.get(changePath(`/users/getSearchPeople/${value}`));
-            setUsers(newUsers.data);
+            setUsers(newUsers.data.filter(newUser => newUser._id !== user._id));
         }
     }
     return (

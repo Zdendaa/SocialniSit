@@ -87,10 +87,11 @@ const Notifications = () => {
     const setReadedToTrue = async (idOfNotification, link, senderId) => {
 
         var currentNotification = notifications.filter((notification) => notification._id === idOfNotification);
+        !currentNotification[0].readed && setNumberOfNewNotifications(prev => prev - 1);
+        console.log(currentNotification[0].readed);
         currentNotification[0].readed = true;
         setNotifications((prev) => [...prev.filter((notification) => notification._id !== idOfNotification)]);
         setNotifications((notification) => [...notification, currentNotification[0]]);
-        setNumberOfNewNotifications(prev => prev - 1);
         sortNotificationsByDate();
         console.log(senderId);
         await axios.put(changePath(`/notifications/changeReadedToTrue/`), { id: idOfNotification }).then(() => {
@@ -145,7 +146,7 @@ const Notifications = () => {
                 {
                     showPost &&
                     <PopupWindown classNameMain="mainContainerForPost" classNameContainer="containerForPost" setVisible={setShowPost}>
-                        <Post post={dataOfPost} socket={socket} />
+                        <Post post={dataOfPost} />
                     </PopupWindown>
                 }
             </AnimatePresence>

@@ -13,7 +13,7 @@ const UserChat = ({ users, chat, idOfActiveChat }) => {
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser._id));
         setUserOfChat(currentUser);
         console.log(chat._id === idOfActiveChat, chat._id, idOfActiveChat);
-    }, [users, chat])
+    }, [users, chat, onlineFriends])
 
 
     return (

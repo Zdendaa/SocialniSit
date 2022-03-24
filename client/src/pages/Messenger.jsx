@@ -92,6 +92,7 @@ const Messenger = () => {
                     }
                 </div>
                 {idOfUser !== user._id && < Chat userOfChat={currentUser} idOfChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />}
+                {idOfUser === user._id && <div className="mobileDiplayNone chatNone" ><h3>není vybrán žádný chat</h3></div>}
             </div>
         </div>
     );
