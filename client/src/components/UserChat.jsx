@@ -9,7 +9,7 @@ const UserChat = ({ users, chat, idOfActiveChat }) => {
     const [isOnline, setIsOnline] = useState();
 
     useEffect(() => {
-        const currentUser = users?.filter(user => chat.usersId.includes(user._id))[0];
+        const currentUser = users?.filter(user => chat?.usersId.includes(user._id))[0];
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser._id));
         setUserOfChat(currentUser);
         console.log(chat._id === idOfActiveChat, chat._id, idOfActiveChat);

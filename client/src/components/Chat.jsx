@@ -5,9 +5,11 @@ import { GlobalContext } from '../context/GlobalState';
 import { MdArrowBack } from 'react-icons/md'
 import { AiOutlineSend } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
+import Message from './Message';
+import { AnimatePresence } from 'framer-motion';
 
 const Chat = ({ userOfChat, idOfChat }) => {
-    const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor4 } = useContext(GlobalContext);
+    const { user, socket, onlineFriends, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
 
     const history = useHistory();
     
@@ -25,10 +27,14 @@ const Chat = ({ userOfChat, idOfChat }) => {
             setMessages(messages.data);
             sortMessagesByDate();
         }
-        setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
         getMessages();
         console.log(idOfChat);
     }, [userOfChat, idOfChat]);
+
+    useEffect(() => {
+        setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
+    }, [onlineFriends, userOfChat, idOfChat]);
+    
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
@@ -63,7 +69,13 @@ const Chat = ({ userOfChat, idOfChat }) => {
     }
 
     const sortMessagesByDate = () => {
-        setMessages((prev) => [...prev.sort((p1, p2) => { return new Date(p2.createdAt) - new Date(p1.createdAt) })]);
+        setMessages((prev) => [...prev.sort((p1, p2) => { return new Date(p1.createdAt) - new Date(p2.createdAt) })]);
+        scrollToDown();
+    }
+
+    const scrollToDown = () => { 
+        var div = document.getElementsByClassName("messagesContainer")[0];
+        div.scrollTop = div.scrollHeight;
     }
 
     return (
@@ -77,13 +89,17 @@ const Chat = ({ userOfChat, idOfChat }) => {
             </div>
             <Link to={`/messenger/${user._id}/0`} className='backChatArrow'><MdArrowBack style={{ color: backgroundColor1 }} /></Link>
             <div className='messagesContainer'>
-                {
-                    messages.map((message) => (
-                        <div className={message.idOfSender === user._id ? "myMessage" : "yourMessage"}>
-                            <span style={message.idOfSender === user._id ? { backgroundColor: backgroundColor1 } : { backgroundColor: backgroundColor2, color: backgroundColor3 }} >{message.text}</span>
-                        </div>
-                    ))
-                }
+                <AnimatePresence
+                    initial={false}
+                    exitBeforeEnter={true}
+                    onExitComplete={() => null}
+                >
+                    {
+                        messages.map((message) => (
+                            <Message message={message} userOfChat={userOfChat} />
+                        ))
+                    }
+                </AnimatePresence>
             </div>
             <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage()}>
                 <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error && "error"} />

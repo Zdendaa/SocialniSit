@@ -21,7 +21,7 @@ const Messenger = () => {
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni chatu
-            const chats = await axios.get(`/chats/getAllChats/${user._id}`);
+            const chats = await axios.get(`/chats/getAllChats/${user?._id}`);
             const chatsData = chats.data;
 
             //  nacteni uzivatelu
@@ -56,7 +56,7 @@ const Messenger = () => {
     }, [idOfUser])
 
     useEffect(() => {
-      if(idOfChat === '0' && idOfChat === user._id) {
+      if(idOfChat === '0') {
         chats?.forEach(chat => {
             if(chat.usersId.some(id => id === idOfUser)) {
                 setIdOfChat2(chat._id);

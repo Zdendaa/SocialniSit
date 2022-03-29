@@ -1084,7 +1084,7 @@ span {
   height: calc(100% - 45px);
   top: 0;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   overflow: auto;
 }
 
@@ -1153,22 +1153,39 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .myMessage, .yourMessage {
-  margin: 15px 0px;
+  margin: 8px 0px;
+  align-self: flex-start;
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 80%;
 }
-.myMessage span {
+.myMessage .textInMessage {
   border-radius: 15px 15px 0px 15px;
 }
-.yourMessage span {
+.yourMessage .textInMessage {
   border-radius: 15px 15px 15px 0px;
 }
-.myMessage span, .yourMessage span{
+.myMessage .textInMessage, .yourMessage .textInMessage{
   padding: 10px;
   color: white;
 }
 
 .myMessage {
-  margin-left: auto;
-  
+  margin-left: auto;  
+}
+.yourMessage {
+  display: flex;
+}
+.myMessageTimeMessage, .yourMessageTimeMessage {
+  display: flex;
+  flex-direction: column;
+}
+.profileImgInMessage {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-right: 8px;
+  margin-top: 8px;
 }
 
 
