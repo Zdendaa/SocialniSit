@@ -1081,8 +1081,8 @@ span {
 .messagesContainer {
   position: absolute;
   width: 100%;
-  height: calc(100% - 45px);
-  top: 0;
+  height: calc(100% - 45px - 50px);
+  top: 50px;
   display: flex;
   flex-direction: column;
   overflow: auto;
