@@ -16,6 +16,7 @@ button {
 .mobile {
   display: block;
 }
+
 .pc {
   display: none;
 }
@@ -32,6 +33,7 @@ button {
   0% {
     width: 0%;
   }
+
   100% {
     width: 100%;
   }
@@ -42,6 +44,7 @@ button {
 .opacity {
   transition: 0.2s;
 }
+
 .scaled:hover {
   transform: scale(0.8);
 }
@@ -70,7 +73,7 @@ button {
   max-height: 500px;
   top: 50px;
   padding: 5px;
-  background-color: white; 
+  background-color: white;
   overflow: auto;
 }
 
@@ -120,6 +123,7 @@ span {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
 }
+
 .weight500 {
   font-weight: 500;
 }
@@ -235,6 +239,7 @@ span {
 .inputRegister:focus {
   outline: none;
 }
+
 #fileUpload {
   display: none;
 }
@@ -333,12 +338,14 @@ span {
   padding: 0px 15px 0px 15px;
   z-index: 100000000000000000001000000000000000000010000000000000000000;
 }
+
 .topBarProfile {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .topBarProfile img {
   margin-left: 7px;
 }
@@ -362,6 +369,7 @@ span {
   align-items: center;
   justify-content: center;
 }
+
 .buttonLogOut {
   position: relative;
   cursor: pointer;
@@ -425,6 +433,7 @@ span {
   padding: 15px;
   overflow: auto;
 }
+
 .shareButton {
   padding: 8px 20px;
   display: flex;
@@ -433,18 +442,21 @@ span {
   cursor: pointer;
   border-radius: 5px;
 }
+
 .shareMainBox {
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .inputValShare {
   border: none;
   width: 70%;
   height: 100%;
   margin: 5px;
 }
+
 .inputValShare:focus {
   outline: none;
 }
@@ -497,6 +509,7 @@ span {
   justify-content: left;
   margin-top: 0px;
 }
+
 .topAddNewPost * {
   margin-right: 15px;
 }
@@ -506,6 +519,7 @@ span {
   display: flex;
   justify-content: space-between;
 }
+
 .bottomAddNewPost {
   margin-bottom: 0px;
   justify-content: center;
@@ -612,6 +626,7 @@ span {
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
 }
+
 .userCommentTop,
 .userCommentBottom {
   position: relative;
@@ -629,10 +644,12 @@ span {
   object-fit: cover;
   margin-right: 5px;
 }
+
 .addComment {
   display: flex;
   align-items: center;
 }
+
 .addCommentInput,
 .addCommentButton {
   border: none;
@@ -640,9 +657,11 @@ span {
   border-radius: 5px;
   margin-right: 8px;
 }
+
 .addCommentInput:focus {
   outline: none;
 }
+
 .addCommentButton {
   color: white;
 }
@@ -704,6 +723,7 @@ span {
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
 }
+
 .profileImagesContainer {
   position: relative;
   padding: 8px;
@@ -711,9 +731,11 @@ span {
   flex-wrap: wrap;
   overflow: auto;
 }
+
 .profileImagesContainer * {
   margin: 5px 5px 0px 0px;
 }
+
 .profileInfo {
   position: relative;
   width: 55%;
@@ -779,6 +801,7 @@ span {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .buttonConfirmFriendShip {
   border: none;
   padding: 12px;
@@ -786,6 +809,7 @@ span {
   color: white;
   cursor: pointer;
 }
+
 .topProfileBackgroundPicture {
   width: 100%;
   height: 200px;
@@ -799,12 +823,15 @@ span {
   flex-wrap: wrap;
   text-decoration: none;
 }
+
 .userProfile span {
   margin-left: 8px;
 }
+
 .mainImg {
   position: relative;
 }
+
 .online {
   position: absolute;
   width: 12px;
@@ -993,6 +1020,7 @@ span {
   display: flex;
   flex-wrap: wrap;
 }
+
 .messengerMain {
   position: absolute;
   width: 100%;
@@ -1001,6 +1029,7 @@ span {
   display: flex;
   justify-content: center;
 }
+
 .messengerFriends {
   position: relative;
   width: 90%;
@@ -1008,6 +1037,7 @@ span {
   align-items: center;
   flex-direction: column;
 }
+
 .searchChat {
   width: 95%;
   padding: 10px 2.5% 10px 2.5%;
@@ -1017,9 +1047,11 @@ span {
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
 }
+
 .searchChat::placeholder {
   color: #C4C4C4;
 }
+
 .userChatMain {
   width: 95%;
   margin-top: 18px;
@@ -1032,21 +1064,27 @@ span {
   align-items: center;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
+
 .userChatContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.imgOfUserChat, .mainDivImgChat {
+
+.imgOfUserChat,
+.mainDivImgChat {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 5px;
 }
+
 .mainDivImgChat {
   position: relative;
 }
+
 .InfoAboutChat {
   position: relative;
   margin-left: 15px;
@@ -1054,9 +1092,11 @@ span {
   justify-content: center;
   flex-direction: column;
 }
+
 .InfoAboutChat * {
   margin: 2px;
 }
+
 .numberOfNewMessages {
   display: flex;
   align-items: center;
@@ -1065,6 +1105,7 @@ span {
   border-radius: 7px;
   color: white;
 }
+
 .mobileDiplayNone {
   display: none;
 }
@@ -1078,6 +1119,7 @@ span {
   align-items: center;
   flex-direction: column;
 }
+
 .messagesContainer {
   position: absolute;
   width: 100%;
@@ -1095,8 +1137,10 @@ span {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .messagesContainer {
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .addMessageContainer {
@@ -1107,6 +1151,7 @@ scrollbar-width: none;  /* Firefox */
   display: flex;
   justify-content: space-between;
 }
+
 .addMessageContainer input {
   width: 70%;
   padding: 12px 10px;
@@ -1115,9 +1160,11 @@ scrollbar-width: none;  /* Firefox */
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
   border: none;
 }
+
 .addMessageContainer input:focus {
   outline: none;
 }
+
 .addMessageContainer button {
   width: 40px;
   height: 40px;
@@ -1128,7 +1175,8 @@ scrollbar-width: none;  /* Firefox */
   align-items: center;
   justify-content: center;
 }
-.userChat{
+
+.userChat {
   position: absolute;
   width: auto;
   height: auto;
@@ -1142,7 +1190,8 @@ scrollbar-width: none;  /* Firefox */
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
   z-index: 100;
 }
-.backChatArrow{
+
+.backChatArrow {
   position: absolute;
   width: auto;
   height: auto;
@@ -1152,34 +1201,47 @@ scrollbar-width: none;  /* Firefox */
   z-index: 1000;
 }
 
-.myMessage, .yourMessage {
+.unReaded {
+  color: blue;
+}
+
+.myMessage,
+.yourMessage {
   margin: 8px 0px;
   align-self: flex-start;
   font-size: 14px;
   line-height: 20px;
   max-width: 80%;
 }
+
 .myMessage .textInMessage {
   border-radius: 15px 15px 0px 15px;
 }
+
 .yourMessage .textInMessage {
   border-radius: 15px 15px 15px 0px;
 }
-.myMessage .textInMessage, .yourMessage .textInMessage{
+
+.myMessage .textInMessage,
+.yourMessage .textInMessage {
   padding: 10px;
   color: white;
 }
 
 .myMessage {
-  margin-left: auto;  
+  margin-left: auto;
 }
+
 .yourMessage {
   display: flex;
 }
-.myMessageTimeMessage, .yourMessageTimeMessage {
+
+.myMessageTimeMessage,
+.yourMessageTimeMessage {
   display: flex;
   flex-direction: column;
 }
+
 .profileImgInMessage {
   width: 25px;
   height: 25px;
@@ -1198,6 +1260,7 @@ scrollbar-width: none;  /* Firefox */
   overflow: hidden;
   display: flex;
 }
+
 .stories {
   position: relative;
   height: auto;
@@ -1216,33 +1279,40 @@ scrollbar-width: none;  /* Firefox */
   overflow: hidden;
   margin-left: 12px;
 }
+
 .Story:hover {
   cursor: pointer;
 }
+
 .Story:hover .storyImg {
   transform: scale(1.2);
 }
+
 .storyWidthAndHeight {
   width: 120px;
   height: 180px;
 }
+
 .storyImg {
   position: relative;
   object-fit: cover;
   transition: 0.5s;
 }
+
 .profileImgMain {
   position: relative;
   width: 25px;
   height: 25px;
   margin-right: 5px;
 }
+
 .profileImgStory {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .profileContainerStory {
   position: absolute;
   width: 112px;
@@ -1268,6 +1338,7 @@ scrollbar-width: none;  /* Firefox */
   border-radius: 50%;
   background-color: green;
 }
+
 .profileContainerAddStory {
   position: absolute;
   width: 112px;
@@ -1281,6 +1352,7 @@ scrollbar-width: none;  /* Firefox */
   align-items: center;
   flex-direction: column;
 }
+
 .iconAddStory {
   font-size: 50px;
   margin-bottom: 7px;
@@ -1307,12 +1379,14 @@ scrollbar-width: none;  /* Firefox */
   align-items: center;
   justify-content: space-around;
 }
+
 .settingsStory {
   position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
+
 .top,
 .mid,
 .bot {
@@ -1325,12 +1399,15 @@ scrollbar-width: none;  /* Firefox */
   font-weight: bold;
   color: white;
 }
+
 .top {
   align-items: flex-start;
 }
+
 .mid {
   align-items: center;
 }
+
 .bot {
   align-items: flex-end;
 }
@@ -1340,6 +1417,7 @@ scrollbar-width: none;  /* Firefox */
   width: 100%;
   height: 100%;
 }
+
 .mainContainerStoryBook {
   position: relative;
   width: 100%;
@@ -1350,27 +1428,33 @@ scrollbar-width: none;  /* Firefox */
   border-radius: 15px;
   overflow: hidden;
 }
+
 .buttonStoryBook {
   position: absolute;
   font-size: 35px;
   color: white;
   cursor: pointer;
 }
+
 .buttonNext {
   left: 0;
 }
+
 .buttonPrev {
   right: 0;
 }
 
 @media only screen and (min-width: 450px) {
+
   /*TABLET SMALL*/
   span {
     font-size: 12px;
   }
+
   .mobile {
     display: none;
   }
+
   .pc {
     display: block;
   }
@@ -1379,6 +1463,7 @@ scrollbar-width: none;  /* Firefox */
     position: absolute;
     min-height: 100%;
   }
+
   /* Register a Login */
   .Register,
   .Login {
@@ -1387,6 +1472,7 @@ scrollbar-width: none;  /* Firefox */
     display: flex;
     justify-content: center;
   }
+
   .registerContainer,
   .loginContainer {
     margin-top: 35px;
@@ -1396,11 +1482,13 @@ scrollbar-width: none;  /* Firefox */
     -webkit-box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 27px 5px rgba(0, 0, 0, 0.25);
   }
+
   /* HOME */
   .homeContainerPosts {
     width: 68%;
     margin-top: 29px;
   }
+
   .onlineListOfUsers {
     position: sticky;
     top: 90px;
@@ -1412,10 +1500,12 @@ scrollbar-width: none;  /* Firefox */
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
   }
+
   /*Profile*/
   .profileContainer {
     width: 80%;
   }
+
   /*ChangeProfileImg ChangeCoverImg*/
   .settingsChangeProfilePicture,
   .settingsChangeCoverPicture {
@@ -1440,6 +1530,7 @@ scrollbar-width: none;  /* Firefox */
   .SetUserInfo {
     align-items: flex-start;
   }
+
   /* ChangeColors */
   .ChangeColors {
     align-items: flex-start;
@@ -1452,6 +1543,7 @@ scrollbar-width: none;  /* Firefox */
     max-height: 80%;
     z-index: 10000000000;
   }
+
   /*Messenger*/
   .messengerMain {
     height: calc(100% - 120px);
@@ -1462,14 +1554,17 @@ scrollbar-width: none;  /* Firefox */
 }
 
 @media only screen and (min-width: 750px) {
+
   /*TABLET BIG*/
   .homeContainerPosts {
     width: 470px;
   }
+
   /*Profile*/
   .profileContainer {
     width: 60%;
   }
+
   .profileAllAboutContainer {
     width: 35%;
   }
@@ -1483,13 +1578,16 @@ scrollbar-width: none;  /* Firefox */
     align-items: center;
     flex-direction: column-reverse;
   }
+
   .profileAllAbout {
     height: auto;
   }
+
   .profileImages {
     width: 100%;
     height: 150px;
   }
+
   .profileInfo {
     width: 100%;
     height: 150px;
@@ -1508,13 +1606,16 @@ scrollbar-width: none;  /* Firefox */
     width: 200px;
     height: 200px;
   }
+
   /*Share*/
   .shareContainer {
     width: 40%;
   }
+
   .shareAllFriends {
     width: 60%;
   }
+
   .shareMainBox {
     width: 60%;
   }
@@ -1539,11 +1640,13 @@ scrollbar-width: none;  /* Firefox */
   .ProfileSettingsContainer {
     width: 50%;
   }
+
   /*StoryBook*/
   .storyBookContainer {
     width: 360px;
     height: 540px;
   }
+
   /*Messenger*/
   .messengerFriends {
     position: relative;
@@ -1557,13 +1660,15 @@ scrollbar-width: none;  /* Firefox */
   .chatNone {
     justify-content: center;
   }
-  .Chat, .chatNone {
+
+  .Chat,
+  .chatNone {
     width: 60%;
     height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    position:-webkit-sticky;
+    position: -webkit-sticky;
     position: sticky;
     top: 0px;
   }
@@ -1578,18 +1683,22 @@ scrollbar-width: none;  /* Firefox */
     margin: 0;
     align-items: center;
   }
+
   .registerContainer,
   .loginContainer {
     width: 405px;
   }
+
   /* HOME */
   .homeContainerPosts {
     width: 550px;
   }
+
   /*Profile*/
   .profileContainer {
     width: 50%;
   }
+
   /*StoryBook*/
   .storyBookContainer {
     width: 400px;

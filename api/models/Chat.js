@@ -7,6 +7,13 @@ const chat = new mongoose.Schema({
     },
     lastMessage: {
         type: String
+    },
+    readed: {
+        type: Boolean,
+        default: false
+    },
+    lastIdOfUser: {
+        type: String
     }
 })
 

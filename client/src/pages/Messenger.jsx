@@ -18,6 +18,8 @@ const Messenger = () => {
 
     const [idOfChat2, setIdOfChat2] = useState();
 
+
+
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni chatu
@@ -50,20 +52,23 @@ const Messenger = () => {
                 setCurrentUser(newUser.data)
             } else {
                 setCurrentUser(users?.filter(user => user?._id === idOfUser)[0]);
-            }   
+            }
         }
         getCurrentUser();
     }, [idOfUser])
 
     useEffect(() => {
-      if(idOfChat === '0') {
-        chats?.forEach(chat => {
-            if(chat.usersId.some(id => id === idOfUser)) {
-                setIdOfChat2(chat._id);
-            }
-        })
-      }
-    }, [idOfChat, chats])
+        if (idOfChat === '0' && idOfUser !== user._id) {
+            chats?.forEach(chat => {
+                if (chat.usersId.some(id => id === idOfUser)) {
+                    setIdOfChat2(chat._id);
+                }
+            })
+        } else {
+            setIdOfChat2(null);
+        }
+        console.log(idOfUser);
+    }, [idOfChat, chats, idOfUser])
 
     const searchChat = (val) => {
         const findUsers = users.filter(user => user.username.toLowerCase().includes(val.toLowerCase()));
@@ -87,11 +92,11 @@ const Messenger = () => {
                     <input type="text" className="searchChat" placeholder="hledej chaty..." onChange={(e) => { searchChat(e.target.value) }} />
                     {
                         searchChats?.map(chat => (
-                            <UserChat users={users} chat={chat} key={chat._id} idOfActiveChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />
+                            <UserChat chats={chats} setChats={setChats} users={users} chat={chat} key={chat._id} idOfActiveChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />
                         ))
                     }
                 </div>
-                {idOfUser !== user._id && < Chat userOfChat={currentUser} idOfChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />}
+                {idOfUser !== user._id && < Chat chats={chats} setChats={setChats} userOfChat={currentUser} idOfChat={(idOfChat2 && idOfChat == '0') ? idOfChat2 : idOfChat} />}
                 {idOfUser === user._id && <div className="mobileDiplayNone chatNone" ><h3>není vybrán žádný chat</h3></div>}
             </div>
         </div>

@@ -8,11 +8,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Message from './Message';
 import { AnimatePresence } from 'framer-motion';
 
-const Chat = ({ userOfChat, idOfChat }) => {
+const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const { user, socket, onlineFriends, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
 
     const history = useHistory();
-    
+
     const [error, setError] = useState(false);
 
     const [isOnline, setIsOnline] = useState();
@@ -28,13 +28,12 @@ const Chat = ({ userOfChat, idOfChat }) => {
             sortMessagesByDate();
         }
         getMessages();
-        console.log(idOfChat);
     }, [userOfChat, idOfChat]);
 
     useEffect(() => {
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
     }, [onlineFriends, userOfChat, idOfChat]);
-    
+
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
@@ -50,17 +49,22 @@ const Chat = ({ userOfChat, idOfChat }) => {
 
 
     const addMessage = async () => {
-        if(valOfText == "") {
+        if (valOfText == "") {
             setError(true);
             return;
         }
         setError(false);
         var newChat = [];
-        if(idOfChat == '0') {
-            newChat = await axios.post(changePath('/chats/createChat'), {usersId: [userOfChat._id, user._id]});
+        if (idOfChat == '0') {
+            newChat = await axios.post(changePath('/chats/createChat'), { usersId: [userOfChat._id, user._id], lastMessage: valOfText, lastIdOfUser: user._id });
+        } else {
+            // kdyz uz existuje chat tak aktualizujeme lastMessage jak na backendu tak na frontendu
+            await axios.put(changePath('/chats/setLastMessage'), { id: idOfChat, lastMessage: valOfText, readed: false, lastIdOfUser: user._id });
+            updateChats();
         }
         const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat == "0" ? newChat.data._id : idOfChat, text: valOfText });
         setMessages((prev) => [...prev, newMessage.data]);
+
         sortMessagesByDate();
         setValOfText("");
         // zavolani socketu
@@ -68,14 +72,21 @@ const Chat = ({ userOfChat, idOfChat }) => {
         idOfChat == '0' && history.push(`/messenger/${userOfChat._id}/${newChat.data._id}`);
     }
 
+    const updateChats = () => {
+        var newChats = [...chats];
+        newChats.filter(chat => chat._id === idOfChat)[0].lastMessage = valOfText;
+        newChats.filter(chat => chat._id === idOfChat)[0].readed = true;
+        setChats(newChats);
+    }
+
     const sortMessagesByDate = () => {
         setMessages((prev) => [...prev.sort((p1, p2) => { return new Date(p1.createdAt) - new Date(p2.createdAt) })]);
         scrollToDown();
     }
 
-    const scrollToDown = () => { 
+    const scrollToDown = () => {
         var div = document.getElementsByClassName("messagesContainer")[0];
-        div.scrollTop = div.scrollHeight;
+        div.scrollTop = div?.scrollHeight;
     }
 
     return (
@@ -91,19 +102,19 @@ const Chat = ({ userOfChat, idOfChat }) => {
             <div className='messagesContainer'>
                 <AnimatePresence
                     initial={false}
-                    exitBeforeEnter={true}
+                    // exitBeforeEnter={true}
                     onExitComplete={() => null}
                 >
                     {
                         messages.map((message) => (
-                            <Message message={message} userOfChat={userOfChat} />
+                            <Message message={message} key={message._id} userOfChat={userOfChat} />
                         ))
                     }
                 </AnimatePresence>
             </div>
             <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage()}>
-                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error && "error"} />
-                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} ><AiOutlineSend style={{fontSize: "19px"}}/></button>
+                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error ? "error" : "noError"} />
+                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} ><AiOutlineSend style={{ fontSize: "19px" }} /></button>
             </div>
         </div >
     )
