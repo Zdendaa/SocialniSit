@@ -26,8 +26,9 @@ const message = new mongoose.Schema({
     urlOfVoice: {
         type: String,
     },
-    type: {
-        type: Number // 0 - posilani, 1 - poslano, 2 - precteno
+    readed: {
+        type: Boolean,
+        default: false
     }
 },
     { timestamps: true } // kazda zprava bude mit datum vytvoreni

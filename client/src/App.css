@@ -1242,6 +1242,10 @@ span {
   flex-direction: column;
 }
 
+.myMessageTimeMessage {
+  justify-content: flex-end;
+}
+
 .profileImgInMessage {
   width: 25px;
   height: 25px;

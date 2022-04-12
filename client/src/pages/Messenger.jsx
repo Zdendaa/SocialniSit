@@ -18,8 +18,6 @@ const Messenger = () => {
 
     const [idOfChat2, setIdOfChat2] = useState();
 
-
-
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni chatu
@@ -67,7 +65,6 @@ const Messenger = () => {
         } else {
             setIdOfChat2(null);
         }
-        console.log(idOfUser);
     }, [idOfChat, chats, idOfUser])
 
     const searchChat = (val) => {

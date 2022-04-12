@@ -10,13 +10,13 @@ import { AnimatePresence } from 'framer-motion';
 
 const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const { user, socket, onlineFriends, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
-
     const history = useHistory();
 
     const [error, setError] = useState(false);
 
     const [isOnline, setIsOnline] = useState();
     const [messages, setMessages] = useState([]);
+    const [idOfLastReadedMessage, setIdOfLastReadedMessage] = useState();
 
     const [valOfText, setValOfText] = useState("");
 
@@ -28,25 +28,61 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             sortMessagesByDate();
         }
         getMessages();
-    }, [userOfChat, idOfChat]);
+    }, [idOfChat]);
+
+    // nastaveni id podledni prectene zpravy
+    useEffect(() => {
+        messages.map((message, index) => {
+
+            if (!message.readed && message.idOfSender === user?._id) {
+                console.log("phoda");
+                console.log(index, message.readed, message.idOfSender === user?._id);
+                setIdOfLastReadedMessage(messages[index - 1]?._id);
+                socket?.emit("setReadedMessage", { idOfMessage: messages[index - 1]?._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
+                return;
+            } else {
+                if (index == messages.length - 1) {
+                    console.log("aoj");
+                    setIdOfLastReadedMessage(messages[index]._id);
+                    socket?.emit("setReadedMessage", { idOfMessage: messages[index]._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
+                }
+            }
+        })
+    }, [messages])
+
+    useEffect(() => {
+        const readedMessages = async () => {
+            await axios.put(changePath(`/messages/setReadedAllMessage`), { idOfChat: idOfChat, idOfSender: userOfChat?._id });
+        }
+        readedMessages();
+    }, [userOfChat])
+
 
     useEffect(() => {
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
     }, [onlineFriends, userOfChat, idOfChat]);
 
-
+    // prihlaseni k socketu
     useEffect(() => {
         socket?.on("getMessage", (data) => {
-            if (data.idOfChat === idOfChat) {
-                console.log(messages.filter(message => message._id === data._id));
-                if (messages.filter(message => message._id === data._id).length === 0) {
-                    setMessages((prev) => [...prev, data]);
-                    sortMessagesByDate();
-                }
+            var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
+
+            if (data.idOfChat === idOfCurrentChat) { // jestli se id shoduje s nasim otevrenym chatem
+                setMessages((prev) => [...prev, data]);
+                socket?.emit("setReadedMessage", { idOfMessage: data._id, idOfUser: data.idOfSender, idOfChat: data.idOfChat });
+                sortMessagesByDate();
             }
         })
     }, [socket])
 
+    useEffect(() => {
+        socket?.on("getReadedMessage", (data) => {
+            var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
+            if (data.idOfChat === idOfCurrentChat) {
+                setIdOfLastReadedMessage(data._id);
+            }
+        })
+    }, [socket])
 
     const addMessage = async () => {
         if (valOfText == "") {
@@ -106,8 +142,8 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                     onExitComplete={() => null}
                 >
                     {
-                        messages.map((message) => (
-                            <Message message={message} key={message._id} userOfChat={userOfChat} />
+                        messages?.map((message) => (
+                            <Message idOfReadedMessage={idOfLastReadedMessage} message={message} key={message._id} userOfChat={userOfChat} />
                         ))
                     }
                 </AnimatePresence>

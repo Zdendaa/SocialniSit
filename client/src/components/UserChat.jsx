@@ -19,15 +19,11 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
-            console.log(chats);
             if (chats?.some(chat => chat?._id == data.idOfChat)) {
-                console.log("pohoda");
                 var newChats = [...chats];
-                console.log(data.text);
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastMessage = data.text;
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
                 newChats.filter(chat => chat._id === data.idOfChat)[0].readed = false;
-                console.log(newChats);
                 setChats(newChats);
             }
         })
@@ -40,9 +36,11 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
 
     const updateChatReadedTrue = async () => {
         var newChats = [...chats];
-        newChats.filter(currentChat => currentChat._id === chat._id)[0].readed = true;
-        setChats(newChats);
-        await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
+        if (!newChats.filter(currentChat => currentChat._id === chat._id)[0].readed) {
+            newChats.filter(currentChat => currentChat._id === chat._id)[0].readed = true;
+            setChats(newChats);
+            await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
+        }
     }
 
     return (
