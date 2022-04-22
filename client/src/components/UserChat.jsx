@@ -10,6 +10,8 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     const [userOfChat, setUserOfChat] = useState(null);
     const [isOnline, setIsOnline] = useState();
 
+    const [currentChat, setcurrentChat] = useState();
+
     const history = useHistory();
     useEffect(() => {
         const currentUser = users?.filter(user => chat?.usersId.includes(user?._id))[0];
@@ -18,16 +20,29 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     }, [users, chat, onlineFriends])
 
     useEffect(() => {
-        socket?.on("getMessage", (data) => {
+        socket?.on("getMessage", async (data) => {
+
             if (chats?.some(chat => chat?._id == data.idOfChat)) {
                 var newChats = [...chats];
+
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastMessage = data.text;
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
-                newChats.filter(chat => chat._id === data.idOfChat)[0].readed = false;
-                setChats(newChats);
+                if (data.idOfChat === window.location.href.split('/')[5]) {
+                    newChats.filter(chat => chat._id === data.idOfChat)[0].readed = true;
+                    setChats(newChats);
+                    await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
+                } else {
+                    newChats.filter(chat => chat._id === data.idOfChat)[0].readed = false;
+                    setChats(newChats);
+                }
+
             }
         })
     }, [socket])
+
+    useEffect(() => {
+        setcurrentChat(chats.filter(item => item._id === chat._id)[0]);
+    }, [chat, chats])
 
     const goToChat = async () => {
         await updateChatReadedTrue();
@@ -44,7 +59,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     }
 
     return (
-        <div onClick={goToChat} className="userChatMain" style={chat._id === idOfActiveChat ? { backgroundColor: backgroundColor2 } : { backgroundColor: "white" }}>
+        <div onClick={goToChat} className="userChatMain" style={currentChat?._id === idOfActiveChat ? { backgroundColor: backgroundColor2 } : { backgroundColor: "white" }}>
             <div className="userChatContainer">
                 <div className="mainDivImgChat">
                     <img src={userOfChat?.idOrUrlOfProfilePicture || "/img/anonymous.png"} className="imgOfUserChat" alt="" />
@@ -52,7 +67,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                 </div>
                 <div className="InfoAboutChat">
                     <span>{userOfChat?.username}</span>
-                    <span className={(chat.lastIdOfUser !== user._id) ? (chat.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{chat?.lastMessage}</span>
+                    <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage}</span>
                 </div>
             </div>
             <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>5</span></div>

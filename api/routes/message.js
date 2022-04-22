@@ -35,6 +35,7 @@ router.get("/getAllMessages/:idOfChat", async (req, res) => {
 router.put("/setReadedAllMessage", async (req, res) => {
     try {
         // vyhledani vsech zprav z daneho chatu
+        console.log("neconeoc")
         const messages = await Message.find({ idOfChat: req.body.idOfChat, idOfSender: req.body.idOfSender, readed: false });
         console.log(req.body.idOfChat);
         console.log(messages);

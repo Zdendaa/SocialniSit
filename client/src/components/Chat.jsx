@@ -24,7 +24,11 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         setMessages([]);
         const getMessages = async () => {
             const messages = await axios.get(changePath(`/messages/getAllMessages/${idOfChat}`));
-            setMessages(messages.data);
+            var DataOfMessages = messages.data;
+            for (var index = 0; index < DataOfMessages.length; index++) {
+                if (DataOfMessages[index].idOfReciever === user?._id) DataOfMessages[index].readed = true;
+            }
+            setMessages(DataOfMessages);
             sortMessagesByDate();
         }
         getMessages();
@@ -32,17 +36,14 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     // nastaveni id podledni prectene zpravy a poslani cez socket druhemu uzivatelovi precteni zpravy
     useEffect(() => {
-        console.log(messages);
         for (var index = 0; index < messages.length; index++) {
             if (!messages[index].readed && messages[index].idOfSender === user?._id) {
-                console.log("phoda");
-                console.log(index, messages[index].readed, messages[index].idOfSender === user?._id);
                 setIdOfLastReadedMessage(messages[index - 1]?._id);
+                console.log("ahoj");
                 socket?.emit("setReadedMessage", { idOfMessage: messages[index - 1]?._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
                 break;
             } else {
                 if (index == messages.length - 1) {
-                    console.log("aoj");
                     setIdOfLastReadedMessage(messages[index]._id);
                     socket?.emit("setReadedMessage", { idOfMessage: messages[index]._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
                 }
@@ -50,9 +51,11 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         }
     }, [messages])
 
+    // precteni zprav
     useEffect(() => {
         const readedMessages = async () => {
             await axios.put(changePath(`/messages/setReadedAllMessage`), { idOfChat: idOfChat, idOfSender: userOfChat?._id });
+            socket?.emit("setReadedMessage", { idOfMessage: null, idOfUser: userOfChat?._id, idOfChat: idOfChat });
         }
         readedMessages();
     }, [userOfChat])
@@ -79,7 +82,16 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         socket?.on("getReadedMessage", (data) => {
             var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
             if (data.idOfChat === idOfCurrentChat) {
-                setIdOfLastReadedMessage(data._id);
+                setMessages(messages => {
+                    var DataOfMessages = messages;
+                    for (var index = 0; index < DataOfMessages.length; index++) {
+                        DataOfMessages[index].readed = true;
+                        if (DataOfMessages[index]._id === data._id && data._id) break;
+                    }
+                    setIdOfLastReadedMessage(data._id || DataOfMessages[DataOfMessages.length - 1]?._id);
+                    console.log(data._id, DataOfMessages[DataOfMessages.length - 1]?._id);
+                    return DataOfMessages;
+                });
             }
         })
     }, [socket])

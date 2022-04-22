@@ -40,12 +40,12 @@ io.on('connection', (socket) => {
     socket.on("sendMessage", ({ idOfMessage, idOfSender, idOfReciever, idOfChat, text, type, urlOfImg, urlOfVideo, urlOfVoice }) => {
         console.log("message sended", idOfReciever);
         console.log(findUser(idOfReciever));
-        findUser(idOfReciever) && io.to(findUser(idOfReciever).socketId).emit("getMessage", { _id: idOfMessage, idOfSender, idOfReciever, idOfChat, text, type, urlOfImg, urlOfVideo, urlOfVoice, createdAt: Date.now() });
+        findUser(idOfReciever) && io.to(findUser(idOfReciever).socketId).emit("getMessage", { _id: idOfMessage, idOfSender, idOfReciever, idOfChat, text, readed: false, type, urlOfImg, urlOfVideo, urlOfVoice, createdAt: Date.now() });
     })
 
     socket.on("setReadedMessage", ({ idOfMessage, idOfUser, idOfChat }) => {
-        console.log("readed message set", idOfUser);
-        console.log(findUser(idOfUser));
+        // console.log("readed message set", idOfUser);
+        // console.log(findUser(idOfUser));
         findUser(idOfUser) && io.to(findUser(idOfUser).socketId).emit("getReadedMessage", { _id: idOfMessage, idOfChat });
     })
 
