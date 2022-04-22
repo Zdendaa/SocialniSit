@@ -30,16 +30,16 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         getMessages();
     }, [idOfChat]);
 
-    // nastaveni id podledni prectene zpravy
+    // nastaveni id podledni prectene zpravy a poslani cez socket druhemu uzivatelovi precteni zpravy
     useEffect(() => {
-        messages.map((message, index) => {
-
-            if (!message.readed && message.idOfSender === user?._id) {
+        console.log(messages);
+        for (var index = 0; index < messages.length; index++) {
+            if (!messages[index].readed && messages[index].idOfSender === user?._id) {
                 console.log("phoda");
-                console.log(index, message.readed, message.idOfSender === user?._id);
+                console.log(index, messages[index].readed, messages[index].idOfSender === user?._id);
                 setIdOfLastReadedMessage(messages[index - 1]?._id);
                 socket?.emit("setReadedMessage", { idOfMessage: messages[index - 1]?._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
-                return;
+                break;
             } else {
                 if (index == messages.length - 1) {
                     console.log("aoj");
@@ -47,7 +47,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                     socket?.emit("setReadedMessage", { idOfMessage: messages[index]._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
                 }
             }
-        })
+        }
     }, [messages])
 
     useEffect(() => {
