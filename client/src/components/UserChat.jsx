@@ -11,6 +11,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     const [isOnline, setIsOnline] = useState();
 
     const [currentChat, setcurrentChat] = useState();
+    const [numberOfNewMessages, setNumberOfNewMessages] = useState(0);
 
     const history = useHistory();
     useEffect(() => {
@@ -20,15 +21,25 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     }, [users, chat, onlineFriends])
 
     useEffect(() => {
+        const getNewMessages = async () => {
+            const numberMessages = await axios.post(changePath(`/messages/getNumberOfUnreadedMessages`), { idOfChat: chat._id, myId: user._id });
+            setNumberOfNewMessages(numberMessages.data.length);
+        }
+        getNewMessages();
+    }, [])
+
+
+    useEffect(() => {
         socket?.on("getMessage", async (data) => {
 
             if (chats?.some(chat => chat?._id == data.idOfChat)) {
                 var newChats = [...chats];
-
+                ((data.idOfReciever === user._id) && (chat._id === data.idOfChat)) && setNumberOfNewMessages(number => number + 1);
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastMessage = data.text;
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
                 if (data.idOfChat === window.location.href.split('/')[5]) {
                     newChats.filter(chat => chat._id === data.idOfChat)[0].readed = true;
+                    setNumberOfNewMessages(0);
                     setChats(newChats);
                     await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
                 } else {
@@ -50,6 +61,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     }
 
     const updateChatReadedTrue = async () => {
+        setNumberOfNewMessages(0);
         var newChats = [...chats];
         if (!newChats.filter(currentChat => currentChat._id === chat._id)[0].readed) {
             newChats.filter(currentChat => currentChat._id === chat._id)[0].readed = true;
@@ -70,7 +82,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                     <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage}</span>
                 </div>
             </div>
-            <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>5</span></div>
+            {numberOfNewMessages !== 0 && <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>{numberOfNewMessages}</span></div>}
         </div>
     )
 }

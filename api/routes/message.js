@@ -48,4 +48,13 @@ router.put("/setReadedAllMessage", async (req, res) => {
     }
 })
 
+router.post("/getNumberOfUnreadedMessages", async (req, res) => {
+    try {
+        const updatedChat = await Message.find({ readed: false, idOfChat: req.body.idOfChat, idOfReciever: req.body.myId });
+        res.status(200).send(updatedChat);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
 module.exports = router;
