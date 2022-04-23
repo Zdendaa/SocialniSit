@@ -9,12 +9,13 @@ const initialState = {
     backgroundColor3: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor3 : "black", // barva pro cerny text
     backgroundColor4: localStorage.getItem("colors") ? JSON.parse(localStorage.getItem("colors")).backgroundColor4 : "#ffffff", // barva pro bily text
     onlineFriends: null,
-    socket: null
+    socket: null,
+    numberOfNewMessages: null
 }
 
 export const GlobalContext = createContext(initialState);
 
-export const GlobalProvider = ({children}) => {
+export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(Reducer, initialState);
 
     // akce ktere muzu volat
@@ -74,22 +75,32 @@ export const GlobalProvider = ({children}) => {
         })
     }
 
+    // nastaveni socketu uzivatele
+    function setNumberOfNewMessages(data) {
+        dispatch({
+            type: 'SET_NUMBER_UNREADED_MESSAGES',
+            payload: data
+        })
+    }
+
     return (
         <GlobalContext.Provider value={{
             user: state.user,
-            backgroundColor1: state.backgroundColor1, 
-            backgroundColor2: state.backgroundColor2, 
-            backgroundColor3: state.backgroundColor3, 
+            backgroundColor1: state.backgroundColor1,
+            backgroundColor2: state.backgroundColor2,
+            backgroundColor3: state.backgroundColor3,
             backgroundColor4: state.backgroundColor4,
             onlineFriends: state.onlineFriends,
             socket: state.socket,
-            setUser, 
+            numberOfNewMessages: state.numberOfNewMessages,
+            setUser,
             deleteUser,
             changeProfileImg,
             changeCoverImg,
             setColors,
             setOnlineFriends,
-            setSocket
+            setSocket,
+            setNumberOfNewMessages
         }}>
             {children}
         </GlobalContext.Provider>

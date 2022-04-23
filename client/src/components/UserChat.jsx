@@ -5,13 +5,13 @@ import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 
 const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
-    const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
+    const { user, socket, numberOfNewMessages, setNumberOfNewMessages, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     const [userOfChat, setUserOfChat] = useState(null);
     const [isOnline, setIsOnline] = useState();
 
     const [currentChat, setcurrentChat] = useState();
-    const [numberOfNewMessages, setNumberOfNewMessages] = useState(0);
+    const [numberUnReadedMessages, setNumberUnReadedMessages] = useState(0);
 
     const history = useHistory();
     useEffect(() => {
@@ -23,7 +23,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     useEffect(() => {
         const getNewMessages = async () => {
             const numberMessages = await axios.post(changePath(`/messages/getNumberOfUnreadedMessages`), { idOfChat: chat._id, myId: user._id });
-            setNumberOfNewMessages(numberMessages.data.length);
+            setNumberUnReadedMessages(numberMessages.data.length);
         }
         getNewMessages();
     }, [])
@@ -34,12 +34,12 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
 
             if (chats?.some(chat => chat?._id == data.idOfChat)) {
                 var newChats = [...chats];
-                ((data.idOfReciever === user._id) && (chat._id === data.idOfChat)) && setNumberOfNewMessages(number => number + 1);
+                ((data.idOfReciever === user._id) && (chat._id === data.idOfChat)) && setNumberUnReadedMessages(number => number + 1);
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastMessage = data.text;
                 newChats.filter(chat => chat._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
                 if (data.idOfChat === window.location.href.split('/')[5]) {
                     newChats.filter(chat => chat._id === data.idOfChat)[0].readed = true;
-                    setNumberOfNewMessages(0);
+                    setNumberUnReadedMessages(0);
                     setChats(newChats);
                     await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
                 } else {
@@ -61,7 +61,9 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     }
 
     const updateChatReadedTrue = async () => {
-        setNumberOfNewMessages(0);
+        setNumberUnReadedMessages(0);
+        console.log(numberOfNewMessages - numberUnReadedMessages)
+        setNumberOfNewMessages(numberOfNewMessages - numberUnReadedMessages);
         var newChats = [...chats];
         if (!newChats.filter(currentChat => currentChat._id === chat._id)[0].readed) {
             newChats.filter(currentChat => currentChat._id === chat._id)[0].readed = true;
@@ -82,7 +84,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                     <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage}</span>
                 </div>
             </div>
-            {numberOfNewMessages !== 0 && <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>{numberOfNewMessages}</span></div>}
+            {numberUnReadedMessages !== 0 && <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>{numberUnReadedMessages}</span></div>}
         </div>
     )
 }

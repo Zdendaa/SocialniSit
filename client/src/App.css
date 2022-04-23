@@ -1207,7 +1207,7 @@ span {
 
 .myMessage,
 .yourMessage {
-  margin: 8px 0px;
+  margin: 5px 0px;
   align-self: flex-start;
   font-size: 14px;
   line-height: 20px;
@@ -1246,14 +1246,31 @@ span {
   justify-content: flex-end;
 }
 
+.profileImgReadedContainer {
+  position: relative;
+  width: 100%;
+  padding: 0px 0px 8px 0px;
+  display: flex;
+  align-items: right;
+  justify-content: right;
+}
+
+.profileImgInMessage,
+.profileImgInMessageReaded {
+  border-radius: 50%;
+}
+
 .profileImgInMessage {
   width: 25px;
   height: 25px;
-  border-radius: 50%;
   margin-right: 8px;
   margin-top: 8px;
 }
 
+.profileImgInMessageReaded {
+  width: 19px;
+  height: 19px;
+}
 
 /*StoryMain*/
 .StoriesMain {

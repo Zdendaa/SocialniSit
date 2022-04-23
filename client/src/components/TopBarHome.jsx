@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
-import { FiMessageCircle } from "react-icons/fi";
+import axios from 'axios';
+import MessengerIcon from './MessengerIcon';
 
 const TopBarHome = () => {
     const { user, socket, setColors, deleteUser, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
@@ -16,7 +17,7 @@ const TopBarHome = () => {
             </Link>
             <div className="iconsSearchAndMessenger" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
                 <SearchBar />
-                <Link to={`/messenger/${user._id}/0`} style={{ textDecoration: "none", marginLeft: "10px" }}><FiMessageCircle className="searchIcon scaled pointer" style={{ color: backgroundColor1 }} /></Link>
+                <MessengerIcon />
             </div>
             <div className="topBarProfile">
                 <Link to={`/profile/${user._id}`} className="userProfile" style={{ color: backgroundColor1 }}>

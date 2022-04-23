@@ -44,7 +44,12 @@ const Reducer = (state, action) => {
                 ...state,
                 socket: action.payload
             }
-        default: 
+        case "SET_NUMBER_UNREADED_MESSAGES":
+            return {
+                ...state,
+                numberOfNewMessages: action.payload
+            }
+        default:
             return state;
     }
 }

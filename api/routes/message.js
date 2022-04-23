@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Message = require('../models/Message');
-
+const Chat = require('../models/Chat');
 
 router.post("/addMessage", async (req, res) => {
     try {
@@ -35,7 +35,6 @@ router.get("/getAllMessages/:idOfChat", async (req, res) => {
 router.put("/setReadedAllMessage", async (req, res) => {
     try {
         // vyhledani vsech zprav z daneho chatu
-        console.log("neconeoc")
         const messages = await Message.find({ idOfChat: req.body.idOfChat, idOfSender: req.body.idOfSender, readed: false });
         console.log(req.body.idOfChat);
         console.log(messages);
@@ -50,8 +49,30 @@ router.put("/setReadedAllMessage", async (req, res) => {
 
 router.post("/getNumberOfUnreadedMessages", async (req, res) => {
     try {
-        const updatedChat = await Message.find({ readed: false, idOfChat: req.body.idOfChat, idOfReciever: req.body.myId });
-        res.status(200).send(updatedChat);
+        const newMessages = await Message.find({ readed: false, idOfChat: req.body.idOfChat, idOfReciever: req.body.myId });
+        res.status(200).send(newMessages);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
+router.post("/getNumberOfUnreadedMessagesInMessenger", async (req, res) => {
+    try {
+        // vyhledani vsech chatu ve kterych jsme
+        const chats = await Chat.find({
+            usersId: {
+                $in: req.body.myId
+            }
+        });
+        // projeti vsech chatu a vyhledani pomoci jejich id vsechny neprectene zpravy a vraceni jejich poctu
+        const numbersOfNewMessages = await Promise.all(chats.map(async (chat) => {
+            const newMessages = await Message.find({ readed: false, idOfChat: chat._id, idOfReciever: req.body.myId });
+            return newMessages.length;
+        }))
+        // secteni vsech hodnot v poli
+        const sum = numbersOfNewMessages.reduce((partialSum, a) => partialSum + a, 0);
+        res.status(200).send(sum + "");
+
     } catch (err) {
         res.status(500).send(err);
     }
