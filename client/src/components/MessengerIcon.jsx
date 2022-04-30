@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
 
-const MessengerIcon = ({ chats }) => {
+const MessengerIcon = () => {
     const { user, socket, numberOfNewMessages, setNumberOfNewMessages, backgroundColor1 } = useContext(GlobalContext);
 
     const [number, setNumber] = useState();
@@ -38,9 +38,9 @@ const MessengerIcon = ({ chats }) => {
         })
     }, [socket])
     return (
-        <Link to={`/messenger/${user._id}/0`} style={{ textDecoration: "none", marginLeft: "10px" }}>
+        <Link to={`/messenger/${user._id}/0`} style={{ textDecoration: "none", marginLeft: "10px", position: "relative" }}>
             <FiMessageCircle className="searchIcon scaled pointer" style={{ color: backgroundColor1 }} />
-            {number}
+            {number > 0 && <div className="numberOfNewMessagesinMessenger"><span>{number}</span></div>}
         </Link>
     )
 }

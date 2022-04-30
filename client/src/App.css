@@ -1037,6 +1037,21 @@ span {
   align-items: center;
   flex-direction: column;
 }
+.numberOfNewMessagesinMessenger {
+  position: absolute;
+  min-width: 13px;
+  min-height: 13px;
+  padding: 2px;
+  border-radius: 50%;
+  background-color: red;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: blue;
+}
 
 .searchChat {
   width: 95%;
