@@ -7,9 +7,10 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 import Message from './Message';
 import { AnimatePresence } from 'framer-motion';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
-    const { user, socket, onlineFriends, backgroundColor1, backgroundColor4 } = useContext(GlobalContext);
+    const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
     const history = useHistory();
 
     const [error, setError] = useState(false);
@@ -19,6 +20,8 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const [idOfLastReadedMessage, setIdOfLastReadedMessage] = useState();
 
     const [valOfText, setValOfText] = useState("");
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setMessages([]);
@@ -102,19 +105,27 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             return;
         }
         setError(false);
+        setLoading(true);
         var newChat = [];
+        var newMessage;
         if (idOfChat == '0') {
             newChat = await axios.post(changePath('/chats/createChat'), { usersId: [userOfChat._id, user._id], lastMessage: valOfText, lastIdOfUser: user._id });
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: newChat.data._id, text: valOfText });
+            setMessages((prev) => [...prev, newMessage.data]);
+            sortMessagesByDate();
+            setValOfText("");
+            setLoading(false);
         } else {
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+            setMessages((prev) => [...prev, newMessage.data]);
+            sortMessagesByDate();
+            setValOfText("");
+            setLoading(false);
             // kdyz uz existuje chat tak aktualizujeme lastMessage jak na backendu tak na frontendu
             await axios.put(changePath('/chats/setLastMessage'), { id: idOfChat, lastMessage: valOfText, readed: false, lastIdOfUser: user._id });
             updateChats();
         }
-        const newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat == "0" ? newChat.data._id : idOfChat, text: valOfText });
-        setMessages((prev) => [...prev, newMessage.data]);
 
-        sortMessagesByDate();
-        setValOfText("");
         // zavolani socketu
         socket?.emit("sendMessage", { idOfMessage: newMessage.data._id, idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
         idOfChat == '0' && history.push(`/messenger/${userOfChat._id}/${newChat.data._id}`);
@@ -162,7 +173,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             </div>
             <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage()}>
                 <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error ? "error" : "noError"} />
-                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} ><AiOutlineSend style={{ fontSize: "19px" }} /></button>
+                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
             </div>
         </div >
     )

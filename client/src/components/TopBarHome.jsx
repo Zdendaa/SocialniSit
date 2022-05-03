@@ -3,7 +3,6 @@ import { GlobalContext } from '../context/GlobalState';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useHistory } from 'react-router';
-import axios from 'axios';
 import MessengerIcon from './MessengerIcon';
 
 const TopBarHome = () => {

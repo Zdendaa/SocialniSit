@@ -30,7 +30,8 @@ const MessengerIcon = () => {
     // prihlaseni k socketu
     useEffect(() => {
         socket?.on("getMessage", async (data) => {
-            if (data.idOfReciever === user._id) {
+            var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
+            if (data.idOfReciever === user._id && data.idOfChat !== idOfCurrentChat) {
                 const data = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
                 setNumber(data.data);
                 setNumberOfNewMessages(data.data);
