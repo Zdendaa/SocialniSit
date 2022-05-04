@@ -10,7 +10,7 @@ import { AnimatePresence } from 'framer-motion';
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
-    const { user, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
+    const { user, setNumberOfNewMessages, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
     const history = useHistory();
 
     const [error, setError] = useState(false);
@@ -59,6 +59,8 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         const readedMessages = async () => {
             await axios.put(changePath(`/messages/setReadedAllMessage`), { idOfChat: idOfChat, idOfSender: userOfChat?._id });
             socket?.emit("setReadedMessage", { idOfMessage: null, idOfUser: userOfChat?._id, idOfChat: idOfChat });
+            const newData = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
+            setNumberOfNewMessages(newData);
         }
         readedMessages();
     }, [userOfChat])
@@ -145,7 +147,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     const scrollToDown = () => {
         var div = document.getElementsByClassName("messagesContainer")[0];
-        div.scrollTop = div?.scrollHeight;
+        if(div.scrollTop) div.scrollTop = div?.scrollHeight;
     }
 
     return (

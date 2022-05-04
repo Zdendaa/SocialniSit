@@ -16,7 +16,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
     const history = useHistory();
     useEffect(() => {
         const currentUser = users?.filter(user => chat?.usersId.includes(user?._id))[0];
-        setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === currentUser._id));
+        setIsOnline(onlineFriends?.some(onlineUser => onlineUser?.userId === currentUser?._id));
         setUserOfChat(currentUser);
     }, [users, chat, onlineFriends])
 

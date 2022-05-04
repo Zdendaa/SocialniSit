@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
     socket.on("setReadedMessage", ({ idOfMessage, idOfUser, idOfChat }) => {
         // console.log("readed message set", idOfUser);
         // console.log(findUser(idOfUser));
-        findUser(idOfUser) && io.to(findUser(idOfUser).socketId).emit("getReadedMessage", { _id: idOfMessage, idOfChat });
+        findUser(idOfUser) && io.to(findUser(idOfUser).socketId).emit("getReadedMessage", { _id: idOfMessage, idOfChat, idOfUser });
     })
 
     socket.on("disconnect", () => {
