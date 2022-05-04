@@ -36,7 +36,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                 var newChats = [...chats];
                 newChats.filter(chatData => chatData._id === data.idOfChat)[0].lastMessage = data.text;
                 newChats.filter(chatData => chatData._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
-                if (data.idOfChat === window.location.href.split('/')[5]) { // jetli dany chat mame otevreny
+                if (data.idOfChat === window.location.href.split('/')[5] && data.idOfChat === chat._id) { // jetli dany chat mame otevreny
                     newChats.filter(chatData => chatData._id === data.idOfChat)[0].readed = true;
                     setNumberUnReadedMessages(0);
                     setChats(newChats);
