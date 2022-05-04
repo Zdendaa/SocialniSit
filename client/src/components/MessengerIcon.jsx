@@ -34,16 +34,14 @@ const MessengerIcon = () => {
             if (data.idOfChat !== idOfCurrentChat) {
                 setNumber(prev => {
                     setNumberOfNewMessages(typeof prev == "number" ? prev + 1 : 1);
-                    console.log(typeof prev == "number"? prev + 1 : 1);
                     return prev + 1;
                 });
-                console.log("znemena")
             }
         })
     }, [socket])
     return (
-        <Link to={`/messenger/${user._id}/0`} style={{ textDecoration: "none", marginLeft: "10px", position: "relative" }}>
-            <FiMessageCircle className="searchIcon scaled pointer" style={{ color: backgroundColor1 }} />
+        <Link to={`/messenger/${user._id}/0`} className="scaled pointer" style={{ textDecoration: "none", marginLeft: "10px", position: "relative" }}>
+            <FiMessageCircle className="searchIcon" style={{ color: backgroundColor1 }} />
             {number > 0 && <div className="numberOfNewMessagesinMessenger"><span>{number}</span></div>}
         </Link>
     )

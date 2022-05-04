@@ -42,7 +42,6 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         for (var index = 0; index < messages.length; index++) {
             if (!messages[index].readed && messages[index].idOfSender === user?._id) {
                 setIdOfLastReadedMessage(messages[index - 1]?._id);
-                console.log("ahoj");
                 socket?.emit("setReadedMessage", { idOfMessage: messages[index - 1]?._id, idOfUser: userOfChat?._id, idOfChat: idOfChat });
                 break;
             } else {
@@ -56,16 +55,23 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     // precteni zprav
     useEffect(() => {
-        const readedMessages = async () => {
-            await axios.put(changePath(`/messages/setReadedAllMessage`), { idOfChat: idOfChat, idOfSender: userOfChat?._id });
-            socket?.emit("setReadedMessage", { idOfMessage: null, idOfUser: userOfChat?._id, idOfChat: idOfChat });
-            const newData = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
-            setNumberOfNewMessages(newData);
-            console.log(newData)
-        }
         readedMessages();
     }, [userOfChat])
-
+    const readedMessages = async () => {
+        await axios.put(changePath(`/messages/setReadedAllMessage`), { idOfChat: idOfChat, idOfSender: userOfChat?._id });
+        socket?.emit("setReadedMessage", { idOfMessage: null, idOfUser: userOfChat?._id, idOfChat: idOfChat });
+        const newData = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
+        setNumberOfNewMessages(newData.data);
+    }
+    // precteni zpravy 
+    useEffect(() => {
+        socket?.on("getMessage", async (data) => {
+            var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
+            if (data.idOfChat === idOfCurrentChat) { // jestli se id shoduje s nasim otevrenym chatem
+                await readedMessages();
+            }
+        })
+    }, [socket, userOfChat])
 
     useEffect(() => {
         setIsOnline(onlineFriends?.some(onlineUser => onlineUser.userId === userOfChat?._id));
@@ -73,10 +79,10 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     // prihlaseni k socketu
     useEffect(() => {
-        socket?.on("getMessage", (data) => {
+        socket?.on("getMessage", async (data) => {
             var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
-
             if (data.idOfChat === idOfCurrentChat) { // jestli se id shoduje s nasim otevrenym chatem
+                data.readed = true;
                 setMessages((prev) => [...prev, data]);
                 socket?.emit("setReadedMessage", { idOfMessage: data._id, idOfUser: data.idOfSender, idOfChat: data.idOfChat });
                 sortMessagesByDate();
@@ -95,7 +101,6 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                         if (DataOfMessages[index]._id === data._id && data._id) break;
                     }
                     setIdOfLastReadedMessage(data._id || DataOfMessages[DataOfMessages.length - 1]?._id);
-                    console.log(data._id, DataOfMessages[DataOfMessages.length - 1]?._id);
                     return DataOfMessages;
                 });
             }

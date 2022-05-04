@@ -31,22 +31,21 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
 
     useEffect(() => {
         socket?.on("getMessage", async (data) => {
-
-            if (chats?.some(chat => chat?._id == data.idOfChat)) {
+            // jestli se nachazi chat se stejnym id jako v socketu
+            if (chats?.some(chatData => chatData?._id == data.idOfChat)) {
                 var newChats = [...chats];
-                ((data.idOfReciever === user._id) && (chat._id === data.idOfChat)) && setNumberUnReadedMessages(number => number + 1);
-                newChats.filter(chat => chat._id === data.idOfChat)[0].lastMessage = data.text;
-                newChats.filter(chat => chat._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
-                if (data.idOfChat === window.location.href.split('/')[5]) {
-                    newChats.filter(chat => chat._id === data.idOfChat)[0].readed = true;
+                newChats.filter(chatData => chatData._id === data.idOfChat)[0].lastMessage = data.text;
+                newChats.filter(chatData => chatData._id === data.idOfChat)[0].lastIdOfUser = data.idOfSender;
+                if (data.idOfChat === window.location.href.split('/')[5]) { // jetli dany chat mame otevreny
+                    newChats.filter(chatData => chatData._id === data.idOfChat)[0].readed = true;
                     setNumberUnReadedMessages(0);
                     setChats(newChats);
                     await axios.put(changePath('/chats/updateReaded'), { id: chat._id, readed: true });
                 } else {
-                    newChats.filter(chat => chat._id === data.idOfChat)[0].readed = false;
+                    if (data.idOfChat === chat._id) newChats.filter(chatData => chatData._id === data.idOfChat)[0].readed = false;
+                    ((data.idOfReciever === user._id) && (chat._id === data.idOfChat)) && setNumberUnReadedMessages(number => number + 1);
                     setChats(newChats);
                 }
-
             }
         })
     }, [socket])
@@ -62,7 +61,6 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
 
     const updateChatReadedTrue = async () => {
         setNumberUnReadedMessages(0);
-        console.log(numberOfNewMessages - numberUnReadedMessages)
         setNumberOfNewMessages(numberOfNewMessages - numberUnReadedMessages);
         var newChats = [...chats];
         if (!newChats.filter(currentChat => currentChat._id === chat._id)[0].readed) {
