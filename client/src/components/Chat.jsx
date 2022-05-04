@@ -61,6 +61,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             socket?.emit("setReadedMessage", { idOfMessage: null, idOfUser: userOfChat?._id, idOfChat: idOfChat });
             const newData = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
             setNumberOfNewMessages(newData);
+            console.log(newData)
         }
         readedMessages();
     }, [userOfChat])
@@ -147,7 +148,11 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     const scrollToDown = () => {
         var div = document.getElementsByClassName("messagesContainer")[0];
-        if(div.scrollTop) div.scrollTop = div?.scrollHeight;
+        try {
+            div.scrollTop = div?.scrollHeight;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
