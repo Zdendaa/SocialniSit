@@ -79,7 +79,7 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                 </div>
                 <div className="InfoAboutChat">
                     <span>{userOfChat?.username}</span>
-                    <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage}</span>
+                    <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage.length > 25 ? currentChat?.lastMessage.slice(0, 20) + "..." : currentChat?.lastMessage}</span>
                 </div>
             </div>
             {numberUnReadedMessages !== 0 && <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>{numberUnReadedMessages}</span></div>}
