@@ -118,7 +118,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     }, [socket])
 
     const addMessage = async () => {
-        if (valOfText == "" && !voiceFile && !photoFile) {
+        if (valOfText == "" && !voiceFile && !photoFile && !videoFile) {
             setError(true);
             return;
         }
@@ -130,26 +130,31 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         // img
         const photoName = photoFile && await uploadFileMessage(photoFile);
         const photoUrl = photoName && await downloadUrlImg(photoName);
+        // img
+        const videoName = videoFile && await uploadFileMessage(videoFile);
+        const videoUrl = videoName && await downloadUrlImg(videoName);
 
         // video
         var newChat = [];
         var newMessage;
         if (idOfChat == '0') {
             newChat = await axios.post(changePath('/chats/createChat'), { usersId: [userOfChat._id, user._id], lastMessage: valOfText, lastIdOfUser: user._id });
-            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: newChat.data._id, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl });
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: newChat.data._id, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl, urlOfVideo: videoUrl });
             setMessages((prev) => [...prev, newMessage.data]);
             sortMessagesByDate();
             setValOfText("");
             setVoiceFile(null);
             setPhotoFile(null);
+            setVideoFile(null);
             setLoading(false);
         } else {
-            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl });
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl, urlOfVideo: videoUrl });
             setMessages((prev) => [...prev, newMessage.data]);
             sortMessagesByDate();
             setValOfText("");
             setPhotoFile(null);
             setVoiceFile(null);
+            setVideoFile(null);
             setLoading(false);
             // kdyz uz existuje chat tak aktualizujeme lastMessage jak na backendu tak na frontendu
             await axios.put(changePath('/chats/setLastMessage'), { id: idOfChat, lastMessage: valOfText, readed: false, lastIdOfUser: user._id });
@@ -157,7 +162,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         }
 
         // zavolani socketu
-        socket?.emit("sendMessage", { idOfMessage: newMessage.data._id, idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+        socket?.emit("sendMessage", { idOfMessage: newMessage.data._id, idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl, urlOfVideo: videoUrl });
         idOfChat == '0' && history.push(`/messenger/${userOfChat._id}/${newChat.data._id}`);
     }
 
@@ -221,7 +226,7 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                         <PhotoMessage setPhotoFile={setPhotoFile} />
                     </div>
                     {
-                        !photoFile && !voiceFile
+                        !photoFile && !voiceFile && !videoFile
                             ?
                             <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
                             :
@@ -232,6 +237,14 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                                         <div className='smallExampleContainer'>
                                             <img className='smallExample' src={URL.createObjectURL(photoFile)} alt="" />
                                             <TiDelete className="removeImgShow scaled" onClick={() => { setPhotoFile(null) }} />
+                                        </div>
+                                    }
+                                    {
+                                        videoFile &&
+                                        <div className='smallVoiceExampleContainer'>
+                                            <video className='videoSmallExample' controls src={URL.createObjectURL(videoFile)}>
+                                            </video>
+                                            <TiDelete className="removeImgShow scaled" onClick={() => { setVideoFile(null) }} />
                                         </div>
                                     }
                                     {

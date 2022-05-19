@@ -11,7 +11,8 @@ router.post("/addMessage", async (req, res) => {
             idOfChat: req.body.idOfChat,
             text: req.body.text,
             urlOfVoice: req.body.urlOfVoice,
-            urlOfImg: req.body.urlOfImg
+            urlOfImg: req.body.urlOfImg,
+            urlOfVideo: req.body.urlOfVideo
         })
         // ulozeni postu do db
         const newMessage = await message.save();

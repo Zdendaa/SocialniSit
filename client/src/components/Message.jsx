@@ -22,6 +22,7 @@ const Message = ({ message, userOfChat, idOfReadedMessage }) => {
                         {message.text && <div className="textInMessage" style={{ backgroundColor: backgroundColor1 }} >{message.text}</div>}
                         {message.urlOfVoice && <audio controls src={message.urlOfVoice}></audio>}
                         {message.urlOfImg && <img className='imgInMessage' src={message.urlOfImg} />}
+                        {message.urlOfVideo && <video className='videoInMessage' controls src={message.urlOfVideo}></video>}
                         <span style={{ textAlign: "right" }}>{(Date.now() - (date?.getTime())) / 3600000 > 24 && `${date?.getDate()}.${date?.getMonth()}.`} {date?.getHours()}:{date?.getMinutes()}</span>
 
                     </div>
@@ -37,7 +38,10 @@ const Message = ({ message, userOfChat, idOfReadedMessage }) => {
                 >
                     <img className="profileImgInMessage" src={userOfChat?.idOrUrlOfProfilePicture || "/img/anonymous.png"} alt="" />
                     <div className="yourMessageTimeMessage">
-                        <div className="textInMessage" style={{ backgroundColor: backgroundColor2, color: backgroundColor3 }} >{message.text}</div>
+                        {message.text && <div className="textInMessage" style={{ backgroundColor: backgroundColor2, color: backgroundColor3 }} >{message.text}</div>}
+                        {message.urlOfVoice && <audio controls src={message.urlOfVoice}></audio>}
+                        {message.urlOfImg && <img className='imgInMessage' src={message.urlOfImg} />}
+                        {message.urlOfVideo && <video className='videoInMessage' controls src={message.urlOfVideo}></video>}
                         <span style={{ color: backgroundColor1 }}>{(Date.now() - (date?.getTime())) / 3600000 > 24 && `${date?.getDate()}.${date?.getMonth()}.`} {date?.getHours()}:{date?.getMinutes()}</span>
                     </div>
                 </motion.div>

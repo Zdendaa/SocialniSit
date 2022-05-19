@@ -1140,6 +1140,11 @@ span {
   height: 400px;
 }
 
+.videoInMessage {
+  width: auto;
+  height: 200px;
+}
+
 .messagesContainer {
   position: absolute;
   width: 100%;
@@ -1287,6 +1292,10 @@ label {
   flex-direction: column;
 }
 
+.yourMessageTimeMessage {
+  align-items: flex-start;
+}
+
 .myMessageTimeMessage {
   align-items: flex-end;
   justify-content: right;
@@ -1358,6 +1367,10 @@ label {
 }
 
 .audioSmallExample {
+  height: 40px;
+}
+
+.videoSmallExample {
   height: 40px;
 }
 
