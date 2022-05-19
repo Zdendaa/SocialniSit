@@ -8,6 +8,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Message from './Message';
 import { AnimatePresence } from 'framer-motion';
 import ClipLoader from "react-spinners/ClipLoader";
+import VoiceMessage from './addMessageVariants/VoiceMessage';
+import { TiDelete } from 'react-icons/ti';
+import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions';
+import VideoMessage from './addMessageVariants/VideoMessage';
+import PhotoMessage from './addMessageVariants/PhotoMessage';
 
 const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const { user, setNumberOfNewMessages, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
@@ -22,6 +27,11 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const [valOfText, setValOfText] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    // urls
+    const [voiceFile, setVoiceFile] = useState(null);
+    const [videoFile, setVideoFile] = useState(null);
+    const [photoFile, setPhotoFile] = useState(null);
 
     useEffect(() => {
         setMessages([]);
@@ -108,26 +118,38 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     }, [socket])
 
     const addMessage = async () => {
-        if (valOfText == "") {
+        if (valOfText == "" && !voiceFile && !photoFile) {
             setError(true);
             return;
         }
         setError(false);
         setLoading(true);
+        // voice 
+        const voiceName = voiceFile && await uploadFileMessage(voiceFile.blob);
+        const voiceUrl = voiceName && await downloadUrlImg(voiceName);
+        // img
+        const photoName = photoFile && await uploadFileMessage(photoFile);
+        const photoUrl = photoName && await downloadUrlImg(photoName);
+
+        // video
         var newChat = [];
         var newMessage;
         if (idOfChat == '0') {
             newChat = await axios.post(changePath('/chats/createChat'), { usersId: [userOfChat._id, user._id], lastMessage: valOfText, lastIdOfUser: user._id });
-            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: newChat.data._id, text: valOfText });
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: newChat.data._id, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl });
             setMessages((prev) => [...prev, newMessage.data]);
             sortMessagesByDate();
             setValOfText("");
+            setVoiceFile(null);
+            setPhotoFile(null);
             setLoading(false);
         } else {
-            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText });
+            newMessage = await axios.post(changePath(`/messages/addMessage`), { idOfSender: user._id, idOfReciever: userOfChat._id, idOfChat: idOfChat, text: valOfText, urlOfVoice: voiceUrl, urlOfImg: photoUrl });
             setMessages((prev) => [...prev, newMessage.data]);
             sortMessagesByDate();
             setValOfText("");
+            setPhotoFile(null);
+            setVoiceFile(null);
             setLoading(false);
             // kdyz uz existuje chat tak aktualizujeme lastMessage jak na backendu tak na frontendu
             await axios.put(changePath('/chats/setLastMessage'), { id: idOfChat, lastMessage: valOfText, readed: false, lastIdOfUser: user._id });
@@ -159,6 +181,14 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             console.log(err);
         }
     }
+    // funkce pro ukladani do uloziste
+    const uploadFileMessage = async (file, typeOf) => {
+        const newFileMessageName = "messenger/" + user.username + "/" + (typeOf ? file.size : file.name) + "" + Math.floor(Date.now() / 1000);
+        await uploadImg(file, newFileMessageName).then(async () => {
+            console.log('file message upload succesfully');
+        })
+        return newFileMessageName;
+    }
 
     return (
         <div className='Chat'>
@@ -183,9 +213,42 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                     }
                 </AnimatePresence>
             </div>
-            <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage()}>
-                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error ? "error" : "noError"} />
-                <button style={{ backgroundColor: backgroundColor1 }} onClick={addMessage} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
+            <div className='addMessageContainer' onKeyPress={(event) => event.key == 'Enter' && addMessage(null)}>
+                <div className='leftDiv'>
+                    <div className='actionsButton'>
+                        <VoiceMessage setUrlOfVoice={setVoiceFile} />
+                        <VideoMessage setVideoFile={setVideoFile} />
+                        <PhotoMessage setPhotoFile={setPhotoFile} />
+                    </div>
+                    {
+                        !photoFile && !voiceFile
+                            ?
+                            <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
+                            :
+                            <div className='smallExampleDiv'>
+                                <div className='smallExampleMainContainer'>
+                                    {
+                                        photoFile &&
+                                        <div className='smallExampleContainer'>
+                                            <img className='smallExample' src={URL.createObjectURL(photoFile)} alt="" />
+                                            <TiDelete className="removeImgShow scaled" onClick={() => { setPhotoFile(null) }} />
+                                        </div>
+                                    }
+                                    {
+                                        voiceFile &&
+                                        <div className='smallVoiceExampleContainer'>
+                                            <audio className='audioSmallExample' controls src={voiceFile.url}></audio>
+                                            <TiDelete className="removeImgShow scaled" onClick={() => { setVoiceFile(null) }} />
+                                        </div>
+                                    }
+                                </div>
+                                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} style={{ width: "auto" }} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
+                            </div>
+                    }
+                </div>
+
+                <button style={{ backgroundColor: backgroundColor1 }} className='buttonsForVariantsMessage' onClick={() => addMessage(null)} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
+
             </div>
         </div >
     )

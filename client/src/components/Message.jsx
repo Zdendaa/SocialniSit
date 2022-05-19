@@ -19,7 +19,9 @@ const Message = ({ message, userOfChat, idOfReadedMessage }) => {
                     animate={{ scale: 1 }}
                 >
                     <div className="myMessageTimeMessage">
-                        <div className="textInMessage" style={{ backgroundColor: backgroundColor1 }} >{message.text}</div>
+                        {message.text && <div className="textInMessage" style={{ backgroundColor: backgroundColor1 }} >{message.text}</div>}
+                        {message.urlOfVoice && <audio controls src={message.urlOfVoice}></audio>}
+                        {message.urlOfImg && <img className='imgInMessage' src={message.urlOfImg} />}
                         <span style={{ textAlign: "right" }}>{(Date.now() - (date?.getTime())) / 3600000 > 24 && `${date?.getDate()}.${date?.getMonth()}.`} {date?.getHours()}:{date?.getMinutes()}</span>
 
                     </div>
