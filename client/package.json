@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "audio-react-recorder": "^1.0.4",
     "axios": "^0.22.0",
+    "emoji-picker-react": "^3.5.1",
     "firebase": "^8.10.0",
     "format": "^0.2.2",
     "framer-motion": "^4.1.17",

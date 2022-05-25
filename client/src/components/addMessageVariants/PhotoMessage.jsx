@@ -12,8 +12,8 @@ const PhotoMessage = ({ setPhotoFile }) => {
     }
     return (
         <>
-            <label htmlFor="photoFileUpload" id="inputfileRegister" className="buttonsForVariantsMessage" style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} >
-                <MdInsertPhoto />
+            <label htmlFor="photoFileUpload" id="inputfileRegister" className="buttonsForVariantsMessage opacity" style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} >
+                <MdInsertPhoto className='reactIcon' />
             </label>
             <input id="photoFileUpload" key={image || ''} type="file" accept='image/*' onChange={(e) => { onUpload(e.target.files[0]) }} hidden />
         </>

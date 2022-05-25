@@ -26,6 +26,10 @@ const message = new mongoose.Schema({
     urlOfVoice: {
         type: String,
     },
+    idOfLikes: {
+        type: Array,
+        default: []
+    },
     readed: {
         type: Boolean,
         default: false

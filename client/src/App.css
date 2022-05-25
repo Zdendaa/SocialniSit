@@ -450,6 +450,11 @@ span {
   justify-content: space-between;
 }
 
+.shareMainBox .buttonsForVariantsMessage {
+  width: 30px;
+  height: 30px;
+}
+
 .inputValShare {
   border: none;
   width: 70%;
@@ -506,12 +511,19 @@ span {
 .topAddNewPost {
   width: 100%;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   margin-top: 0px;
 }
 
-.topAddNewPost * {
-  margin-right: 15px;
+.topAddNewPost .topAddNewPostLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.topAddNewPostLeft * {
+  margin-right: 5px;
 }
 
 .middleAddNewPost {
@@ -1136,13 +1148,13 @@ span {
   flex-direction: column;
 }
 
-.imgInMessage {
-  height: 400px;
+.imgInMessage,
+.videoInMessage {
+  height: 100px;
 }
 
 .videoInMessage {
   width: auto;
-  height: 200px;
 }
 
 .messagesContainer {
@@ -1187,7 +1199,6 @@ span {
 }
 
 .leftDiv .actionsButton {
-  max-width: 15%;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -1224,6 +1235,7 @@ label {
   align-items: center;
   justify-content: center;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .userChat {
@@ -1288,6 +1300,7 @@ label {
 
 .myMessageTimeMessage,
 .yourMessageTimeMessage {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -1517,6 +1530,19 @@ label {
   flex-direction: column;
 }
 
+.inputEmojiPickerContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.postEmojiContainer .pickerReact {
+  position: absolute;
+  bottom: -330px;
+  right: 0;
+  z-index: 10;
+}
+
 .top,
 .mid,
 .bot {
@@ -1574,11 +1600,32 @@ label {
   right: 0;
 }
 
+.likesOfMessage {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.likesOfMessage .icon {
+  font-size: 18px;
+}
+
 @media only screen and (min-width: 450px) {
 
   /*TABLET SMALL*/
   span {
     font-size: 12px;
+  }
+
+  .imgInMessage,
+  .videoInMessage {
+    height: 200px;
   }
 
   .mobile {
@@ -1690,6 +1737,11 @@ label {
     width: 470px;
   }
 
+  .imgInMessage,
+  .videoInMessage {
+    height: 250px;
+  }
+
   /*Profile*/
   .profileContainer {
     width: 60%;
@@ -1791,6 +1843,16 @@ label {
     justify-content: center;
   }
 
+  .reactIcon {
+    font-size: 18px;
+  }
+
+  .pickerReact {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+  }
+
   .Chat,
   .chatNone {
     width: 60%;
@@ -1812,6 +1874,11 @@ label {
   .Login {
     margin: 0;
     align-items: center;
+  }
+
+  .imgInMessage,
+  .videoInMessage {
+    height: 350px;
   }
 
   .registerContainer,

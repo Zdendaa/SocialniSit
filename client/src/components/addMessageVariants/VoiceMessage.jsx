@@ -22,7 +22,7 @@ const VoiceMessage = ({ setUrlOfVoice }) => {
     return (
         <div className='VoiceMessage'>
             <AudioReactRecorder state={recordState} onStop={onStop} className="audioRecorder" />
-            {recordState == "start" ? <button className='buttonsForVariantsMessage' style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} onClick={stop}>stop</button> : <button className='buttonsForVariantsMessage' style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} onClick={start}><MdKeyboardVoice /></button>}
+            {recordState == "start" ? <button className='buttonsForVariantsMessage opacity' style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} onClick={stop}>stop</button> : <button className='buttonsForVariantsMessage opacity' style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} onClick={start}><MdKeyboardVoice className='reactIcon' /></button>}
         </div >
     )
 }

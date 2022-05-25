@@ -12,8 +12,8 @@ const VideoMessage = ({ setVideoFile }) => {
     }
     return (
         <>
-            <label htmlFor="videoFileUpload" id="inputfileRegister" className="buttonsForVariantsMessage" style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} >
-                <ImVideoCamera />
+            <label htmlFor="videoFileUpload" id="inputfileRegister" className="buttonsForVariantsMessage opacity" style={{ color: backgroundColor4, backgroundColor: backgroundColor1 }} >
+                <ImVideoCamera className='reactIcon' />
             </label>
             <input id="videoFileUpload" key={file || ''} type="file" accept="video/*" onChange={(e) => { onUpload(e.target.files[0]) }} hidden />
         </>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import EmojiPicker from './addMessageVariants/EmojiPicker';
 import React, { useContext, useState } from 'react'
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
@@ -62,7 +63,10 @@ const AddStory = ({ setIsOpenAddStory }) => {
     <PopupWindown classNameMain="AddStory" classNameContainer="shareContainer" setVisible={setIsOpenAddStory}>
       <div className="mainContainerSettingsStory">
         <div className="settingsStory">
-          <input type="text" className="inputInfo" style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} placeholder="něco k příběhu..." value={valueOfInput} onChange={(e) => { setValueOfInput(e.target.value) }} />
+          <div className='inputEmojiPickerContainer'>
+            <input type="text" className="inputInfo" style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} placeholder="něco k příběhu..." value={valueOfInput} onChange={(e) => { setValueOfInput(e.target.value) }} />
+            <EmojiPicker setValOfText={setValueOfInput} />
+          </div>
           <select onChange={(e) => { setValueOfPlace(e.target.value) }} className="inputInfo" style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} >
             <option value="top" >nahoře</option>
             <option value="mid" selected >upřostřed</option>

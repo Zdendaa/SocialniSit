@@ -13,6 +13,7 @@ import { TiDelete } from 'react-icons/ti';
 import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions';
 import VideoMessage from './addMessageVariants/VideoMessage';
 import PhotoMessage from './addMessageVariants/PhotoMessage';
+import EmojiPicker from './addMessageVariants/EmojiPicker';
 
 const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
     const { user, setNumberOfNewMessages, socket, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
@@ -195,6 +196,11 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
         return newFileMessageName;
     }
 
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+
+
+
     return (
         <div className='Chat'>
             <div className="userChat" style={{ backgroundColor: backgroundColor4 }}>
@@ -256,11 +262,12 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                                     }
                                 </div>
                                 <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} style={{ width: "auto" }} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
+
                             </div>
                     }
                 </div>
-
-                <button style={{ backgroundColor: backgroundColor1 }} className='buttonsForVariantsMessage' onClick={() => addMessage(null)} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
+                <EmojiPicker setValOfText={setValOfText} />
+                <button style={{ backgroundColor: backgroundColor1 }} className='buttonsForVariantsMessage opacity' onClick={() => addMessage(null)} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
 
             </div>
         </div >
