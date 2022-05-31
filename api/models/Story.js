@@ -9,15 +9,19 @@ const stories = new mongoose.Schema({
         type: String,
         require: true
     },
+    urlOfVideo: {
+        type: String,
+        require: true
+    },
     text: {
         type: String,
     },
     position: {
         type: String,
     },
-    expire_at: {type: Date, default: Date.now, expires: 86400} // za expires dosazujeme sekundy, toto nasatvi auto delete za nejakou dobu
+    expire_at: { type: Date, default: Date.now, expires: 86400 } // za expires dosazujeme sekundy, toto nasatvi auto delete za nejakou dobu
 },
-{timestamps: true} // kazdy zaznam stories bude mit svuj cas kdy byl zverejnen
+    { timestamps: true } // kazdy zaznam stories bude mit svuj cas kdy byl zverejnen
 )
 
 module.exports = mongoose.model("Story", stories);

@@ -7,6 +7,7 @@ router.post("/addStory", async (req, res) => {
         const data = new Story({
             idOfUser: req.body.idOfUser,
             urlOfImg: req.body.urlOfImg,
+            urlOfVideo: req.body.urlOfVideo,
             text: req.body.text,
             position: req.body.position
         })

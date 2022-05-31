@@ -43,7 +43,13 @@ const StoriesBook = ({ users, idOfCurrentOpenStory, setIsVisibleStoriesBook, all
                 animate={{ rotate: 0 }}
                 exit={{ rotate: -45 }}
             >
-                <img src={allStories[indexOfStory].urlOfImg} alt="storyImg" className="storyImg storyBookImgWidthAndHeight" />
+                {allStories[indexOfStory].urlOfVideo &&
+                    <video className="storyImg storyBookImgWidthAndHeight" autoPlay loop>
+                        <source src={allStories[indexOfStory].urlOfVideo} type='video/mp4' />
+                    </video>
+                    //<iframe allow='autoplay' loop="true" src={allStories[indexOfStory].urlOfVideo + "?autoplay=1"} alt="video/obrázek nelze najít"  referrerPolicy="no-referrer" ></iframe>
+                }
+                {allStories[indexOfStory].urlOfImg && <img src={allStories[indexOfStory].urlOfImg} alt="storyImg" className="storyImg storyBookImgWidthAndHeight" />}
                 <span className={allStories[indexOfStory].position}><h2 style={{ padding: "5px" }}>{allStories[indexOfStory].text}</h2></span>
                 <Link to={`/profile/${userOfStory?._id}`} className="profileContainerStory">
                     <div className="profileImgMain">

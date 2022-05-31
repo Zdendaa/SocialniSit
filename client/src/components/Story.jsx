@@ -33,7 +33,12 @@ const Story = ({ story, type, setIsOpenAddStory, setIdOfCurrentOpenStory, setIsV
                 ) : (
                     <div onClick={() => { setIdOfCurrentOpenStory(story._id); setIsVisibleStoriesBook(true) }} >
                         <div style={{ position: "relative" }}>
-                            <img src={story.urlOfImg} alt="storyImg" className="storyImg storyWidthAndHeight" />
+                            {story.urlOfImg && <img src={story.urlOfImg} alt="storyImg" className="storyImg storyWidthAndHeight" />}
+                            {story.urlOfVideo &&
+                                <video className="storyImg storyWidthAndHeight">
+                                    <source src={story.urlOfVideo} type='video/mp4' />
+                                </video>
+                            }
                             <span className={story.position}><span style={{ padding: "5px" }}>{story.text}</span></span>
                         </div>
 
