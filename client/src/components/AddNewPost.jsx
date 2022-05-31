@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { downloadUrlImg, uploadImg } from '../storageImgActions/imgFunctions';
 import { TiDelete } from 'react-icons/ti';
@@ -8,26 +8,40 @@ import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 import EmojiPicker from './addMessageVariants/EmojiPicker';
+import PhotoMessage from './addMessageVariants/PhotoMessage';
+import VideoMessage from './addMessageVariants/VideoMessage';
 
 const AddNewPost = ({ friends }) => {
     const { user, socket, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
-    // useState promenna pro ulozeni a ukazani obrazku ktery uzivatel vybral
-    const [image, setImage] = useState(null);
+    // objekt daneho souboru
+    const [file, setFile] = useState(null);
+
+    // jaky typ je url // 1 = img, 2 = video
+    const [typeOfUrl, setTypeOfUrl] = useState(null);
+
 
     // useState promenna pro ulozeni hodnoty co se vam honi hlavou
     const [desc, setDesc] = useState("");
 
     const [errorMessages, setErrorMessages] = useState(null);
 
-    // hodnota inputu pro url obrazku
+    // hodnota inputu pro url
     const [valueUrlInput, setValueUrlInput] = useState("");
 
     // loading
     const [loading, setLoading] = useState(false);
 
-    // funkce 
+    useEffect(() => {
+        whatTypeIsFile(file?.name);
+    }, [file])
 
+    useEffect(() => {
+        whatTypeIsFile(valueUrlInput);
+    }, [valueUrlInput])
+    
+
+    // funkce 
     const validation = (val) => {
         setDesc(val);
         if (val) {
@@ -47,18 +61,18 @@ const AddNewPost = ({ friends }) => {
         // nacitani nastavime na true
         setLoading(true)
 
-        // jestli uzivatel vybral obrazek tak se vytvori zaznam v tabulkce images
-        const img = (image && (typeof image === "object")) ? image : null;
+        // jestli uzivatel vybral soubor tak se vytvori zaznam v tabulkce urls
+        const newFile = (file && (typeof file === "object")) ? file : null;
 
-        // jeslit obrzek existuje ulozeme ho do storage
-        if (img) {
+        // jeslit soubor existuje ulozeme ho do storage
+        if (newFile) {
             // promenna cesta k souboru (obrazku)
-            const newImgName = "posts/" + user.username + "/" + img.name + "" + Math.floor(Date.now() / 1000);
+            const newFileName = "posts/" + user.username + "/" + newFile.name + "" + Math.floor(Date.now() / 1000);
             // obrazek se ulozi do storage
-            await uploadImg(image, newImgName).then(async () => {
+            await uploadImg(newFile, newFileName).then(async () => {
                 console.log('upload img succesfully');
-                const urlOfImg = await downloadUrlImg(newImgName);
-                await setDataOfPost(urlOfImg);
+                const urlOfFile = await downloadUrlImg(newFileName);
+                await setDataOfPost(urlOfFile);
             });
         } else {
             // jestli obrzek neexistuje tak posilame do funkce null
@@ -73,7 +87,8 @@ const AddNewPost = ({ friends }) => {
             const newPost = {
                 userId: user._id,
                 desc: desc,
-                urlOfImg: validator.isURL(valueUrlInput) ? image : (img ? img : null)
+                urlOfImg: typeOfUrl === 1 && validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null),
+                urlOfVideo: typeOfUrl === 2 && validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null)
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
             const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);
@@ -106,6 +121,23 @@ const AddNewPost = ({ friends }) => {
         socket.emit("sendNotification", { id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text });
     }
 
+    const whatTypeIsFile = (val) => { 
+        const valLowerCase = val?.toLowerCase();
+        if(valLowerCase?.includes("youtube") || valLowerCase?.includes("mp4") || valLowerCase?.includes("avi")) {
+            setTypeOfUrl(2)
+            // jestli uzivatel zadal url z youtube musime url upravit
+            if(valLowerCase?.includes("youtube") && !valLowerCase?.includes("embed") ) {
+                const id = val.split("v=");
+                setValueUrlInput("https://www.youtube.com/embed/" + id[1]);
+            } else {
+                setValueUrlInput(val);
+            }
+            console.log(2)
+        } else {
+            setTypeOfUrl(1);
+        }
+    }
+
     return (
         <div className="addNewPost">
             <div className="addNewPostContainer">
@@ -122,23 +154,33 @@ const AddNewPost = ({ friends }) => {
                     </div>
                 </div>
                 {errorMessages && <div className="bottomAddNewPost"><span className="errorMessage">{errorMessages}</span></div>}
-                {image &&
-
+                {(file || valueUrlInput !== "") &&
+                    (typeOfUrl === 1 
+                    ? 
                     <div className="imgShowContainerAddPost">
-                        <img src={typeof image === "object" ? (URL.createObjectURL(image).toString().search('blob:') === 0 && URL.createObjectURL(image)) : (validator.isURL(image) && image)} alt="obrázek nelze najít" className="imgShowAddPost" referrerPolicy="no-referrer" />
-                        <TiDelete className="removeImgShow scaled" onClick={(e) => { setImage(null) }} />
+                        <img src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="imgShowAddPost" referrerPolicy="no-referrer" />
+                        <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput("") }} />
+                       
                     </div>
-
+                    :
+                    <div className="imgShowContainerAddPost">
+                        <iframe src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="videoShowAddPost" referrerPolicy="no-referrer" ></iframe>
+                        <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput(""); }} />
+                    </div>)
                 }
                 <hr className="lineNewPost" style={{ backgroundColor: backgroundColor1, width: "100%" }} />
                 <div className="middleAddNewPost">
-                    <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost opacity" style={{ backgroundColor: backgroundColor1, color: "white" }} >
+                    {/* <label htmlFor="fileUpload" id="inputfileRegister" className="inputImgAddPost opacity" style={{ backgroundColor: backgroundColor1, color: "white" }} >
                         <span style={{ color: backgroundColor4 }}>obrázek</span>
-                    </label>
-                    <input id="fileUpload" key={image || ''} type="file" accept="image/*" onChange={(e) => { setImage(e.target.files[0]); setValueUrlInput("") }} required />
+                    </label>  */}
+                    <div className='actionsMethod'>
+                        <PhotoMessage setPhotoFile={setFile} />
+                        <VideoMessage setVideoFile={setFile}/>
+                    </div>
+                    {/* <input id="fileUpload" key={url || ''} type="file" accept="url/*" onChange={(e) => { setFile(e.target.files[0]); setValueUrlInput("") }} required /> */}
 
                     <span>nebo</span>
-                    <input type="text" value={valueUrlInput} onChange={(e) => { setImage(e.target.value); setValueUrlInput(e.target.value) }} className="inputAddNewPost inputUlrImgAddNewPost" style={{ backgroundColor: "black", color: "white" }} placeholder="url obrázku..." />
+                    <input type="text" onChange={(e) => { setValueUrlInput(e.target.value) }} className="inputAddNewPost inputUlrImgAddNewPost" style={{ backgroundColor: "black", color: "white" }} placeholder="url obrázku / videa..." />
                 </div>
                 <hr className="lineNewPost" style={{ backgroundColor: backgroundColor1, width: "75%" }} />
                 <div className="bottomAddNewPost">

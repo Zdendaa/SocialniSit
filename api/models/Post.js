@@ -14,6 +14,10 @@ const post = new mongoose.Schema({
         type: String,
         default: null
     },
+    urlOfVideo: {
+        type: String,
+        default: null
+    },
     idOfLikes: {
         type: Array,
         default: []

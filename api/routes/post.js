@@ -11,7 +11,8 @@ router.post("/addPost", async (req, res) => {
             userId: req.body.userId,
             desc: req.body.desc,
             urlOfImg: req.body.urlOfImg,
-            newPicture: req.body.newPicture
+            newPicture: req.body.newPicture,
+            urlOfVideo: req.body.urlOfVideo
         })
         // ulozeni postu do db
         const newPost = await post.save();
