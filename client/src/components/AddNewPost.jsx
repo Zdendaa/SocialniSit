@@ -34,6 +34,7 @@ const AddNewPost = ({ friends }) => {
 
     useEffect(() => {
         whatTypeIsFile(file?.name);
+        console.log(file)
     }, [file])
 
     useEffect(() => {
