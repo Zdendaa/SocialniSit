@@ -11,10 +11,10 @@ const Message = ({ message, userOfChat, idOfReadedMessage }) => {
     const [date, setDate] = useState();
 
     // promenna pro pocet liku
-    const [lenghtOfLikes, setLenghtOfLikes] = useState(message.idOfLikes.length);
+    const [lenghtOfLikes, setLenghtOfLikes] = useState(message?.idOfLikes?.length || []);
 
     // promenna zdali jsem prispevek likenul
-    const [ifIsLiked, setIfIsLiked] = useState(message.idOfLikes.includes(user._id));
+    const [ifIsLiked, setIfIsLiked] = useState(message?.idOfLikes?.includes(user._id));
 
     useEffect(() => {
         setDate(new Date(message.createdAt));
