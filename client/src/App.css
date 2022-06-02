@@ -441,6 +441,7 @@ span {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  margin-left: 5px;
 }
 
 .shareMainBox {

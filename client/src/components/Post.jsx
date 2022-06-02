@@ -95,7 +95,15 @@ const Post = ({ post, userOfPost }) => {
                 <div className="postContent">
                     <span className="postDescContent" style={{ color: backgroundColor3 }}>{post.desc}</span>
                     {post.urlOfImg && <img className="postImg" src={post.urlOfImg} alt="" referrerPolicy="no-referrer" />}
-                    {post.urlOfVideo && <iframe autoPlay={1} className="videoShowAddPost videoMargin" src={post.urlOfVideo} alt="" referrerPolicy="no-referrer" ></iframe>}
+                    {post.urlOfVideo &&
+                        (post?.urlOfVideo?.includes("youtu") || post?.urlOfVideo?.includes(".gif")
+                        ?
+                        <iframe autoPlay={1} className="videoShowAddPost videoMargin" src={post.urlOfVideo} alt="" referrerPolicy="no-referrer" ></iframe>
+                        :
+                        <video className="videoShowAddPost videoMargin" controls>
+                            <source src={post.urlOfVideo} type='video/mp4' />
+                        </video>)
+                    }
                 </div>
                 <div className="postBottom">
                     <div className="acitonsForPosts">
