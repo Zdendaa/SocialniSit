@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
+import { format, register } from 'timeago.js';
 import changePath from '../changePath';
 import { GlobalContext } from '../context/GlobalState';
+import czDataFormat from '../format.jsCZ/CzFormat';
 
 const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
+    // registrovani cestiny do formatjs
+    register('myLanguage', czDataFormat);
+
     const { user, socket, numberOfNewMessages, setNumberOfNewMessages, onlineFriends, backgroundColor1, backgroundColor2, backgroundColor4 } = useContext(GlobalContext);
 
     const [userOfChat, setUserOfChat] = useState(null);
@@ -79,7 +84,10 @@ const UserChat = ({ users, chat, idOfActiveChat, chats, setChats }) => {
                 </div>
                 <div className="InfoAboutChat">
                     <span>{userOfChat?.username}</span>
-                    <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage.length > 25 ? currentChat?.lastMessage.slice(0, 20) + "..." : currentChat?.lastMessage}</span>
+                    <div style={{ display: "flex" }}>
+                        <span className={(currentChat?.lastIdOfUser !== user._id) ? (currentChat?.readed ? "lastMessage" : "lastMessage unReaded") : "lastMessage"}>{currentChat?.lastMessage.length > 25 ? currentChat?.lastMessage.slice(0, 20) + "..." : currentChat?.lastMessage}</span>
+                        <span>{format(currentChat?.lastMessageTime, 'myLanguage')}</span>
+                    </div>
                 </div>
             </div>
             {numberUnReadedMessages !== 0 && <div className="numberOfNewMessages" style={{ backgroundColor: backgroundColor1 }} ><span>{numberUnReadedMessages}</span></div>}

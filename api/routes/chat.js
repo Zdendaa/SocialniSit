@@ -8,6 +8,7 @@ router.post("/createChat", async (req, res) => {
         const chat = new Chat({
             usersId: req.body.usersId,
             lastMessage: req.body.lastMessage,
+            lastMessageTime: req.body.lastMessageTime,
             lastIdOfUser: req.body.lastIdOfUser
         })
         // ulozeni postu do db
@@ -36,7 +37,8 @@ router.get("/getAllChats/:id", async (req, res) => {
 
 router.put("/setLastMessage", async (req, res) => {
     try {
-        const updatedChat = await Chat.findByIdAndUpdate(req.body.id, { lastMessage: req.body.lastMessage, readed: req.body.readed, lastIdOfUser: req.body.lastIdOfUser });
+        // console.log(req.body.lastMessageTime)
+        const updatedChat = await Chat.findByIdAndUpdate(req.body.id, { lastMessage: req.body.lastMessage, lastMessageTime: req.body.lastMessageTime, readed: req.body.readed, lastIdOfUser: req.body.lastIdOfUser });
         res.status(200).send(updatedChat);
     } catch (err) {
         res.status(500).send(err);

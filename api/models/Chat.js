@@ -8,6 +8,9 @@ const chat = new mongoose.Schema({
     lastMessage: {
         type: String
     },
+    lastMessageTime: {
+        type: Date
+    },
     readed: {
         type: Boolean,
         default: false

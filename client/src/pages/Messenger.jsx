@@ -19,6 +19,12 @@ const Messenger = () => {
     const [idOfChat2, setIdOfChat2] = useState();
 
     useEffect(() => {
+        const sortChats = chats?.sort((p1, p2) => { return new Date(p2.lastMessageTime) - new Date(p1.lastMessageTime) });
+        setsearchChats(sortChats);
+    }, [chats])
+
+
+    useEffect(() => {
         const getFrinends = async () => {
             // nacteni chatu
             const chats = await axios.get(`/chats/getAllChats/${user?._id}`);
@@ -80,6 +86,10 @@ const Messenger = () => {
         })
         setsearchChats(newArrayOfChat);
     }
+
+    //    const sortChatsByDate = () => {
+    //         setChats(chats => chats?.sort((p1, p2) => { return new Date(p2.lastMessageTime) - new Date(p1.lastMessageTime) }));
+    //     } 
 
     return (
         <div className="messengerContainer">

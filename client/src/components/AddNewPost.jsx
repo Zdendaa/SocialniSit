@@ -40,7 +40,7 @@ const AddNewPost = ({ friends }) => {
     useEffect(() => {
         whatTypeIsFile(valueUrlInput);
     }, [valueUrlInput])
-    
+
 
     // funkce 
     const validation = (val) => {
@@ -122,14 +122,15 @@ const AddNewPost = ({ friends }) => {
         socket.emit("sendNotification", { id: newNotificatons.data._id, senderId: user._id, recieverId, type, url, idOfPost, readed: false, text });
     }
 
-    const whatTypeIsFile = (val) => { 
+    const whatTypeIsFile = (val) => {
         const valLowerCase = val?.toLowerCase();
-        if(valLowerCase?.includes("youtube") || valLowerCase?.includes("mp4") || valLowerCase?.includes("avi")) {
+        if (valLowerCase?.includes("youtube") || valLowerCase?.includes("mp4") || valLowerCase?.includes("avi")) {
             setTypeOfUrl(2)
             // jestli uzivatel zadal url z youtube musime url upravit
-            if(valLowerCase?.includes("youtube") && !valLowerCase?.includes("embed") ) {
-                const id = val.split("v=");
-                setValueUrlInput("https://www.youtube.com/embed/" + id[1]);
+            if (valLowerCase?.includes("youtube") && !valLowerCase?.includes("embed")) {
+                var id = val.split("v=");
+                id = id[1].split("&");
+                setValueUrlInput("https://www.youtube.com/embed/" + id[0]);
             } else {
                 setValueUrlInput(val);
             }
@@ -156,18 +157,29 @@ const AddNewPost = ({ friends }) => {
                 </div>
                 {errorMessages && <div className="bottomAddNewPost"><span className="errorMessage">{errorMessages}</span></div>}
                 {(file || valueUrlInput !== "") &&
-                    (typeOfUrl === 1 
-                    ? 
-                    <div className="imgShowContainerAddPost">
-                        <img src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="imgShowAddPost" referrerPolicy="no-referrer" />
-                        <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput("") }} />
-                       
-                    </div>
-                    :
-                    <div className="imgShowContainerAddPost">
-                        <iframe src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="videoShowAddPost" referrerPolicy="no-referrer" ></iframe>
-                        <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput(""); }} />
-                    </div>)
+                    (typeOfUrl === 1
+                        ?
+                        <div className="imgShowContainerAddPost">
+                            <img src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="imgShowAddPost" referrerPolicy="no-referrer" />
+                            <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput("") }} />
+
+                        </div>
+                        :
+                        (file?.name?.includes(".gif") || valueUrlInput.includes("youtu") || valueUrlInput.includes(".gif")
+                            ?
+                            <div className="imgShowContainerAddPost">
+                                <iframe src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} alt="video/obrázek nelze najít" className="videoShowAddPost" referrerPolicy="no-referrer" ></iframe>
+                                <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput(""); }} />
+                            </div>
+                            :
+                            <div className="imgShowContainerAddPost">
+                                <video className="videoShowAddPost" controls>
+                                    <source src={file ? URL.createObjectURL(file) : (validator.isURL(valueUrlInput) && valueUrlInput)} type='video/mp4' />
+                                </video>
+                                <TiDelete className="removeImgShow scaled" onClick={(e) => { setFile(null); setValueUrlInput(""); }} />
+                            </div>
+                        )
+                    )
                 }
                 <hr className="lineNewPost" style={{ backgroundColor: backgroundColor1, width: "100%" }} />
                 <div className="middleAddNewPost">
@@ -176,7 +188,7 @@ const AddNewPost = ({ friends }) => {
                     </label>  */}
                     <div className='actionsMethod'>
                         <PhotoMessage setPhotoFile={setFile} />
-                        <VideoMessage setVideoFile={setFile}/>
+                        <VideoMessage setVideoFile={setFile} />
                     </div>
                     {/* <input id="fileUpload" key={url || ''} type="file" accept="url/*" onChange={(e) => { setFile(e.target.files[0]); setValueUrlInput("") }} required /> */}
 
@@ -188,7 +200,7 @@ const AddNewPost = ({ friends }) => {
                     <button style={{ backgroundColor: backgroundColor1, color: backgroundColor4 }} className="inputImgAddPost opacity" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
