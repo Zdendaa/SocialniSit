@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@electron/remote": "^2.0.8",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "audio-react-recorder": "^1.0.4",
     "axios": "^0.22.0",
+    "electron-builder": "^23.0.3",
+    "electron": "7.1.8",
+    "electron-is-dev": "^2.0.0",
     "emoji-picker-react": "^3.5.1",
     "firebase": "^8.10.0",
     "format": "^0.2.2",
@@ -24,13 +28,32 @@
     "swiper": "^6.8.4",
     "timeago.js": "^4.0.0-beta.3",
     "validator": "^13.6.0",
+    "wait-on": "^6.0.1",
     "web-vitals": "^1.0.1"
   },
+  "main": "public/main.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
+    "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
+    "electron:start": "wait-on tcp:3000 && electron ."
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.example.electron-cra",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -52,7 +75,6 @@
   },
   "proxy": "http://localhost:5000/api",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
   "author": "",
   "license": "ISC"
 }
