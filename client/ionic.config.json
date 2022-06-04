@@ -1,0 +1,7 @@
+{
+    "name": "socialApp",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "react"
+}
