@@ -5,14 +5,14 @@ import "firebase/auth";
 
 // pripojeni k firebase 
 const firebaseConfig = {
-    apiKey: "AIzaSyAAoZQnJBdS-cewGfaahvtFo4yCht1UI2I",
-    authDomain: "socialapp-74542.firebaseapp.com",
-    projectId: "socialapp-74542",
-    storageBucket: "socialapp-74542.appspot.com",
-    messagingSenderId: "893529540261",
-    appId: "1:893529540261:web:ebc3daabc0e1462ecfef4c",
-    measurementId: "G-311G3G7JMT"
-  };
+  apiKey: "AIzaSyDTtUnhCGoG6grg8kWAGf3eRqDLM8WqAYc",
+  authDomain: "socialapp-37b2c.firebaseapp.com",
+  projectId: "socialapp-37b2c",
+  storageBucket: "socialapp-37b2c.appspot.com",
+  messagingSenderId: "1050215924923",
+  appId: "1:1050215924923:web:bb25243c81dff11f59959e",
+  measurementId: "G-JDL1ECNSK7"
+};
 
 firebase.initializeApp(firebaseConfig);
 // vytvoreni uloziste s kterym muzeme pracovat
