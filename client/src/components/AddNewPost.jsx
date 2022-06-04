@@ -88,8 +88,8 @@ const AddNewPost = ({ friends }) => {
             const newPost = {
                 userId: user._id,
                 desc: desc,
-                urlOfImg: typeOfUrl === 1 && validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null),
-                urlOfVideo: typeOfUrl === 2 && validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null)
+                urlOfImg: typeOfUrl === 1 ? (validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null)) : null,
+                urlOfVideo: typeOfUrl === 2 ? (validator.isURL(valueUrlInput) ? valueUrlInput : (img ? img : null)) : null
             }
             // kdyz vse probehne v poradku tak se vytvori samotny prispevek v databazi prispevku
             const dataOfNewPost = await axios.post(changePath("/posts/addPost"), newPost);

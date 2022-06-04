@@ -4,7 +4,7 @@
             "outputFile": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-watch-v20\\values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\3fd71efe07c1898a09b51e9ae231fb5e\\transformed\\appcompat-1.2.0\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\ce3f79a523d89320dd464c2b2de6183e\\transformed\\appcompat-1.2.0\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

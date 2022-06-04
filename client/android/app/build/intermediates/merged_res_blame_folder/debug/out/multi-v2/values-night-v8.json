@@ -4,7 +4,7 @@
             "outputFile": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\3fd71efe07c1898a09b51e9ae231fb5e\\transformed\\appcompat-1.2.0\\res\\values-night-v8\\values-night-v8.xml",
+                    "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\ce3f79a523d89320dd464c2b2de6183e\\transformed\\appcompat-1.2.0\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
