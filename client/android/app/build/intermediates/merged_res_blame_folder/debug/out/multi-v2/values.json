@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\2affdb6e6a1314389bbf6c67f425b6c6\\transformed\\core-1.3.2\\res\\values\\values.xml",
@@ -42,25 +42,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\node_modules\\@capacitor\\android\\capacitor\\build\\intermediates\\packaged_res\\debug\\values\\values.xml",
-                    "from": {
-                        "startLines": "2,3,4,6,7,8,9,20",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,101,148,253,315,349,393,978",
-                        "endLines": "2,3,4,6,7,8,9,22",
-                        "endColumns": "45,46,50,61,33,43,78,22",
-                        "endOffsets": "96,143,194,310,344,388,467,1088"
-                    },
-                    "to": {
-                        "startLines": "31,32,33,292,294,296,297,3353",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "2153,2199,2246,18982,19106,19197,19241,207093",
-                        "endLines": "31,32,33,292,294,296,297,3355",
-                        "endColumns": "45,46,50,61,33,43,78,22",
-                        "endOffsets": "2194,2241,2292,19039,19135,19236,19315,207203"
-                    }
-                },
-                {
                     "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\8d6e2a378b08012ce21682f02156e96d\\transformed\\jetified-savedstate-1.1.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -97,23 +78,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\src\\main\\res\\values\\ic_launcher_background.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "56",
-                        "endOffsets": "107"
-                    },
-                    "to": {
-                        "startLines": "44",
-                        "startColumns": "4",
-                        "startOffsets": "2978",
-                        "endColumns": "56",
-                        "endOffsets": "3030"
-                    }
-                },
-                {
                     "source": "C:\\Users\\djmax\\.gradle\\caches\\transforms-3\\804042e6d116ef92477c35ed4e474038\\transformed\\jetified-appcompat-resources-1.2.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,29,36,47,74",
@@ -130,6 +94,25 @@
                         "endLines": "1969,1976,1987,3134,3139",
                         "endColumns": "24,24,24,24,24",
                         "endOffsets": "132190,132575,133172,194588,194858"
+                    }
+                },
+                {
+                    "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "4,11,18",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "97,424,673",
+                        "endLines": "9,15,20",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "416,663,823"
+                    },
+                    "to": {
+                        "startLines": "306,312,317",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "19941,20260,20500",
+                        "endLines": "311,316,319",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "20255,20495,20648"
                     }
                 },
                 {
@@ -150,22 +133,22 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\node_modules\\@capacitor\\android\\capacitor\\build\\intermediates\\packaged_res\\debug\\values\\values.xml",
                     "from": {
-                        "startLines": "4,11,18",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "93,413,655",
-                        "endLines": "9,15,20",
-                        "endColumns": "12,12,12",
-                        "endOffsets": "407,648,803"
+                        "startLines": "2,3,4,6,7,8,9,20",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,101,148,253,315,349,393,978",
+                        "endLines": "2,3,4,6,7,8,9,22",
+                        "endColumns": "45,46,50,61,33,43,78,22",
+                        "endOffsets": "96,143,194,310,344,388,467,1088"
                     },
                     "to": {
-                        "startLines": "306,312,317",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "19941,20260,20500",
-                        "endLines": "311,316,319",
-                        "endColumns": "12,12,12",
-                        "endOffsets": "20255,20495,20648"
+                        "startLines": "31,32,33,292,294,296,297,3353",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "2153,2199,2246,18982,19106,19197,19241,207093",
+                        "endLines": "31,32,33,292,294,296,297,3355",
+                        "endColumns": "45,46,50,61,33,43,78,22",
+                        "endOffsets": "2194,2241,2292,19039,19135,19236,19315,207203"
                     }
                 },
                 {
@@ -205,13 +188,30 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\djmax\\Desktop\\mobile social app\\Socialni-sit\\client\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\values\\ic_launcher_background.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endColumns": "56",
+                        "endOffsets": "109"
+                    },
+                    "to": {
+                        "startLines": "44",
+                        "startColumns": "4",
+                        "startOffsets": "2978",
+                        "endColumns": "56",
+                        "endOffsets": "3030"
+                    }
+                },
+                {
+                    "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "2,5,4,3",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "55,211,154,99",
+                        "startOffsets": "57,216,158,102",
                         "endColumns": "43,61,56,54",
-                        "endOffsets": "94,268,206,149"
+                        "endOffsets": "96,273,210,152"
                     },
                     "to": {
                         "startLines": "291,293,295,300",
