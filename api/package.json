@@ -8,11 +8,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "*",
-    "dotenv": "*",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "express": "*",
-    "mongoose": "*",
-    "nodemon": "*"
+    "mongoose": "^6.3.6",
+    "nodemon": "^2.0.16"
   },
   "description": ""
 }
