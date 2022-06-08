@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/Zdendaa/Socialni-sit/issues"
   },
-  "homepage": "https://bestsocialapp.herokuapp.com/",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "concurrently": "^6.4.0",
