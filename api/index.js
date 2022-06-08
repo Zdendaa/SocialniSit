@@ -13,7 +13,8 @@ const userColors = require('./routes/userColors');
 const notification = require('./routes/notification');
 const story = require('./routes/story');
 const chat = require('./routes/chat');
-const message = require('./routes/message')
+const message = require('./routes/message');
+const path = require('path');
 
 dotenv.config();
 const app = express();
