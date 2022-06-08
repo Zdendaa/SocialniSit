@@ -12,7 +12,7 @@
     "dotenv": "^10.0.0",
     "express": "*",
     "mongoose": "^6.3.6",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.16"
   },
   "description": ""
 }
