@@ -22,7 +22,8 @@
     "bcrypt": "^5.0.1",
     "concurrently": "^6.4.0",
     "dotenv": "^16.0.1",
-    "epxress": "^0.0.1-security",
+    "epxress": "*",
+    "express": "^4.18.1",
     "mongoose": "^6.3.6",
     "nodemon": "^2.0.16"
   }
