@@ -336,7 +336,7 @@ span {
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px 0px 15px;
-  z-index: 100000000000000000001000000000000000000010000000000000000000;
+  z-index: 10000000000000000;
 }
 
 .topBarProfile {
