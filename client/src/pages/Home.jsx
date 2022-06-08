@@ -18,7 +18,7 @@ const Home = () => {
     useEffect(() => {
         const getPosts = async () => {
             // nacteni postu naseho uzivatele
-            const posts = await axios.get(`/posts/getAllPosts/${user._id}`)
+            const posts = await axios.get(changePath(`/posts/getAllPosts/${user._id}`))
 
             const usersIdData = [];
             posts.data.forEach(post => {
@@ -38,7 +38,7 @@ const Home = () => {
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni pratel
-            const users = await axios.get(`/users/getAllFriends/${user._id}`);
+            const users = await axios.get(changePath(`/users/getAllFriends/${user._id}`));
             setUsers(users.data);
         }
         getFrinends();

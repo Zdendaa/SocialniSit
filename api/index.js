@@ -13,7 +13,8 @@ const userColors = require('./routes/userColors');
 const notification = require('./routes/notification');
 const story = require('./routes/story');
 const chat = require('./routes/chat');
-const message = require('./routes/message')
+const message = require('./routes/message');
+const path = require('path');
 
 dotenv.config();
 const app = express();
@@ -39,6 +40,19 @@ app.use("/api/notifications", notification);
 app.use("/api/stories", story);
 app.use("/api/chats", chat);
 app.use("/api/messages", message);
+
+// jestli je appka na hostingu, nebo jestli na localhostu
+const __dirname1 = path.resolve(); // current path
+if (process.env.NODE_ENV = "production") {
+    app.use(express.static(path.join(__dirname1, "../client/build")));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname1, 'client', 'build', 'index.html'));
+    });
+} else {
+    app.get("/", (req, res) => { res.send("API is running successfully") })
+}
+
 
 // zpusteni serveru
 app.listen(PORT, () => {
