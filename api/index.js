@@ -55,8 +55,13 @@ if (process.env.NODE_ENV = "production") {
 }
 
 
+// zpusteni serveru
+const server = app.listen(PORT, () => {
+    console.log(`server bezi na portu ${PORT}`);
+})
+
 // vytvoreni socket.io serveru
-const io = socketIO(app);
+const io = socketIO(server);
 
 // pole uzivatelu
 let users = [];
@@ -108,11 +113,3 @@ io.on('connection', (socket) => {
         io.emit("getUsers", users);
     })
 });
-
-
-
-
-// zpusteni serveru
-app.listen(PORT, () => {
-    console.log(`server bezi na portu ${PORT}`);
-})
