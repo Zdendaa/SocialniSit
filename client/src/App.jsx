@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // pripojeni socket.io
     if (user) {
-      setSocket(io("ws://:8900"));
+      setSocket(io("ws://socialappsocrot.herokuapp.com/:8900"));
     }
   }, [user])
 
