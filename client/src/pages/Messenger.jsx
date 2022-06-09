@@ -27,7 +27,7 @@ const Messenger = () => {
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni chatu
-            const chats = await axios.get(`/chats/getAllChats/${user?._id}`);
+            const chats = await axios.get(changePath(`/chats/getAllChats/${user?._id}`));
             const chatsData = chats.data;
 
             //  nacteni uzivatelu
