@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // pripojeni socket.io
     if (user) {
-      setSocket(io("/"));
+      setSocket(io());
     }
   }, [user])
 
