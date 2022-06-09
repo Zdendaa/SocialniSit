@@ -56,6 +56,13 @@ if (process.env.NODE_ENV = "production") {
 
 
 // zpusteni serveru
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`server bezi na portu ${PORT}`);
 })
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: 'http://localhost:3000',
+    }
+});

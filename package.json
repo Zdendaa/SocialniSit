@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && npm start",
-    "start": "concurrently \"cd api && node index\" \"cd socket && node index\"",
+    "start": "cd api && node index",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
