@@ -64,9 +64,6 @@ const server = app.listen(PORT, () => {
 
 const io = require('socket.io')(server, {
     pingTimeout: 60000,
-    cors: {
-        origin: 'https://socialappsocrot.herokuapp.com',
-    }
 });
 
 // pole uzivatelu
