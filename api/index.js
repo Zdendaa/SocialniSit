@@ -1,6 +1,7 @@
 const express = require('express');
 const connect = require('./database/connect');
 const dotenv = require('dotenv') // diky dotenv muzu nacitat promenne v souboru .env
+var cors = require('cors')
 
 // volani routu
 const user = require('./routes/user');
@@ -26,6 +27,7 @@ connect();
 const PORT = process.env.PORT || 5000;
 
 // midleware
+app.use(cors());
 app.use(express.json());
 
 // nastaveni url adresy rout, abychom k nim mohli pristupovat
