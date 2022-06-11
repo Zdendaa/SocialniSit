@@ -4,6 +4,7 @@
   "webDir": "build",
   "bundledWebRuntime": false,
   "server": {
+    "url": "https://socialappsocrot.herokuapp.com",
     "cleartext": true
   },
   "plugins": {
