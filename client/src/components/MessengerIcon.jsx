@@ -10,15 +10,6 @@ const MessengerIcon = () => {
 
     const [number, setNumber] = useState();
     useEffect(() => {
-        const getNumberOfNewMessages = async () => {
-            if (!numberOfNewMessages) {
-                const data = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
-                setNumberOfNewMessages(data.data);
-                setNumber(data.data);
-            } else {
-                setNumber(numberOfNewMessages);
-            }
-        }
         getNumberOfNewMessages();
     }, [])
 
@@ -32,13 +23,24 @@ const MessengerIcon = () => {
         socket?.on("getMessage", async (data) => {
             var idOfCurrentChat = window.location.href.split('/')[5]; // useParams nefunguje v socket.io proto jsem zvolil tuto moznost ziskani parametru v url adrese
             if (data.idOfChat !== idOfCurrentChat) {
-                setNumber(prev => {
-                    setNumberOfNewMessages(typeof prev == "number" ? prev + 1 : 1);
-                    return prev + 1;
-                });
+                // setNumber(prev => {
+                //     setNumberOfNewMessages(typeof prev == "number" ? prev + 1 : 1);
+                //     return prev + 1;
+                // });
+                getNumberOfNewMessages();
             }
         })
     }, [socket])
+
+    const getNumberOfNewMessages = async () => {
+        if (!numberOfNewMessages) {
+            const data = await axios.post(changePath(`/messages/getNumberOfUnreadedMessagesInMessenger`), { myId: user._id });
+            setNumberOfNewMessages(data.data);
+            setNumber(data.data);
+        } else {
+            setNumber(numberOfNewMessages);
+        }
+    }
     return (
         <Link to={`/messenger/${user._id}/0`} className="scaled pointer" style={{ textDecoration: "none", marginLeft: "10px", position: "relative" }}>
             <FiMessageCircle className="searchIcon" style={{ color: backgroundColor1 }} />
