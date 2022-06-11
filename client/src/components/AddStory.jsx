@@ -19,9 +19,18 @@ const AddStory = ({ setIsOpenAddStory }) => {
   const [valueOfInput, setValueOfInput] = useState("");
   const [valueOfPlace, setValueOfPlace] = useState("mid");
 
+  const [error, setError] = useState(null);
 
   const getNewCroppedPicture = async (file, setNoError, setIsLoading, friends, sendNotification, type) => {
-    setIsLoading(true);
+    if (((file?.size / 1024) / 1024).toFixed(4) > 5 && (typeof file === "object")) {
+      setError("soubor je větší než 5MB");
+      return;
+    } else {
+      // nacitani nastavime na true
+      setIsLoading(true);
+      setError(null);
+    }
+
     const newFileName = "stories/" + user.username + "/" + file.name + "" + Math.floor(Date.now() / 1000);
     // soubor se ulozi do storage
     await uploadImg(file, newFileName).then(async () => {
@@ -75,6 +84,7 @@ const AddStory = ({ setIsOpenAddStory }) => {
             <option value="mid" selected >upřostřed</option>
             <option value="bot" >dole</option>
           </select>
+          {error && <h4 style={{ color: backgroundColor1 }}>{error}</h4>}
           {
             video && (
               <div className="imgShowContainerAddPost" style={{ position: "relative" }} >

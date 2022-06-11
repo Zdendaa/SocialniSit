@@ -59,12 +59,14 @@ const AddNewPost = ({ friends }) => {
         if (validation(desc)) {
             return;
         }
-        // nacitani nastavime na true
-        setLoading(true)
 
-        if (((file.size / 1024) / 1024).toFixed(4) > 5 && (typeof file === "object")) {
+
+        if (((file?.size / 1024) / 1024).toFixed(4) > 5 && (typeof file === "object")) {
             setErrorMessages("soubro je větší než 5MB");
             return;
+        } else {
+            // nacitani nastavime na true
+            setLoading(true)
         }
         // jestli uzivatel vybral soubor tak se vytvori zaznam v tabulkce urls
         const newFile = (file && (typeof file === "object")) ? file : null;
@@ -201,7 +203,7 @@ const AddNewPost = ({ friends }) => {
                 </div>
                 <hr className="lineNewPost" style={{ backgroundColor: backgroundColor1, width: "75%" }} />
                 <div className="bottomAddNewPost">
-                    <button style={{ backgroundColor: backgroundColor1, color: backgroundColor4 }} className="inputImgAddPost opacity" onClick={createPost}><span> {!loading ? "přídat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
+                    <button style={{ backgroundColor: backgroundColor1, color: backgroundColor4 }} className="inputImgAddPost opacity" onClick={() => !loading && createPost()}><span> {!loading ? "přidat příspěvek" : <ClipLoader color={backgroundColor2} size={10} />} </span></button>
                 </div>
             </div>
         </div >

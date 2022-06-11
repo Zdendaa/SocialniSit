@@ -8,7 +8,7 @@ const ImagesOfUser = ({ user }) => {
     const [urlOfImages, setUrlOfImages] = useState([]);
 
     const [openPopupWidnown, setOpenPopupWidnown] = useState(false);
-    const [urlOfChoseImg, setUrlOfChoseImg] = useState("second");
+    const [urlOfChoseImg, setUrlOfChoseImg] = useState(null);
 
     useEffect(() => {
         // nacteni url vsech obrazku uzivatele
@@ -31,7 +31,7 @@ const ImagesOfUser = ({ user }) => {
 
     return (
         <div className="profileImages">
-            <div className="profileImagesContainer">
+            <div className="profileImagesContainerMain">
                 {
                     urlOfImages?.map((idOfImage) => (
                         <img src={idOfImage} onClick={() => openPopupWindownImg(idOfImage)} alt="allPicture" style={{ width: "70px", height: "70px", objectFit: "cover" }} />
@@ -45,7 +45,7 @@ const ImagesOfUser = ({ user }) => {
                 >
                     {openPopupWidnown &&
                         <PopupWindown classNameMain="Share" classNameContainer="shareContainer" setVisible={setOpenPopupWidnown} >
-                            <img src={urlOfChoseImg} alt="" />
+                            <img className='popupImg' src={urlOfChoseImg} alt="" />
                         </PopupWindown>}
                 </AnimatePresence>
             </div>

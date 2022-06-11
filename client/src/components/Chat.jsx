@@ -21,6 +21,8 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
 
     const [error, setError] = useState(false);
 
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [isOnline, setIsOnline] = useState();
     const [messages, setMessages] = useState([]);
     const [idOfLastReadedMessage, setIdOfLastReadedMessage] = useState();
@@ -124,6 +126,25 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
             setError(true);
             return;
         }
+
+        if (((voiceFile?.blob?.size / 1024) / 1024).toFixed(4) > 5) {
+            setErrorMessage("soubor je větší než 5MB");
+            setError(true);
+            console.log(((voiceFile?.blob?.size / 1024) / 1024).toFixed(4));
+            return;
+        }
+        else if (((photoFile?.size / 1024) / 1024).toFixed(4) > 5) {
+            setErrorMessage("soubor je větší než 5MB");
+            setError(true);
+            return;
+        }
+        else if (((videoFile?.size / 1024) / 1024).toFixed(4) > 5) {
+            setErrorMessage("soubor je větší než 5MB");
+            console.log(((videoFile?.size / 1024) / 1024).toFixed(4));
+            setError(true);
+            return;
+        }
+        setErrorMessage(null);
         setError(false);
         setLoading(true);
         // voice 
@@ -259,14 +280,13 @@ const Chat = ({ userOfChat, idOfChat, setChats, chats }) => {
                                         </div>
                                     }
                                 </div>
-                                <input type="text" placeholder='zadej text...' onChange={(e) => setValOfText(e.target.value)} value={valOfText} style={{ width: "auto" }} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
+                                <input type="text" placeholder={errorMessage ? errorMessage : 'zadej text...'} onChange={(e) => setValOfText(e.target.value)} value={valOfText} style={{ width: "auto" }} className={error ? "error inputForTextInMessenger" : "noError inputForTextInMessenger"} />
 
                             </div>
                     }
                 </div>
                 <EmojiPicker setValOfText={setValOfText} />
-                <button style={{ backgroundColor: backgroundColor1 }} className='buttonsForVariantsMessage opacity' onClick={() => addMessage(null)} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
-
+                <button style={{ backgroundColor: backgroundColor1 }} className='buttonsForVariantsMessage opacity' onClick={() => !loading && addMessage(null)} >{!loading ? <AiOutlineSend style={{ fontSize: "19px" }} /> : <ClipLoader color={backgroundColor2} size={10} />}</button>
             </div>
         </div >
     )

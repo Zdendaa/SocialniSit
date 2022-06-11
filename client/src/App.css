@@ -765,11 +765,7 @@ span {
   padding: 8px;
   display: flex;
   flex-wrap: wrap;
-  overflow: auto;
-}
-
-.profileImagesContainer * {
-  margin: 5px 5px 0px 0px;
+  overflow: hidden;
 }
 
 .profileInfo {
@@ -1088,6 +1084,13 @@ span {
   justify-content: center;
   color: white;
   background-color: blue;
+}
+
+.popupImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 .searchChat {
@@ -1543,6 +1546,7 @@ label {
   width: 100%;
   height: 500px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
@@ -1821,7 +1825,7 @@ label {
 
   /*Share*/
   .shareContainer {
-    width: 40%;
+    width: 60%;
   }
 
   .shareAllFriends {
@@ -1857,6 +1861,10 @@ label {
   .storyBookContainer {
     width: 360px;
     height: 540px;
+  }
+
+  .mainContainerSettingsStory {
+    flex-direction: row;
   }
 
   /*Messenger*/
@@ -1930,5 +1938,10 @@ label {
   .storyBookContainer {
     width: 400px;
     height: 600px;
+  }
+
+  /*Share*/
+  .shareContainer {
+    width: 40%;
   }
 }
