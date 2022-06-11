@@ -1,0 +1,19 @@
+{
+  "appId": "com.socrot.app",
+  "appName": "client",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "1050215924923-1rrssiuukcu6aleosgiktl85692v9sgm.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}
