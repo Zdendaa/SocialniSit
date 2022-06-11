@@ -62,7 +62,7 @@ const AddNewPost = ({ friends }) => {
 
 
         if (((file?.size / 1024) / 1024).toFixed(4) > 5 && (typeof file === "object")) {
-            setErrorMessages("soubro je větší než 5MB");
+            setErrorMessages("soubor je větší než 5MB");
             return;
         } else {
             // nacitani nastavime na true
