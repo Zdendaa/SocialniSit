@@ -48,12 +48,12 @@
         "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\xml\\config.xml"
     },
     {
-        "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
-        "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
-    },
-    {
         "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
     },
     {
         "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
@@ -112,12 +112,12 @@
         "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable-port-hdpi\\splash.png"
     },
     {
-        "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_splash.png.flat",
-        "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable\\splash.png"
-    },
-    {
         "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-port-xhdpi_splash.png.flat",
         "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable-port-xhdpi\\splash.png"
+    },
+    {
+        "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_splash.png.flat",
+        "source": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\src\\main\\res\\drawable\\splash.png"
     },
     {
         "merged": "D:\\IT\\Socialnisit\\mobilesocialapp\\SocialniSit\\client\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-land-hdpi_splash.png.flat",

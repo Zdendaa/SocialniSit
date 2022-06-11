@@ -10,7 +10,7 @@ import validator from 'validator';
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Login = () => {
-    const {setUser, setColors, backgroundColor1, backgroundColor2} = useContext(GlobalContext);
+    const { setUser, setColors, backgroundColor1, backgroundColor2 } = useContext(GlobalContext);
 
     // promenna useState jesli se nacita stranka
     const [ifWaiting, setIfWaiting] = useState(false);
@@ -41,34 +41,34 @@ const Login = () => {
         const isItRight = ((!errEmail && !errPassword) && (errEmail !== "" && errPassword !== "")) ? true : false;
 
         // jeslit jsou data spravna pokracujeme v prihlaseni
-        if(isItRight) {
+        if (isItRight) {
             try {
                 // nacitani nastavime na true
                 setIfWaiting(true);
 
                 const data = {
-                    email: email.current.value, 
+                    email: email.current.value,
                     password: password.current.value
                 }
                 // zjisteni jeslit uzivatel existuje a email i heslo se shoduje
                 const newUser = await axios.post(changePath("/users/login"), data);
-                    
+
                 const newUserData = newUser.data;
-                    
+
                 // ulozeni uzivatele do local storage aby uzivatel byl ulozeny i po refreshnuti stranky
                 localStorage.setItem("user", JSON.stringify(newUserData));
 
                 // zjisteni zda existuje UserColors
                 const ifExistUserColors = await axios.get(changePath(`userColors/ifUserColorsExist/${newUserData._id}`))
                 // jestli existuej tak ulozime do local storage a take do context api barvy uzivatele
-                if(ifExistUserColors.data) {
-                    localStorage.setItem("colors", JSON.stringify({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4}));
-                    setColors({backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4});
-                } 
-                
+                if (ifExistUserColors.data) {
+                    localStorage.setItem("colors", JSON.stringify({ backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4 }));
+                    setColors({ backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4 });
+                }
+
                 // volani funkce v GlobalProvider a ulozeni uzivatele do initialState
                 setUser(newUserData);
-            
+
                 // presmerovani na stranku home
                 history.push("/");
             } catch (err) {
@@ -76,7 +76,7 @@ const Login = () => {
                 setIfWaiting(false);
                 setWrongPasswordOrEmail(true);
             }
-            
+
         } else {
             // jeslit data nejsou spravna zkontrolujeme chyby
             errEmail === "" && checkInput(1, "");
@@ -86,27 +86,27 @@ const Login = () => {
     return (
         <div className="Login">
             <div className="loginContainer">
-                
-                <div className="rotateDiv1" style={{backgroundColor: backgroundColor1}}></div>
-                <div className="rotateDiv2" style={{backgroundColor: backgroundColor1}}></div>
-                <div className="loginForm">
-                    
-                    <h2 style={{color: backgroundColor1}}>Přihlásit se</h2>
 
-                    <input className="inputRegister" onChange={(e) => { checkInput(1, e.target.value)}} ref={email} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="email" placeholder="email"/>
+                <div className="rotateDiv1" style={{ backgroundColor: backgroundColor1 }}></div>
+                <div className="rotateDiv2" style={{ backgroundColor: backgroundColor1 }}></div>
+                <div className="loginForm">
+
+                    <h2 style={{ color: backgroundColor1 }}>Přihlásit se</h2>
+
+                    <input className="inputRegister" onChange={(e) => { checkInput(1, e.target.value) }} ref={email} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="email" placeholder="email" />
                     {(errEmail !== "" && errEmail) && <span className="errorMessage">{errEmail}</span>}
-                    <input className="inputRegister" onChange={(e) => { checkInput(2, e.target.value)}} ref={password} style={{backgroundColor: backgroundColor2, color: backgroundColor1}} type="password" placeholder="heslo"/>
-                    {(errPassword  !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
+                    <input className="inputRegister" onChange={(e) => { checkInput(2, e.target.value) }} ref={password} style={{ backgroundColor: backgroundColor2, color: backgroundColor1 }} type="password" placeholder="heslo" />
+                    {(errPassword !== "" && errPassword) && <span className="errorMessage">{errPassword}</span>}
                     {wrongPasswordOrEmail && <span className="errorMessage">špatné heslo nebo email</span>}
-                    <button className="buttonRegister inputRegister" style={{backgroundColor: backgroundColor1, color: "white"}} onClick={logIn}>{!ifWaiting ? "Přihlásit" : <ClipLoader color={backgroundColor2} size={10} />}</button> <br/>
-                    <span>nebo</span> 
+                    <button className="buttonRegister inputRegister" style={{ backgroundColor: backgroundColor1, color: "white" }} onClick={logIn}>{!ifWaiting ? "Přihlásit" : <ClipLoader color={backgroundColor2} size={10} />}</button> <br />
+                    <span>aa</span>
 
                     <ButtonGoogleLogIn />
-                    <Link to="/register" className="goToLogInButton inputRegister" style={{backgroundColor: backgroundColor1}}>{!ifWaiting ? (<><span>Registrovat</span><AiOutlineArrowRight className="ArrowImg"/></>) : <ClipLoader color={backgroundColor2} size={10} />}</Link>
+                    <Link to="/register" className="goToLogInButton inputRegister" style={{ backgroundColor: backgroundColor1 }}>{!ifWaiting ? (<><span>Registrovat</span><AiOutlineArrowRight className="ArrowImg" /></>) : <ClipLoader color={backgroundColor2} size={10} />}</Link>
                 </div>
             </div>
         </div>
-        
+
     )
 }
 

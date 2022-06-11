@@ -6,8 +6,9 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "cd api && npm start",
-    "start": "concurrently \"cd client && npm start\" \"cd api && npm start\" \"cd socket && npm start\"",
-    "serversocket": "concurrently \"cd api && npm start\" \"cd socket && npm start\""
+    "serversocket": "concurrently \"cd api && npm start\" \"cd socket && npm start\"",
+    "start": "cd api && node index",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/Zdendaa/Socialni-sit#readme",
   "dependencies": {
-    "concurrently": "^6.4.0"
+    "concurrently": "^6.4.0",
+    "firebase": "^9.8.3"
   }
 }

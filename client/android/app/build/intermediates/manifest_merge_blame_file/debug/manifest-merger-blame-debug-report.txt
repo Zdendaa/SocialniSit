@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.app"
+3    package="com.socrot.app"
 4    android:versionCode="1"
 5    android:versionName="1.0" >
 6
@@ -15,67 +15,225 @@
 13    <uses-permission android:name="android.permission.INTERNET" />
 13-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:40:5-67
 13-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:40:22-64
-14
-15    <application
-15-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:5:5-36:19
-16        android:allowBackup="true"
-16-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:6:9-35
-17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-17-->[androidx.core:core:1.3.2] C:\Users\djmax\.gradle\caches\transforms-3\2affdb6e6a1314389bbf6c67f425b6c6\transformed\core-1.3.2\AndroidManifest.xml:24:18-86
-18        android:debuggable="true"
-19        android:icon="@mipmap/ic_launcher"
-19-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:7:9-43
-20        android:label="@string/app_name"
-20-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:8:9-41
-21        android:roundIcon="@mipmap/ic_launcher_round"
-21-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:9:9-54
-22        android:supportsRtl="true"
-22-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:10:9-35
-23        android:testOnly="true"
-24        android:theme="@style/AppTheme"
-24-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:11:9-40
-25        android:usesCleartextTraffic="true" >
-25-->[:capacitor-cordova-android-plugins] D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\capacitor-cordova-android-plugins\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:18-53
-26        <activity
-26-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:13:9-25:20
-27            android:name="com.example.app.MainActivity"
-27-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:15:13-56
-28            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-28-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:14:13-129
-29            android:label="@string/title_activity_main"
-29-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:16:13-56
-30            android:launchMode="singleTask"
-30-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:18:13-44
-31            android:theme="@style/AppTheme.NoActionBarLaunch" >
-31-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:17:13-62
-32            <intent-filter>
-32-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:20:13-23:29
-33                <action android:name="android.intent.action.MAIN" />
-33-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:21:17-69
-33-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:21:25-66
-34
-35                <category android:name="android.intent.category.LAUNCHER" />
-35-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:22:17-77
-35-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:22:27-74
-36            </intent-filter>
-37        </activity>
-38
-39        <provider
-40            android:name="androidx.core.content.FileProvider"
-40-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:28:13-62
-41            android:authorities="com.example.app.fileprovider"
-41-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:29:13-64
-42            android:exported="false"
-42-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:30:13-37
-43            android:grantUriPermissions="true" >
-43-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:31:13-47
-44            <meta-data
-44-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:32:13-34:64
-45                android:name="android.support.FILE_PROVIDER_PATHS"
-45-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:33:17-67
-46                android:resource="@xml/file_paths" />
-46-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:34:17-51
-47        </provider>
-48    </application>
-49
-50</manifest>
+14    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+14-->[:codetrix-studio-capacitor-google-auth] D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\node_modules\@codetrix-studio\capacitor-google-auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-74
+14-->[:codetrix-studio-capacitor-google-auth] D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\node_modules\@codetrix-studio\capacitor-google-auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:22-71
+15    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+15-->[com.android.installreferrer:installreferrer:1.0] C:\Users\djmax\.gradle\caches\transforms-3\113b38ecdbdee20c9ef54e74e927f35b\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:5-110
+15-->[com.android.installreferrer:installreferrer:1.0] C:\Users\djmax\.gradle\caches\transforms-3\113b38ecdbdee20c9ef54e74e927f35b\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:22-107
+16
+17    <application
+17-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:5:5-36:19
+18        android:allowBackup="true"
+18-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:6:9-35
+19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+19-->[androidx.core:core:1.3.2] C:\Users\djmax\.gradle\caches\transforms-3\2affdb6e6a1314389bbf6c67f425b6c6\transformed\core-1.3.2\AndroidManifest.xml:24:18-86
+20        android:debuggable="true"
+21        android:icon="@mipmap/ic_launcher"
+21-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:7:9-43
+22        android:label="@string/app_name"
+22-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:8:9-41
+23        android:roundIcon="@mipmap/ic_launcher_round"
+23-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:9:9-54
+24        android:supportsRtl="true"
+24-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:10:9-35
+25        android:testOnly="true"
+26        android:theme="@style/AppTheme"
+26-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:11:9-40
+27        android:usesCleartextTraffic="true" >
+27-->[:capacitor-cordova-android-plugins] D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\capacitor-cordova-android-plugins\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:18-53
+28        <activity
+28-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:13:9-25:20
+29            android:name="com.example.app.MainActivity"
+29-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:15:13-56
+30            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+30-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:14:13-129
+31            android:label="@string/title_activity_main"
+31-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:16:13-56
+32            android:launchMode="singleTask"
+32-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:18:13-44
+33            android:theme="@style/AppTheme.NoActionBarLaunch" >
+33-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:17:13-62
+34            <intent-filter>
+34-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:20:13-23:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:21:17-69
+35-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:21:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:22:17-77
+37-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:22:27-74
+38            </intent-filter>
+39        </activity>
+40
+41        <provider
+42            android:name="androidx.core.content.FileProvider"
+42-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:28:13-62
+43            android:authorities="com.socrot.app.fileprovider"
+43-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:29:13-64
+44            android:exported="false"
+44-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:30:13-37
+45            android:grantUriPermissions="true" >
+45-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:31:13-47
+46            <meta-data
+46-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:32:13-34:64
+47                android:name="android.support.FILE_PROVIDER_PATHS"
+47-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:33:17-67
+48                android:resource="@xml/file_paths" />
+48-->D:\IT\Socialnisit\mobilesocialapp\SocialniSit\client\android\app\src\main\AndroidManifest.xml:34:17-51
+49        </provider>
+50
+51        <activity
+51-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:30:9-33:66
+52            android:name="com.facebook.FacebookActivity"
+52-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:31:13-57
+53            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+53-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:32:13-96
+54            android:theme="@style/com_facebook_activity_theme" />
+54-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:33:13-63
+55        <activity android:name="com.facebook.CustomTabMainActivity" />
+55-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:34:9-71
+55-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:34:19-68
+56        <activity
+56-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:35:9-49:20
+57            android:name="com.facebook.CustomTabActivity"
+57-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:36:13-58
+58            android:exported="true" >
+58-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:37:13-36
+59            <intent-filter>
+59-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:39:13-48:29
+60                <action android:name="android.intent.action.VIEW" />
+60-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:40:17-69
+60-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:40:25-66
+61
+62                <category android:name="android.intent.category.DEFAULT" />
+62-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:42:17-76
+62-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:42:27-73
+63                <category android:name="android.intent.category.BROWSABLE" />
+63-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:43:17-78
+63-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:43:27-75
+64
+65                <data
+65-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:45:17-47:50
+66                    android:host="cct.com.socrot.app"
+66-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:46:21-56
+67                    android:scheme="fbconnect" />
+67-->[com.facebook.android:facebook-common:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\6e57953054bf8a0567477d97dab21fbc\transformed\jetified-facebook-common-5.15.3\AndroidManifest.xml:47:21-47
+68            </intent-filter>
+69        </activity>
+70        <activity
+70-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:23:9-27:75
+71            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+71-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:24:13-93
+72            android:excludeFromRecents="true"
+72-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:25:13-46
+73            android:exported="false"
+73-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:26:13-37
+74            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+74-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:27:13-72
+75        <!--
+76            Service handling Google Sign-In user revocation. For apps that do not integrate with
+77            Google Sign-In, this service will never be started.
+78        -->
+79        <service
+79-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:33:9-37:51
+80            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+80-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:34:13-89
+81            android:exported="true"
+81-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:35:13-36
+82            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+82-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:36:13-107
+83            android:visibleToInstantApps="true" />
+83-->[com.google.android.gms:play-services-auth:18.1.0] C:\Users\djmax\.gradle\caches\transforms-3\6acbcada2083831929d6715f14f802ea\transformed\jetified-play-services-auth-18.1.0\AndroidManifest.xml:37:13-48
+84
+85        <activity
+85-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:24:9-31:50
+86            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+86-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:25:13-85
+87            android:excludeFromRecents="true"
+87-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:26:13-46
+88            android:exported="true"
+88-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:27:13-36
+89            android:launchMode="singleTask"
+89-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:28:13-44
+90            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+90-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:29:13-102
+91            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+91-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:30:13-72
+92
+93        <service
+93-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:33:9-39:19
+94            android:name="com.google.firebase.components.ComponentDiscoveryService"
+94-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:34:13-84
+95            android:directBootAware="true"
+95-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:34:13-43
+96            android:exported="false" >
+96-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:35:13-37
+97            <meta-data
+97-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:36:13-38:85
+98                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+98-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:37:17-109
+99                android:value="com.google.firebase.components.ComponentRegistrar" />
+99-->[com.google.firebase:firebase-auth:19.3.1] C:\Users\djmax\.gradle\caches\transforms-3\9d817be7d0d2d5c3180e23a1b52304dc\transformed\jetified-firebase-auth-19.3.1\AndroidManifest.xml:38:17-82
+100        </service>
+101
+102        <activity
+102-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\djmax\.gradle\caches\transforms-3\a1a7b3b4d5a7cb970dfdea65c7d99a6f\transformed\jetified-play-services-base-17.1.0\AndroidManifest.xml:23:9-26:75
+103            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+103-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\djmax\.gradle\caches\transforms-3\a1a7b3b4d5a7cb970dfdea65c7d99a6f\transformed\jetified-play-services-base-17.1.0\AndroidManifest.xml:24:13-79
+104            android:exported="false"
+104-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\djmax\.gradle\caches\transforms-3\a1a7b3b4d5a7cb970dfdea65c7d99a6f\transformed\jetified-play-services-base-17.1.0\AndroidManifest.xml:25:13-37
+105            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+105-->[com.google.android.gms:play-services-base:17.1.0] C:\Users\djmax\.gradle\caches\transforms-3\a1a7b3b4d5a7cb970dfdea65c7d99a6f\transformed\jetified-play-services-base-17.1.0\AndroidManifest.xml:26:13-72
+106
+107        <provider
+107-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+108            android:name="com.google.firebase.provider.FirebaseInitProvider"
+108-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+109            android:authorities="com.socrot.app.firebaseinitprovider"
+109-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
+110            android:exported="false"
+110-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+111            android:initOrder="100" />
+111-->[com.google.firebase:firebase-common:19.3.0] C:\Users\djmax\.gradle\caches\transforms-3\244652d87086c70943b01fc5b111333c\transformed\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
+112
+113        <meta-data
+113-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\djmax\.gradle\caches\transforms-3\992b966ef5ba65202b4562da26bab72c\transformed\jetified-play-services-basement-17.1.1\AndroidManifest.xml:23:9-25:69
+114            android:name="com.google.android.gms.version"
+114-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\djmax\.gradle\caches\transforms-3\992b966ef5ba65202b4562da26bab72c\transformed\jetified-play-services-basement-17.1.1\AndroidManifest.xml:24:13-58
+115            android:value="@integer/google_play_services_version" />
+115-->[com.google.android.gms:play-services-basement:17.1.1] C:\Users\djmax\.gradle\caches\transforms-3\992b966ef5ba65202b4562da26bab72c\transformed\jetified-play-services-basement-17.1.1\AndroidManifest.xml:25:13-66
+116        <!--
+117         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+118         with the application context. This config is merged in with the host app's manifest,
+119         but there can only be one provider with the same authority activated at any given
+120         point; so if the end user has two or more different apps that use Facebook SDK, only the
+121         first one will be able to use the provider. To work around this problem, we use the
+122         following placeholder in the authority to identify each host application as if it was
+123         a completely different provider.
+124        -->
+125        <provider
+125-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:39:9-42:40
+126            android:name="com.facebook.internal.FacebookInitProvider"
+126-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:40:13-70
+127            android:authorities="com.socrot.app.FacebookInitProvider"
+127-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:41:13-72
+128            android:exported="false" />
+128-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:42:13-37
+129
+130        <receiver
+130-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:44:9-50:20
+131            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+131-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:45:13-86
+132            android:exported="false" >
+132-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:46:13-37
+133            <intent-filter>
+133-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:47:13-49:29
+134                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+134-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:48:17-95
+134-->[com.facebook.android:facebook-core:5.15.3] C:\Users\djmax\.gradle\caches\transforms-3\53f24100317913c84e5ab0fbd4b5a4ba\transformed\jetified-facebook-core-5.15.3\AndroidManifest.xml:48:25-92
+135            </intent-filter>
+136        </receiver>
+137    </application>
+138
+139</manifest>

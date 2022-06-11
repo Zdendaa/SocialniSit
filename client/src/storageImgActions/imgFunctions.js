@@ -1,18 +1,18 @@
-import {storage} from "../firebaseStorage/storage";
+import { storage } from "../firebaseStorage/storage";
 
 // ulozeni img do uloziste
 export const uploadImg = async (image, name) => {
-    if(image) {
-      // odeslani img do storage
-      try {
-        await storage.ref(name).put(image).then(() => {
-           console.log("soubor ulozen v ulozisti");
-        });
-      } catch (err) {
-        console.log(err);
-      }
-      
+  if (image) {
+    // odeslani img do storage
+    try {
+      await storage.ref(name).put(image).then(() => {
+        console.log("soubor ulozen v ulozisti");
+      });
+    } catch (err) {
+      console.log(err);
     }
+
+  }
 }
 
 // stahnuti url obrazku pomoci jeho jmena
