@@ -20,7 +20,7 @@ const Share = ({ setifSharing, idOfPost, sendNotification }) => {
     useEffect(() => {
         // nacteni vsech pratel
         const loadAllUsersFriends = async () => {
-            const friends = await axios.get(`/users/getAllFriends/${user._id}`);
+            const friends = await axios.get(changePath(`/users/getAllFriends/${user._id}`));
             setAllFriends(friends.data);
             console.log(friends.data);
         }
