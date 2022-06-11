@@ -23,6 +23,7 @@ const ButtonGoogleLogIn = () => {
 
     const createUserGoogle = async () => {
         const user = await GoogleAuth.signIn();
+        console.log(user);
         try {
             // jestli uzivatel uz existuje jenom ho prihlasime
             const userData = {
@@ -33,7 +34,7 @@ const ButtonGoogleLogIn = () => {
             const newUser = await axios.post(changePath("/users/login"), userData);
 
             // zjisteni zda existuje UserColors
-            const ifExistUserColors = await axios.get(changePath(`userColors/ifUserColorsExist/${newUser.data._id}`))
+            const ifExistUserColors = await axios.get(changePath(`/userColors/ifUserColorsExist/${newUser.data._id}`))
             // jestli existuej tak ulozime do local storage a take do context api barvy uzivatele
             if (ifExistUserColors.data) {
                 localStorage.setItem("colors", JSON.stringify({ backgroundColor1: ifExistUserColors.data.backgroundColor1, backgroundColor2: ifExistUserColors.data.backgroundColor2, backgroundColor3: ifExistUserColors.data.backgroundColor3, backgroundColor4: ifExistUserColors.data.backgroundColor4 }));

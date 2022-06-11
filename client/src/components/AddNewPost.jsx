@@ -62,6 +62,10 @@ const AddNewPost = ({ friends }) => {
         // nacitani nastavime na true
         setLoading(true)
 
+        if (((file.size / 1024) / 1024).toFixed(4) > 5 && (typeof file === "object")) {
+            setErrorMessages("soubro je větší než 5MB");
+            return;
+        }
         // jestli uzivatel vybral soubor tak se vytvori zaznam v tabulkce urls
         const newFile = (file && (typeof file === "object")) ? file : null;
 
