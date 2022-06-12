@@ -61,6 +61,9 @@ function App() {
           <Route path="/messenger/:idOfUser/:idOfChat" >
             {user ? <Messenger /> : <Redirect to="/register" />}
           </Route>
+          <Route path="*" >
+            {user ? <Home /> : <Redirect to="/register" />}
+          </Route>
         </Switch>
       </Router>
     </div>
