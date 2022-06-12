@@ -34,7 +34,7 @@ const TopBarHome = () => {
                         history.push("/register");
                     }}>odhlásit se
                     </button>
-                    <Link to="/settings" className="buttonLogOut opacity" style={{ backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px" }}>nasatvení profilu</Link>
+                    <Link to="/settings" className="buttonLogOut opacity" style={{ backgroundColor: backgroundColor1, color: backgroundColor4, textDecoration: "none", fontSize: "13.33px" }}>nastavení profilu</Link>
                 </div>
             </div>
         </div>
