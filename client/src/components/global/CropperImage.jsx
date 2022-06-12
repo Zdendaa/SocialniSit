@@ -29,7 +29,7 @@ const CropperImage = ({ aspect, rect, saveImg, addStory, children, setCropImg, s
     useEffect(() => {
         const getFrinends = async () => {
             // nacteni pratel
-            const users = await axios.get(`/users/getAllFriends/${user._id}`);
+            const users = await axios.get(changePath(`/users/getAllFriends/${user._id}`));
             setFriends(users.data);
         }
         getFrinends();
