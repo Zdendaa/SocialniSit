@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // pripojeni socket.io
     if (user) {
-      setSocket(io("https://rotal-socialnisit.onrender.com:8900"));
+      setSocket(io("https://rotal-socialnisit.onrender.com"));
     }
   }, [user])
 

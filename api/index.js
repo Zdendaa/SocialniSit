@@ -71,8 +71,6 @@ const io = require('socket.io')(server, {
     }
 });
 
-io.listen(8900);
-
 // pole uzivatelu
 let users = [];
 
