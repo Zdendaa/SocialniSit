@@ -56,6 +56,8 @@ app.use("/api/messages", message);
 //     app.get("/", (req, res) => { res.send("API is running successfully") })
 // }
 
+app.get("/", (req, res) => { res.send("API is running successfully") })
+
 
 // zpusteni serveru
 const server = app.listen(PORT, () => {
