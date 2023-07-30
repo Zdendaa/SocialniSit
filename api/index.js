@@ -24,7 +24,7 @@ const app = express();
 connect();
 
 // port
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 // midleware
 app.use(cors());
@@ -45,16 +45,16 @@ app.use("/api/messages", message);
 
 
 // jestli je appka na hostingu, nebo jestli na localhostu
-const __dirname1 = path.resolve(); // current path
-if (process.env.NODE_ENV = "production") {
-    app.use(express.static(path.join(__dirname1, "../client/build")));
+// const __dirname1 = path.resolve(); // current path
+// if (process.env.NODE_ENV = "production") {
+//     app.use(express.static(path.join(__dirname1, "../client/build")));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname1, 'client', 'build', 'index.html'));
-    });
-} else {
-    app.get("/", (req, res) => { res.send("API is running successfully") })
-}
+//     app.get('*', (req, res) => {
+//         res.sendFile(path.resolve(__dirname1, 'client', 'build', 'index.html'));
+//     });
+// } else {
+//     app.get("/", (req, res) => { res.send("API is running successfully") })
+// }
 
 
 // zpusteni serveru
@@ -68,6 +68,8 @@ const io = require('socket.io')(server, {
         origin: '*',
     }
 });
+
+io.listen(8900);
 
 // pole uzivatelu
 let users = [];
