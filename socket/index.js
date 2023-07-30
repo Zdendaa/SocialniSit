@@ -1,7 +1,7 @@
 // vytvoreni socket.io serveru
 const io = require('socket.io')(8900, {
     cors: {
-        origin: 'https://socialappsocrot.herokuapp.com/',
+        origin: 'http://localhost:3000',
     }
 });
 
